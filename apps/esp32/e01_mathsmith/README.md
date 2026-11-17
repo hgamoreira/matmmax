@@ -1,4 +1,4 @@
-# E01 — MathSmith engine on the ESP32-S3 serial console
+# E01 — MatmMax engine on the ESP32-S3 serial console
 
 **Built and tested in QEMU (2026-11-15); physical-board testing remains open.**
 The user selected the initial scope in XD108: serial prompt, existing engine,
@@ -41,7 +41,7 @@ ans =
 
 The existing QEMU Ctrl+A then lowercase x exit sequence still fails in the
 user's VS Code terminal. Its cause is unknown and the user parked it as
-non-blocking. It is independent of MathSmith's commands; E01 does not claim
+non-blocking. It is independent of MatmMax's commands; E01 does not claim
 to fix it. `quit`/`exit` report that there is no parent shell and retain the
 workspace; they do not exit QEMU.
 
@@ -98,7 +98,7 @@ Platform commands use a colon:
   samples**, not one complex sample. Thus the scalar `fft(1)` forward result
   is valid, but passing its 1x2 result directly to `ifft` has that ambiguity.
   Multirow complex spectra round-trip; the shared engine is unchanged.
-- MathSmith groups powers left to right: `2^3^2` is **64**. This preserves the
+- MatmMax groups powers left to right: `2^3^2` is **64**. This preserves the
   existing language, as described in its manual.
 - Cancellation is cooperative; a kernel without poll points must finish
   before cancellation can take effect. No keyboard latency or hardware speed
@@ -148,7 +148,7 @@ and SHA256SUMS. Neither building, testing nor staging flashes a physical board.
 1. **Flash/boot:** on the confirmed N16R8 board, use its CP2102 USB connector
    and identified serial port. From the repository root, substitute the port
    below. This explicitly writes E01 to the selected board. Expect the E01
-   banner, `PSRAM: ready bytes=8388608`, `New MathSmith workspace.` and `>> `.
+   banner, `PSRAM: ready bytes=8388608`, `New MatmMax workspace.` and `>> `.
 
    ```sh
    esp32/scripts/idf.sh -C apps/esp32/e01_mathsmith \

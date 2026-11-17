@@ -27,9 +27,9 @@
           <a class="text-link" href="@@REPO_URL@@">Explore the source ↗</a></div>
         <p class="edition">Early firmware · ESP8266 on hardware · ESP32-S3 in QEMU</p>
       </div>
-      <div class="terminal" aria-label="Example MathSmith session">
+      <div class="terminal" aria-label="Example MatmMax session">
         <div class="terminal-bar"><span class="dot"></span> mathsmith / console <span class="terminal-tag">64-bit double</span></div>
-        <pre><span class="muted">MathSmith Light · ESP8266</span>
+        <pre><span class="muted">MatmMax Light · ESP8266</span>
 Ready. Type help.
 
 <span class="prompt">&gt;&gt;</span> A=[4 -2;-2 4]
@@ -57,17 +57,17 @@ ans =
       <div class="cards">
         <article class="card">
           <div class="card-top"><span class="target-number">01 / REAL BOARD</span><span class="badge hardware">Hardware tested*</span></div>
-          <h3>ESP8266</h3><p class="board">Wemos D1 mini · 4 MB flash · L01-r14</p>
+          <h3>ESP8266</h3><p class="board">Wemos D1 mini · 4 MB flash · L01-r15</p>
           <p>A tiny network calculator you can program from your browser. Set up Wi-Fi once, then use a USB power supply and connect over your local network.</p>
           <ul><li>Serial and browser console with saved Wi-Fi</li><li>Script editor with computer-side Open/Save and Run/Stop</li><li>Digital GPIO, ADC input and cancellable delay</li><li>16 variables; matrices up to 64 elements</li></ul>
           <a class="text-link" href="@@REPO_URL@@/blob/main/esp8266/docs/USER_MANUAL_L01.md">Read the ESP8266 manual ↗</a>
-          <p class="card-note">* Core workflows and LED output confirmed. Full peripheral and stress checks remain open.</p>
+          <p class="card-note">* Core workflows and LED output confirmed on L01-r14. Full peripheral and stress checks remain open. L01-r15 awaits board testing.</p>
         </article>
         <article class="card">
           <div class="card-top"><span class="target-number">02 / EMULATOR</span><span class="badge emulator">QEMU tested</span></div>
           <h3>ESP32-S3</h3><p class="board">N16R8 target · 16 MB flash / 8 MB PSRAM · E03</p>
           <p>A larger serial workstation with FFTs and a foreground app launcher. Upload a separately compiled program, run it, and return to your mathematical workspace.</p>
-          <ul><li>MathSmith console with 64×64 square matrices</li><li>FFT and a 4 MiB engine payload cap in PSRAM</li><li>External ELF apps uploaded over serial</li><li>Variables preserved when an app returns</li></ul>
+          <ul><li>MatmMax console with 64×64 square matrices</li><li>FFT and a 4 MiB engine payload cap in PSRAM</li><li>External ELF apps uploaded over serial</li><li>Variables preserved when an app returns</li></ul>
           <a class="text-link" href="@@REPO_URL@@/blob/main/apps/esp32/e03_external/README.md">Explore the ESP32-S3 build ↗</a>
           <p class="card-note">Physical board validation is pending. Uploaded programs are RAM-only and trusted native code.</p>
         </article>

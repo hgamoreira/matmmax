@@ -16,7 +16,7 @@ No SDK or cross-compiler is required for that route.
 ## ESP8266: a real Wemos D1 mini, 4 MB
 
 **The instructions in this section install firmware on a physical board.**
-MathSmith then runs on the ESP8266; your browser connects to its Wi-Fi address.
+MatmMax then runs on the ESP8266; your browser connects to its Wi-Fi address.
 
 ```sh
 python3 tools/setup_esp8266.py
@@ -46,7 +46,7 @@ mkdir -p build/private-backups
 
 Use the actual port on your machine. Close the monitor before flashing.
 The normal ROM boot message uses 74880 baud, so a brief garbled burst before
-the readable 115200-baud MathSmith banner is expected. Repeating resets or
+the readable 115200-baud MatmMax banner is expected. Repeating resets or
 exceptions are not normal. Exit miniterm with Ctrl+].
 
 At the prompt, type `2+2`, then `:wifi join`. Enter your 2.4 GHz network's

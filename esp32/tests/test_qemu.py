@@ -1,4 +1,4 @@
-"""Installed emulator checks only; no MathSmith firmware is involved.
+"""Installed emulator checks only; no MatmMax firmware is involved.
 
 Run: python3 -m unittest discover -s esp32/tests -v
 """

@@ -1,20 +1,15 @@
-# L01-r14 — GPIO in MathSmith programs
+# L01-r14 — GPIO in MatmMax programs
 
 17 November2026. User-selected next stage after R13 editor Run/Save/Open,
 error halt, unfinished-block Stop and active-execution Stop passed on hardware.
-R14 adds pin functions and a cooperative millisecond delay. **First hardware
-result: four visible flashes and final read1**, with usable connected :mem:
-heap15128/largest14312/frag6%, stack minimum-free10808/16384, engine4928/5379
-of16384. Pin/LED activity is confirmed. The follow-up resolves the count: **five flashes, printed counts through5, LED off**
-on the unchanged R14 firmware. No root cause is assigned to the earlier count.
-Other electrical/watchdog/stability tests remain pending.
-Exact report (local hardware log omitted; see the validation summary). R13 and
-R12 recovery images remain preserved; the network workaround/key format remain.
+R14 adds pin functions and a cooperative millisecond delay. A follow-up test
+confirmed five visible flashes, a printed count of five and the LED off at
+the end. Other electrical, watchdog and stability checks remain pending.
 
 ## Functions
 
 Use these in either the console or the browser Program editor. Pin/mode strings
-may use the MathSmith language's supported quotes. Setters and delay return
+may use the MatmMax language's supported quotes. Setters and delay return
 numeric0 on success; use a semicolon to suppress that result.
 
 | Function | Meaning |

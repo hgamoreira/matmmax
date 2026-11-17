@@ -3,7 +3,7 @@
 #include <cont.h>
 #include <coredecls.h>
 #include "port.h"
-static_assert(sizeof(double)==8,"MathSmith requires 64-bit doubles");
+static_assert(sizeof(double)==8,"MatmMax requires 64-bit doubles");
 static unsigned char queued[256];
 static unsigned head, tail;
 static bool lost;
@@ -54,7 +54,7 @@ void setup()
     Serial.flush();
     WiFi.persistent(false);
     WiFi.mode(WIFI_OFF);
-    Serial.println(F("L00 boot: starting MathSmith"));
+    Serial.println(F("L00 boot: starting MatmMax"));
     Serial.flush();
     ms_console_start();
 }

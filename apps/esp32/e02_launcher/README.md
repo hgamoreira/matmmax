@@ -1,4 +1,4 @@
-# E02 — run programs from MathSmith and return to its workspace
+# E02 — run programs from MatmMax and return to its workspace
 
 **Built and tested in QEMU, 2026-11-15: 48 combined tests PASS. Hardware
 validation remains open.** Scope selected by the user: app launcher plus a
@@ -31,12 +31,12 @@ Demo program. Text is echoed here, not evaluated.
 demo> x=999
 Demo echo: x=999
 demo> exit
-Returned to MathSmith; workspace kept.
+Returned to MatmMax; workspace kept.
 >> x+1
 ans = 42
 ```
 
-This runs another native app module with its own prompt. MathSmith's session
+This runs another native app module with its own prompt. MatmMax's session
 stays resident while that app runs. `:app demo hello world` passes the literal
 text `hello world` as arguments. The demo can also return with Esc or `fail`;
 the latter is a controlled error return, not a CPU fault. All three paths
@@ -47,21 +47,21 @@ release its scratch memory and return to the same math workspace.
 - `:apps` lists the compiled app registry. `:app NAME [arguments]` launches
   one. Names are case-sensitive; arguments are literal text, not shell syntax.
   An unknown app or failed arena allocation reports an error without running it.
-- Finish or `abort` an open MathSmith block before launching; the launcher
+- Finish or `abort` an open MatmMax block before launching; the launcher
   refuses to switch while a block is incomplete. App names are not reserved
   math variable names: `demo=8` remains a normal assignment.
 - The demo receives a **zeroed 4096-byte PSRAM arena**, outside the engine's
   4 MiB payload cap. The launcher frees the original arena on normal, cancelled
-  and error returns and rejects nested launches. The demo has no MathSmith
+  and error returns and rejects nested launches. The demo has no MatmMax
   session pointer and does not modify variables, matrices or functions.
 - Console input ownership switches to the app. Already queued input is dropped
   on entry/return; bytes arriving later are ordinary new input. Backspace,
   CR/LF/CRLF and line overflow are tested on both sides of the switch. The demo
   accepts 127 printable characters per line. Returning prints the math prompt;
   there is no framebuffer/history screen to restore in this serial version.
-- MathSmith E02 inherits E01's engine, numeric limits, allocator/timer and UART0
+- MatmMax E02 inherits E01's engine, numeric limits, allocator/timer and UART0
   **115200 8N1** console. Existing commands, `:mem`, `:reset`, and `:reboot`
-  remain available. `quit` retains the workspace because MathSmith itself is
+  remain available. `quit` retains the workspace because MatmMax itself is
   the workstation prompt. It does not terminate QEMU.
 - **Initially apps are compiled into the firmware.** Adding another app needs
   a firmware rebuild. Loading separate native program files from SD is a later
@@ -95,7 +95,7 @@ Coverage includes:
   arena ownership, registry validation and nested-launch rejection.
 - Actual target arena-allocation rejection when PSRAM is absent; the shell stays
   usable. Native failure injection covers admission without running the app.
-- Demo input/editing/overflow and CRLF transitions back to the MathSmith prompt.
+- Demo input/editing/overflow and CRLF transitions back to the MatmMax prompt.
 - E01's Python numeric/FFT references and 191-number golden script on **both**
   E01 and E02, plus its cancellation, memory, reset and reboot cases.
 

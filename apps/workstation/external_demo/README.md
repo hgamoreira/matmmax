@@ -8,7 +8,7 @@ zeroed 4096-byte arena come from the versioned host context.
 `entry.c` checks ABI version/size, checks its `.bss` counter starts fresh,
 prints the A/B greeting, runs the demo and reports its return status through
 `finish` before returning. Reloading creates fresh module data each time.
-There are no file, SDK, MathSmith-session or persistent-state dependencies.
+There are no file, SDK, MatmMax-session or persistent-state dependencies.
 
 From the repository root:
 
@@ -17,7 +17,7 @@ esp32/scripts/external.sh apps
 python3 esp32/scripts/upload_external.py --qemu build/esp32/e03_external/demo_b.msp
 ```
 
-Then type `:app uploaded` at the MathSmith prompt. Expect `External demo B`
+Then type `:app uploaded` at the MatmMax prompt. Expect `External demo B`
 and `demo>`. `exit`, Esc or `fail` return with success, cancellation or a
 controlled error. Ctrl+] closes the host uploader console.
 

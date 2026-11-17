@@ -1,4 +1,10 @@
-# MathSmith OS status — 2026-11-17
+# MatmMax status — 2026-11-17
+
+The current sources use MatmMax in the microcontroller consoles and WebREPL.
+The ESP8266 branding build is L01-r15. ESP32-S3 E03 was rebuilt and passed
+82 emulator and host checks. ESP8266 L01, L00, the Wi-Fi probe and the
+native Chrome matrix example passed their automated checks. The board
+results below refer to L01-r14 or earlier firmware.
 
 Read this before changing the firmware. The first source release contains
 ESP32-S3 E03 and ESP8266 L01-r14. The parent source commit and exported-file
@@ -28,11 +34,6 @@ The home DHCP issue was resolved in R12 by requesting broadcast replies
 before acquiring an IP. Earlier short incoming replies were observed, but
 their underlying origin has not been established. Keep receive validation.
 R13 added the editor; R14 added typed GPIO functions and cooperative delay.
-
-Last user-reported R14 connected memory: free heap 15,128 bytes, largest
-block 14,312; fragmentation 6%; dedicated stack 16,384 with minimum free
-10,808; engine payload used 4,928, peak 5,379, limit 16,384. This is one
-workload measurement, not a full stress result.
 
 **Still open:** the separately requested hardware `delay(60000)` Stop check,
 ADC, external pin loopback, full GPIO procedure and sustained/stress use.

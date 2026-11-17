@@ -22,9 +22,9 @@ class MathConsole(Console):
         return super().read_until(marker, timeout)
 
 
-class MathSmithFirmware(unittest.TestCase):
+class MatmMaxFirmware(unittest.TestCase):
     build_dir = BUILD
-    banner = "MathSmith E01"
+    banner = "MatmMax E01"
 
     def start(self, psram=True):
         self.assertTrue((self.build_dir / "flash.bin").is_file(),
@@ -135,7 +135,7 @@ class MathSmithFirmware(unittest.TestCase):
             self.assertEqual(len(got), n)
             self.assertLess(max(abs(a-b) for a,b in zip(got,want)),
                             2e-12*max(1, max(abs(z) for z in want)), n)
-            # Existing MathSmith treats a 1x2 row as two real input samples;
+            # Existing MatmMax treats a 1x2 row as two real input samples;
             # only multirow [real imaginary] matrices round-trip as complex.
             if n > 1:
                 c.command("y=ifft(F);")
@@ -180,7 +180,7 @@ class MathSmithFirmware(unittest.TestCase):
         after = int(re.search(stats, c.command(":mem")).group(1))
         self.assertEqual(before, after)
         c.command("x=42;")
-        self.assertIn("New MathSmith workspace", c.command(":reset"))
+        self.assertIn("New MatmMax workspace", c.command(":reset"))
         self.assertIn("error:", c.command("x"))
         self.assertIn("Line too long", c.command("x=12;"+" "*400))
         self.assertIn("error:", c.command("x"))
@@ -198,7 +198,7 @@ class MathSmithFirmware(unittest.TestCase):
     def test_missing_psram_diagnostic_console(self):
         c, boot = self.start(psram=False)
         self.assertIn("PSRAM: unavailable", boot)
-        self.assertIn("MathSmith unavailable", c.command("2+2"))
+        self.assertIn("MatmMax unavailable", c.command("2+2"))
         self.assertIn("SDK:", c.command(":info"))
 
 

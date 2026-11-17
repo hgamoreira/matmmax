@@ -1,4 +1,4 @@
-/* One policy/state registry shared by prompt commands and MathSmith builtins. */
+/* One policy/state registry shared by prompt commands and MatmMax builtins. */
 #include <string.h>
 #include "web.h"
 #include "pins.h"

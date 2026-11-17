@@ -1,7 +1,7 @@
 # L01 browser protocol and ownership
 
 16 November 2026. Implemented in `apps/esp8266/l01_webrepl/protocol.c` and
-`firmware.cpp`. This is MathSmith's protocol, not MicroPython WebREPL.
+`firmware.cpp`. This is MatmMax's protocol, not MicroPython WebREPL.
 
 ## HTTP and authentication
 
@@ -62,7 +62,7 @@ third byte. The new editor requires this capability and disables batch Run for
 legacy two-byte readiness; the interactive console remains usable. A printed
 `error:` is not used as a result signal. Handled platform commands have their
 existing textual diagnostics; scripts disallow platform-control lines, so the
-queue relies on actual MathSmith/error/cancellation results.
+queue relies on actual MatmMax/error/cancellation results.
 
 The browser prevalidates the whole script, retains at most32KiB/1024physical
 lines locally and sends exactly one <=191printable-ASCII line for each ready

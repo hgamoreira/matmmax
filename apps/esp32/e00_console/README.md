@@ -2,7 +2,7 @@
 
 First firmware milestone for the ordered **ESP32-S3 N16R8 CP2102** board.
 Scope: boot, UART0 input/output, flash/PSRAM reporting and allocation checks
-(XD107). The MathSmith engine, networking, screen, filesystem and application
+(XD107). The MatmMax engine, networking, screen, filesystem and application
 launcher come later. No RP2350 firmware is built by these commands.
 
 **Status (2026-11-15): built; 9 automated tests PASS (7 firmware, 2 emulator
@@ -45,7 +45,7 @@ References: [QEMU shortcut sequences](https://www.qemu.org/docs/master/system/mu
 [VS Code terminal shortcuts](https://code.visualstudio.com/docs/terminal/advanced#_keyboard-shortcuts-and-the-shell).
 
 ```text
-MathSmith workstation E00 - console smoke test
+MatmMax workstation E00 - console smoke test
 SDK: v5.5.6
 ...
 Flash: 16777216 bytes

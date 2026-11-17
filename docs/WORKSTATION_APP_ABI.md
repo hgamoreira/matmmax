@@ -28,7 +28,7 @@ The module imports `wk_app_api_v1()` from the firmware. The returned
 The app checks version/size/context, runs, reports its status once, then
 returns from entry. Returning without reporting a status is an application
 error. The bootstrap returns NULL outside an active app entry call. Pointers
-and arguments are borrowed only for that invocation; no MathSmith session
+and arguments are borrowed only for that invocation; no MatmMax session
 pointer is exported. All temporary app buffers must fit the declared arena.
 Additional resources outside that contract are not automatically reclaimed.
 
@@ -84,7 +84,7 @@ declared arena. Espressif's loader relocates text/data into PSRAM, resolves
 only the explicit imports and runs entry. The module's test `.bss` counter
 must start at zero on every load. On return, the API context is cleared, the
 ELF is deinitialised and its allocations released, and the launcher releases
-the arena/restores console input. MathSmith's resident workspace is preserved.
+the arena/restores console input. MatmMax's resident workspace is preserved.
 
 The uploaded slot stores only the validated package; each run loads a fresh
 executable image. Upload validates/links the candidate **without running it**

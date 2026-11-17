@@ -1,4 +1,4 @@
-/* Serial MathSmith front end. Platform commands use ':' to avoid variable names. */
+/* Serial MatmMax front end. Platform commands use ':' to avoid variable names. */
 #include <inttypes.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -104,9 +104,9 @@ static void reset_session(void)
     block_open = false;
     if (session) {
         ml_set_plot_hook(session, no_display, NULL);
-        puts("New MathSmith workspace.");
+        puts("New MatmMax workspace.");
     } else {
-        puts("MathSmith unavailable: cannot allocate workspace in PSRAM.");
+        puts("MatmMax unavailable: cannot allocate workspace in PSRAM.");
     }
 }
 
@@ -126,12 +126,12 @@ static void platform_info(void)
     esp_flash_get_size(NULL, &flash_size);
 #ifdef MS_WORKSTATION_LAUNCHER
 #ifdef MS_EXTERNAL_APPS
-    puts("MathSmith E03 ESP32-S3 - external program loader");
+    puts("MatmMax E03 ESP32-S3 - external program loader");
 #else
-    puts("MathSmith E02 ESP32-S3 - application launcher");
+    puts("MatmMax E02 ESP32-S3 - application launcher");
 #endif
 #else
-    puts("MathSmith E01 ESP32-S3 - serial engine port");
+    puts("MatmMax E01 ESP32-S3 - serial engine port");
 #endif
     printf("SDK: %s\nFlash: %" PRIu32 " bytes\n", esp_get_idf_version(), flash_size);
     printf("PSRAM: %s bytes=%zu\n", esp_psram_is_initialized() ? "ready" : "unavailable",
@@ -147,7 +147,7 @@ static void platform_info(void)
 
 static void help(void)
 {
-    puts("MathSmith: expressions, variables, matrices, functions and multiline blocks.");
+    puts("MatmMax: expressions, variables, matrices, functions and multiline blocks.");
     puts("Examples: x=2^10   A=[4 -2;-2 4]   A\\[2;8]   fft([1 2 3 4])");
     puts("Language: who, clear [name], format short|long; abort drops an open block.");
     puts("Math: sin cos exp log sqrt, det inv eig svd, fzero integral deriv, fft ifft.");
@@ -184,7 +184,7 @@ static void evaluate(const char *line)
         uart_wait_tx_done(UART_NUM_0, pdMS_TO_TICKS(1000));
         esp_restart();
     } else if (*line == ':') puts("Unknown platform command; use :help.");
-    else if (!session) puts("MathSmith unavailable; use :info or :reset.");
+    else if (!session) puts("MatmMax unavailable; use :info or :reset.");
     else {
         cancelled = false;
         last_yield = esp_timer_get_time();
@@ -192,7 +192,7 @@ static void evaluate(const char *line)
         block_open = (result == ML_MORE);
         if (result == ML_QUIT) {
 #ifdef MS_WORKSTATION_LAUNCHER
-            puts("MathSmith is the workstation prompt; workspace kept. Use :app NAME for programs.");
+            puts("MatmMax is the workstation prompt; workspace kept. Use :app NAME for programs.");
 #else
             puts("E01 has no parent shell yet; workspace kept. Use :reset or :reboot.");
 #endif
@@ -217,7 +217,7 @@ void app_main(void)
 #endif
     platform_info();
     reset_session();
-    puts("Type help. The prompt runs the shared MathSmith engine.");
+    puts("Type help. The prompt runs the shared MatmMax engine.");
     printf(">> ");
     char line[400];
     size_t used = 0;

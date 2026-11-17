@@ -1,13 +1,13 @@
-# L00 — serial MathSmith Light for Wemos D1 mini
+# L00 — serial MatmMax Light for Wemos D1 mini
 
 **2026-11-15: corrected target image builds and fits; 19 automated native/linked-image
 checks PASS. User hardware report confirms boot, serial console, 4x4 matrix
 entry and eigensolver after the startup correction. Full procedure remains open.**
 The user selected serial-only
-MathSmith, 64-bit doubles, fewer variables, provisional 8x8 matrices, Wi-Fi off
+MatmMax, 64-bit doubles, fewer variables, provisional 8x8 matrices, Wi-Fi off
 and memory diagnostics (XD111). No launcher is added until this fit is measured
 on the board. esptool identification confirmed ESP8266EX / 4 MB / 26 MHz crystal;
-the subsequent boot/eigenvalue transcript supplies the first MathSmith hardware evidence.
+the subsequent boot/eigenvalue transcript supplies the first MatmMax hardware evidence.
 
 For everyday operation, see the [ESP8266 user manual](../../../esp8266/docs/USER_MANUAL.md):
 connection, calculations, matrix operations, typed programs and troubleshooting.
@@ -72,7 +72,7 @@ combinations fit. Allocation/stack-limit errors must leave the prompt usable.
 `help`/`:help` describe L00. `:info` and `:mem` report actual flash, CPU, Wi-Fi
 mode, free heap, largest heap block, fragmentation, engine live/peak payload and
 stack high-water margin. `:reset` starts a new workspace; `:reboot` restarts the
-chip. `quit`/`exit` keep MathSmith as the main prompt. Backspace edits input;
+chip. `quit`/`exit` keep MatmMax as the main prompt. Backspace edits input;
 Esc/Ctrl+C discards input or cancels a running calculation. `abort` ends an open
 block. Type each command at its prompt; rapid typeahead is bounded to 255 bytes
 while calculating and overflow cancels/discards the queued input.
@@ -123,7 +123,7 @@ Build, staging and flash commands now validate checksum addresses/length/CRC
 and every app load address/length/payload against the ELF, masking only the
 intended checksum words. Regression checks also reject modified payloads or
 load addresses even when their whole-image CRC has been recomputed. Early
-115200-baud `L00 boot: UART ready` and `L00 boot: starting MathSmith` markers
+115200-baud `L00 boot: UART ready` and `L00 boot: starting MatmMax` markers
 help locate any remaining startup failure. The first marker precedes Wi-Fi
 configuration and the second precedes engine/console startup.
 
@@ -171,11 +171,6 @@ Exact integer characteristic-polynomial expansion independently gives
 `(lambda-10)(lambda+2)(lambda^2-8)` for the supplied matrix; the displayed
 `-2.8284, -2, 2.8284, 10` agree with `-sqrt(8), -2, sqrt(8), 10`.
 
-After that workload, free heap is **27888 bytes**, largest block **27304**,
-fragmentation **3%**, engine payload **5072** (peak **5664**) and minimum free
-stack **11596/16384 bytes**. The earlier **33264-byte** heap report with payload
-zero is **before engine initialisation**. These are specific workload readings,
-not a maximum workload or repeated-cleanup/stability measurement.
 
 This confirms the boot/console recovery and the reported matrix/eigenvalue
 case. Remaining precision, bounds, functions/editing, cancellation, repeated
@@ -201,7 +196,7 @@ includes its boot image and is written at **0x0**, not the ESP32-S3 offset.
 
 2. **Flash/boot:** the next command writes L00 firmware onto the D1 mini. Open
    the monitor afterwards; press the board's Reset button if its banner has
-   already passed. Expect `MathSmith Light L00`, real flash 4194304, CPU 80 MHz,
+   already passed. Expect `MatmMax Light L00`, real flash 4194304, CPU 80 MHz,
    Wi-Fi mode 0 and `Ready. Type help.` followed by `>> `. ROM boot text uses
    a different baud rate and may look garbled before the readable app banner.
 

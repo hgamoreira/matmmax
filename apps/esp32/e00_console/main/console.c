@@ -1,4 +1,4 @@
-/* E00: board/console/memory smoke test. No MathSmith engine or app launcher. */
+/* E00: board/console/memory smoke test. No MatmMax engine or app launcher. */
 #include <inttypes.h>
 #include <stdbool.h>
 #include <stdint.h>
@@ -27,7 +27,7 @@ static void show_info(void)
     esp_chip_info_t chip;
     uint32_t flash_size = 0;
     esp_chip_info(&chip);
-    puts("MathSmith workstation E00 - console smoke test");
+    puts("MatmMax workstation E00 - console smoke test");
     printf("SDK: %s\n", esp_get_idf_version());
     printf("Chip: ESP32-S3 cores=%u revision=%u\n", chip.cores, chip.revision);
     if (esp_flash_get_size(NULL, &flash_size) == ESP_OK) {
@@ -156,7 +156,7 @@ void app_main(void)
     setvbuf(stdout, NULL, _IONBF, 0);
     show_info();
     show_memory();
-    puts("Type help for commands. MathSmith engine is not loaded.");
+    puts("Type help for commands. MatmMax engine is not loaded.");
     printf("e00> ");
 
     char line[LINE_CAPACITY];

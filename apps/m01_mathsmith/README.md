@@ -1,4 +1,4 @@
-# Shared MathSmith engine
+# Shared MatmMax engine
 
 Portable numerical engine retained at its original workstation path.
 ESP32-S3 compiles these sources directly; ESP8266 generates a bounded

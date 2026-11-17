@@ -1,4 +1,4 @@
-# MathSmith Light — ESP8266 user manual
+# MatmMax Light — ESP8266 user manual
 
 **L00 · Wemos D1 mini · 15 November 2026**
 
@@ -6,7 +6,7 @@ For the separate L01 browser/GPIO candidate, see the
 [L01 user manual](USER_MANUAL_L01.md). This document retains L00's supported
 features and serves as the math-language reference for both builds.
 
-MathSmith Light turns the ESP8266 into a small mathematical workstation.
+MatmMax Light turns the ESP8266 into a small mathematical workstation.
 You can calculate, keep variables, manipulate matrices, solve equations and
 write short programs. The current console uses a computer connected by USB
 serial. Calculations run on the ESP8266; the computer supplies the terminal.
@@ -14,7 +14,7 @@ serial. Calculations run on the ESP8266; the computer supplies the terminal.
 This manual describes **the implemented L00 firmware**. Wi-Fi is deliberately
 off. There is no AI connection, file storage, app launcher, FFT, graphical plot
 output, OLED driver or PS/2 keyboard driver in this version. Programs are
-entered as MathSmith statements at the prompt; separate binaries cannot be
+entered as MatmMax statements at the prompt; separate binaries cannot be
 loaded. The OLED and PS/2 console is a planned extension.
 
 Boot, serial interaction and the 4×4 eigenvalue example below have been
@@ -55,7 +55,7 @@ Close any other program using this serial port before connecting.
 Press the board's Reset button if you need to see the banner:
 
 ```text
-MathSmith Light L00 - ESP8266 D1 mini
+MatmMax Light L00 - ESP8266 D1 mini
 ...
 Ready. Type help.
 >>
@@ -67,7 +67,7 @@ Repeated boot messages or crashes are different: see troubleshooting.
 
 **Type `help` and press Enter** to see the port's short help. To leave the
 computer's supplied serial monitor, press **Ctrl+]**. The firmware's `exit`
-and `quit` commands keep MathSmith running and preserve the workspace.
+and `quit` commands keep MatmMax running and preserve the workspace.
 
 ### Reading the examples
 
@@ -138,9 +138,9 @@ exponent notation. Display formatting does not change calculation precision.
 | `clear` or `clear all` | Remove all variables and functions. |
 | `format short`, `format long` | Select result display precision. |
 | `:info`, `:mem` | Show board and memory diagnostics. |
-| `:reset` | Create a fresh MathSmith workspace. |
+| `:reset` | Create a fresh MatmMax workspace. |
 | `:reboot` | Restart the board. |
-| `exit`, `quit` | Keep the firmware's main MathSmith prompt and workspace. |
+| `exit`, `quit` | Keep the firmware's main MatmMax prompt and workspace. |
 | Ctrl+] | Leave the supplied computer-side serial monitor. |
 
 `>>` means ready for a new command. `..>` means a block is unfinished: add
@@ -547,18 +547,9 @@ done between the two commands; interactive pauses can therefore be included.
 
 ## 11. Memory and limits
 
-Use `:mem` to inspect actual board diagnostics. The user reported these
-values after entering the 4×4 matrix and calling `eig(A)`:
-
-```text
-Heap free: 27888; largest block: 27304; fragmentation: 3%
-Engine payload: used=5072 peak=5664 limit=16384 bytes
-Stack: allocated=16384 minimum free=11596 bytes
-```
-
-These are observations from that session, not guaranteed starting values.
-The initial boot diagnostics run **before** the engine workspace is allocated,
-so their `used=0` and higher free heap are not the cost of an idle ready prompt.
+Use `:mem` to inspect the available heap, engine payload and stack margin.
+The initial boot diagnostics run before the engine allocates its workspace.
+The memory figures at boot and at the ready prompt can differ.
 
 | Field | How to interpret it |
 |---|---|
@@ -611,13 +602,13 @@ combination at that size fits; error handling does not roll back a whole program
 | Commands vanish during a large paste | Type at each prompt. Typeahead during calculations is bounded; overflow cancels and discards queued input. |
 | `fft`, file commands or `:app` fail | These features are absent from L00. |
 | `plot` produces no chart | There is no rendering frontend. Some inherited plot bookkeeping may accept commands without visible output. |
-| `exit` does not close the console | It keeps MathSmith running. Ctrl+] exits the supplied monitor. |
+| `exit` does not close the console | It keeps MatmMax running. Ctrl+] exits the supplied monitor. |
 | Lost work after reset or power-off | The workspace is RAM only. Keep program text and recorded results on the computer. |
 
 In VS Code's terminal, the serial monitor still uses **Ctrl+]** to exit.
 Ctrl+A is not an ESP8266 firmware exit key. If a terminal intercepts Ctrl+C,
 try Esc for calculation cancellation. Never send another program's shortcut
-sequence expecting the DOS/Linux MathSmith full-screen interface.
+sequence expecting the DOS/Linux full-screen interface.
 
 ## 13. Firmware, peripherals and further reading
 

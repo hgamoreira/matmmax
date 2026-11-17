@@ -96,7 +96,7 @@ its serial console:
 python3 esp32/scripts/upload_external.py --qemu build/esp32/e03_external/demo_b.msp
 ```
 
-Expect an `INSTALLED uploaded ...` message and the MathSmith `>>` prompt.
+Expect an `INSTALLED uploaded ...` message and the MatmMax `>>` prompt.
 Type commands one line at a time at the current prompt:
 
 ```text
@@ -112,7 +112,7 @@ fft([1 2 3 4])
 
 The first result is `4`; the linear solve produces the column `[2;3]`.
 The app changes the prompt to `demo>`. Type `hello` to see it echoed,
-then `exit` to return to MathSmith. Now enter `x+1`: it returns `42`, showing
+then `exit` to return to MatmMax. Now enter `x+1`: it returns `42`, showing
 that the mathematical workspace survived the app's return.
 
 **Press Ctrl+] to close this host console and stop its QEMU instance.**
@@ -128,8 +128,8 @@ esp32/scripts/external.sh qemu
 
 Use `:app sample` for the embedded external-ELF example. This direct QEMU
 console uses **Ctrl+A, then X** to exit; it is a sequence, not a simultaneous
-three-key chord. MathSmith's `quit` is not an emulator shutdown command.
-Inside the demo, `exit` returns to MathSmith.
+three-key chord. MatmMax's `quit` is not an emulator shutdown command.
+Inside the demo, `exit` returns to MatmMax.
 
 ## 5. Run the emulator checks
 

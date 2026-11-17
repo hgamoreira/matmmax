@@ -84,7 +84,7 @@ bool app_console_dispatch(const char *line, bool block_open)
     if (strncmp(line, ":app", 4) || (line[4] && line[4] != ' ' && line[4] != '\t'))
         return false;
     if (block_open) {
-        puts("Finish or abort the open MathSmith block before launching a program.");
+        puts("Finish or abort the open MatmMax block before launching a program.");
         return true;
     }
     p = skip_space(line+4);
@@ -96,12 +96,12 @@ bool app_console_dispatch(const char *line, bool block_open)
     p = skip_space(p+n);
     result = wk_run(&launcher, name, p);
     switch (result) {
-    case WK_OK: puts("Returned to MathSmith; workspace kept."); break;
-    case WK_CANCELLED: puts("Program cancelled; returned to MathSmith; workspace kept."); break;
+    case WK_OK: puts("Returned to MatmMax; workspace kept."); break;
+    case WK_CANCELLED: puts("Program cancelled; returned to MatmMax; workspace kept."); break;
     case WK_UNKNOWN: puts("Unknown application; use :apps. Workspace kept."); break;
     case WK_NO_MEMORY: puts("Not enough memory to start application. Workspace kept."); break;
     case WK_BUSY: puts("Another application is already active. Workspace kept."); break;
-    case WK_APP_FAILED: puts("Program returned an error; MathSmith workspace kept."); break;
+    case WK_APP_FAILED: puts("Program returned an error; MatmMax workspace kept."); break;
     default: puts("Application launcher configuration error."); break;
     }
     return true;

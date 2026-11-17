@@ -100,10 +100,10 @@ static bool run_package(const uint8_t *bytes, size_t size, const char *name, con
         return true;
     }
     result = wk_run(&launcher, name, args);
-    if (result == WK_OK) puts("Returned to MathSmith; workspace kept.");
-    else if (result == WK_CANCELLED) puts("Program cancelled; returned to MathSmith; workspace kept.");
+    if (result == WK_OK) puts("Returned to MatmMax; workspace kept.");
+    else if (result == WK_CANCELLED) puts("Program cancelled; returned to MatmMax; workspace kept.");
     else if (result == WK_NO_MEMORY) puts("Not enough memory to start application. Workspace kept.");
-    else puts("External program returned an error; MathSmith workspace kept.");
+    else puts("External program returned an error; MatmMax workspace kept.");
     return true;
 }
 
@@ -186,7 +186,7 @@ static const char *skip_space(const char *p)
 bool external_apps_dispatch(const char *line, bool block_open)
 {
     if (!strncmp(line, ":upload", 7) && (!line[7] || line[7] == ' ' || line[7] == '\t')) {
-        if (block_open) puts("Finish or abort the open MathSmith block before uploading.");
+        if (block_open) puts("Finish or abort the open MatmMax block before uploading.");
         else receive_upload(skip_space(line+7));
         return true;
     }
@@ -205,7 +205,7 @@ bool external_apps_dispatch(const char *line, bool block_open)
         bool sample = n == 6 && !memcmp(p, "sample", 6);
         bool external = n == 8 && !memcmp(p, "uploaded", 8);
         if (!sample && !external) return false;
-        if (block_open) { puts("Finish or abort the open MathSmith block before launching a program."); return true; }
+        if (block_open) { puts("Finish or abort the open MatmMax block before launching a program."); return true; }
         if (sample) return run_package(wk_sample_msp, wk_sample_msp_size, "sample", skip_space(end));
         if (!uploaded) { puts("No uploaded app; transfer a package first. Workspace kept."); return true; }
         return run_package(uploaded, uploaded_size, "uploaded", skip_space(end));

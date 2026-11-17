@@ -1,11 +1,11 @@
-# MathSmith OS development: emulation and desktop simulation
+# MatmMax OS development: emulation and desktop simulation
 
 Updated 2026-11-15 (XD106–XD110): **Espressif QEMU and ESP-IDF v5.5.6 are
-installed locally. E00 diagnostics, E01 MathSmith, E02 launcher and E03 external
+installed locally. E00 diagnostics, E01 MatmMax, E02 launcher and E03 external
 ELF/serial upload pass 82 project tests, plus 35 upstream loader checks.** The
 desktop OS simulator is not built.
 RP2350 emulation remains an evaluation task.
-The existing Linux MathSmith application is an engine/front-end reference,
+The existing Linux application is an engine/front-end reference,
 not an implementation of the proposed workstation OS.
 
 ## Existing firmware emulators
@@ -103,9 +103,9 @@ with that warning. No calibration or timing result is inferred for hardware.
 The actual board still needs the user's eight-step test. See
 [E00 instructions](../apps/esp32/e00_console/README.md) and
 [memory map](../esp32/docs/MEMORY_MAP_E00.md) for measurements, candidate and
-remaining limits. E00 has no MathSmith engine, files, networking or launcher.
+remaining limits. E00 has no MatmMax engine, files, networking or launcher.
 
-#### E01: MathSmith engine console
+#### E01: MatmMax engine console
 
 The user selected the next scope (XD108): reuse the existing engine with
 double arithmetic, 4096 elements/matrix, FFTs and cooperative Esc cancellation.
@@ -127,11 +127,11 @@ does not exit the emulator. Both E00 and E01 hardware validation stay open.
 See [E01 README](../apps/esp32/e01_mathsmith/README.md) and
 [E01 memory map](../esp32/docs/MEMORY_MAP_E01.md).
 
-#### E02: other programs from MathSmith
+#### E02: other programs from MatmMax
 
 The user selected an app launcher plus test program (XD109). E02 now has
 `:apps` and `:app demo [arguments]`. The demo owns a `demo>` prompt; `exit`,
-Esc or a controlled `fail` return to MathSmith with its variables/matrices/
+Esc or a controlled `fail` return to MatmMax with its variables/matrices/
 functions still live. The portable C89 registry/arena lifecycle can be reused
 by an RP2350 backend; there is no RP2350 build yet.
 
@@ -158,7 +158,7 @@ All physical-board milestones remain open. Instructions and procedure:
 ### ESP8266 D1 mini: target build, native checks and partial hardware validation
 
 The user owns an ESP8266 Wemos D1 mini and has identified ESP8266EX / 4 MB
-flash / 26 MHz crystal using esptool. They selected serial MathSmith Light
+flash / 26 MHz crystal using esptool. They selected serial MatmMax Light
 with doubles, fewer variables, small matrices and Wi-Fi off (XD111).
 
 L00 now builds with pinned Arduino ESP8266 core 3.1.2 / L106 GCC10.3. Its
@@ -183,7 +183,7 @@ These are build/source decisions whose execution still needs the board test.
 
 `mathsmith.sh native` runs a Linux logic/front-end harness, **not a chip
 emulator**. The installed S3 QEMU workflow is not used as ESP8266 execution
-evidence. No whole-firmware ESP8266 emulator or physical MathSmith run is
+evidence. No whole-firmware ESP8266 emulator or physical MatmMax run is
 claimed. [L00 instructions](../apps/esp8266/l00_mathsmith/README.md) include
 backup/flash/monitor commands and eight numbered hardware steps;
 [memory map](../esp8266/docs/MEMORY_MAP_L00.md) distinguishes linked sizes from
@@ -200,11 +200,8 @@ ROM logs. A subsequent trace mapped to heap startup incorrectly placed in
 flash before cache initialization, because a renamed archive member bypassed
 the linker rule for umm_malloc.cpp.o. Preserving original basenames corrected
 that startup path. The user then reported a usable prompt, help, 4x4 matrix
-entry and correct eigenvalues. After the calculation: free heap 27888 bytes,
-largest block 27304, fragmentation 3%, engine payload 5072 / peak 5664 and minimum
-free stack 11596/16384. Startup heap 33264 is before engine allocation. These
-are user hardware measurements for one workload; cancellation, repeated
-cleanup and reset/cold boot still need the numbered report.
+entry and correct eigenvalues. Cancellation, repeated cleanup and cold boot
+still need the numbered board checks.
 
 ### Both platforms: Wokwi
 
@@ -233,7 +230,7 @@ Sources: [Wokwi ESP32 features](https://docs.wokwi.com/guides/esp32),
 
 The user agreed to the recommended loader proof followed by serial upload
 (XD110). E03 now loads a separately compiled native demo into PSRAM and returns
-to MathSmith with its workspace intact. A versioned workstation API and bounded
+to MatmMax with its workspace intact. A versioned workstation API and bounded
 MSAP package identify ESP32-S3/ABI v1. A and B are independently built files;
 B's greeting is absent from the OS flash, proving execution of newly uploaded
 code without an OS reflash.
@@ -279,7 +276,7 @@ The two transfer/storage roles remain complementary:
   interface/filesystem is selected and hardware-tested, it can supply the same
   package/loader contract. No SD driver, persistence or filesystem is in E03.
 - **RP2350 and scripts:** target binaries need a separate compiler/loader
-  backend; the Espressif component establishes no RP2350 support. MathSmith `.m`
+  backend; the Espressif component establishes no RP2350 support. MatmMax `.m`
   scripts use the interpreter once file services exist, rather than this ELF ABI.
 
 See [E03 instructions and numbered hardware test](../apps/esp32/e03_external/README.md),
@@ -302,7 +299,7 @@ program, using a desktop implementation of the same platform interfaces:
 - The same application registration, launch/return and session ownership code
   intended for firmware.
 
-This would let the user exercise MathSmith, ported WordSmith/CodeSmith and
+This would let the user exercise MatmMax, ported WordSmith/CodeSmith and
 return to the preserved workspace on the development PC. Applications become
 available as they are ported; the existing DOS executables do not become
 native simulator modules automatically.

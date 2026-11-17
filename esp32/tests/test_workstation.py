@@ -4,9 +4,9 @@ import test_mathsmith as math_tests
 from run_workstation import BUILD
 
 
-class WorkstationFirmware(math_tests.MathSmithFirmware):
+class WorkstationFirmware(math_tests.MatmMaxFirmware):
     build_dir = BUILD
-    banner = "MathSmith E02"
+    banner = "MatmMax E02"
 
     def open_demo(self, c, arguments="", ending=b"\r"):
         c.send((":app demo" + (" " + arguments if arguments else "")).encode() + ending)
@@ -32,7 +32,7 @@ class WorkstationFirmware(math_tests.MathSmithFirmware):
         c.send(b"x=999\r")
         self.assertIn("Demo echo: x=999", c.read_until(b"demo> "))
         c.send(b"exit\r")
-        self.assertIn("Returned to MathSmith; workspace kept", c.read_until())
+        self.assertIn("Returned to MatmMax; workspace kept", c.read_until())
         self.near(self.numbers(c, "x+1"), [42])
         self.near(self.numbers(c, "A(2,1)"), [3])
         self.near(self.numbers(c, "f(1)"), [42])
@@ -84,7 +84,7 @@ class WorkstationFirmware(math_tests.MathSmithFirmware):
         c.send(b"a"*128 + b"\r\n")
         self.assertIn("Demo line too long; discarded", c.read_until(b"demo> "))
         c.send(b"exit\r\n")
-        self.assertIn("Returned to MathSmith", c.read_until())
+        self.assertIn("Returned to MatmMax", c.read_until())
         # Match an actual result, tolerating a late empty CRLF submission.
         c.send(b"fprintf('MARK%.17gEND\\n',x)\n")
         output = c.read_until(b"END\r\n")

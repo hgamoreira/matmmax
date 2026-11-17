@@ -1,18 +1,18 @@
 <!doctype html>
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>MathSmith Light</title>
+<title>MatmMax Light</title>
 <style>
 :root{color-scheme:dark;font:16px system-ui;background:#121921;color:#e4edf5}body{max-width:960px;margin:24px auto;padding:0 16px}h1{font-size:1.6rem;margin-bottom:4px}h2{font-size:1.15rem;margin:8px 0}.sub,small{color:#a9bacb}section{padding:12px 0}label{display:inline-block}input,button,textarea{font:inherit;padding:9px;border:1px solid #526272;border-radius:5px;background:#1c2937;color:inherit}button{cursor:pointer}button:disabled{opacity:.45;cursor:default}#key{width:24em;max-width:65vw}#command,#program{width:100%;box-sizing:border-box;font:14px/1.5 monospace}#program{height:26vh;min-height:180px;resize:vertical;tab-size:4;background:#090f15}pre{height:32vh;min-height:180px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;background:#090f15;padding:14px;border:1px solid #354554;border-radius:5px;font:14px/1.5 monospace}#state,#programstate{color:#a9d9be}.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.editor{border-top:1px solid #354554;margin-top:16px}#filename{width:15em;max-width:65vw}#programstate{min-height:1.5em;margin-top:8px}#file{display:none}#clear,#download{margin-left:6px}
 </style>
-<h1>MathSmith Light</h1>
-<div class="sub">ESP8266 · browser console and program editor · L01-r14</div>
+<h1>MatmMax Light</h1>
+<div class="sub">ESP8266 · browser console and program editor · L01-r15</div>
 <section class="row"><label>Access key <input id="key" type="password" autocomplete="off" spellcheck="false" placeholder="Key printed in the serial console"></label><button id="connect">Connect</button><button id="disconnect" disabled>Disconnect</button><span id="state" role="status">Disconnected</span></section>
 <label><input id="remember" type="checkbox"> Remember key on this browser</label><small id="storagehint"></small>
 <section class="editor" aria-labelledby="editorheading">
 <h2 id="editorheading">Program</h2>
 <div class="row"><label>File name <input id="filename" value="example.ms" maxlength="64" spellcheck="false"></label><button id="newprogram" type="button">New</button><button id="openprogram" type="button">Open file</button><button id="saveprogram" type="button">Save file</button><span id="dirty"></span></div>
-<input id="file" type="file" accept=".ms,.m,.txt,text/plain" aria-label="Open a MathSmith program">
-<label for="program">MathSmith source</label>
+<input id="file" type="file" accept=".ms,.m,.txt,text/plain" aria-label="Open a MatmMax program">
+<label for="program">MatmMax source</label>
 <textarea id="program" maxlength="32768" spellcheck="false" autocomplete="off" autocapitalize="off" wrap="off">s=0;
 for k=1:8
     s=s+k;
@@ -177,6 +177,6 @@ $('runprogram').onclick=()=>{
  }catch(e){programStatus(e.message);controls();}
 };
 $('clear').onclick=()=>{text='';$('output').textContent='';};
-$('download').onclick=()=>download(text,'mathsmith-transcript.txt');
+$('download').onclick=()=>download(text,'matmmax-transcript.txt');
 controls();
 </script></html>

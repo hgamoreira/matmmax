@@ -16,7 +16,7 @@ extern "C" {
 #include "settings.h"
 #include "dhcp_trace.h"
 #include "web_page.h"
-static_assert(sizeof(double)==8,"MathSmith requires doubles");
+static_assert(sizeof(double)==8,"MatmMax requires doubles");
 static WiFiServer server(80);
 static WiFiClient client;
 static char token[33], request[1536], queued[192];

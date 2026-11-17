@@ -11,7 +11,7 @@ static void sink(void *ctx, const char *text) { (void)ctx; ms_write(text); }
 static void prompt(void) { ms_write(pending ? "..> " : ">> "); }
 static void help(void)
 {
-    ms_write("MathSmith Light: expressions, variables, functions, loops, small matrices.\n"
+    ms_write("MatmMax Light: expressions, variables, functions, loops, small matrices.\n"
              "Limits: 16 variables, 64 elements/matrix (8x8 square), double=8 bytes.\n"
              "Platform: :help :info :mem :reset :reboot\n"
              "Esc/Ctrl+C cancels; abort ends an open block. Input: 191 characters.\n"
@@ -56,21 +56,21 @@ static void evaluate(void)
     else if (!strcmp(input,":reset")) {
         if (session) ml_close(session);
         session=ml_open(sink,NULL); pending=0;
-        ms_write(session ? "New MathSmith workspace.\n" : "Not enough memory for MathSmith.\n");
+        ms_write(session ? "New MatmMax workspace.\n" : "Not enough memory for MatmMax.\n");
     } else if (*input==':') ms_write("Unknown platform command; use :help.\n");
     else if (!session) ms_write("Engine unavailable; use :mem or :reset.\n");
     else if (!safe_depth(input)) ms_write("Expression nesting/unary limit is 8; line discarded.\n");
     else {
         result=ml_eval(session,input);
         pending=result==ML_MORE;
-        if (result==ML_QUIT) ms_write("MathSmith is the main prompt; workspace kept.\n");
+        if (result==ML_QUIT) ms_write("MatmMax is the main prompt; workspace kept.\n");
     }
     length=0; overflow=0; prompt();
 }
 void ms_console_start(void)
 {
     mat_poll_hook=ms_poll;
-    ms_write("\nMathSmith Light L00 - ESP8266 D1 mini\n");
+    ms_write("\nMatmMax Light L00 - ESP8266 D1 mini\n");
     ms_diagnostics();
     session=ml_open(sink,NULL);
     ms_write(session ? "Ready. Type help.\n" : "Engine allocation failed; diagnostics remain available.\n");

@@ -12,7 +12,7 @@ checks. Automated PASS is not a physical-board result.
 | Stage | Capability | Procedure |
 |---|---|---|
 | E00 | UART0 115200 console, PSRAM/memory and allocation checks | [README](../apps/esp32/e00_console/README.md) |
-| E01 | Shared MathSmith engine, double arithmetic, 4096 matrix elements, FFT | [README](../apps/esp32/e01_mathsmith/README.md) |
+| E01 | Shared MatmMax engine, double arithmetic, 4096 matrix elements, FFT | [README](../apps/esp32/e01_mathsmith/README.md) |
 | E02 | Built-in foreground app launcher; preserve workspace on return | [README](../apps/esp32/e02_launcher/README.md) |
 | E03 | External ELF apps and bounded serial upload into RAM | [README](../apps/esp32/e03_external/README.md) |
 

@@ -1,5 +1,7 @@
 #ifndef MS_8266_PORT_H
 #define MS_8266_PORT_H
+#define MS_PRODUCT_NAME "MatmMax"
+
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>

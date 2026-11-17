@@ -83,7 +83,7 @@ class ConsoleFirmwareTest(unittest.TestCase):
 
     def test_boot_and_hardware_report(self):
         console, boot = self.start()
-        self.assertIn("MathSmith workstation E00", boot)
+        self.assertIn("MatmMax workstation E00", boot)
         self.assertIn("SDK: v5.5.6", boot)
         self.assertIn("Flash: 16777216 bytes", boot)
         self.assertIn("PSRAM: ready bytes=8388608", boot)
@@ -140,7 +140,7 @@ class ConsoleFirmwareTest(unittest.TestCase):
         console, _ = self.start()
         output = console.command("reboot")
         self.assertIn("Rebooting...", output)
-        self.assertIn("MathSmith workstation E00", output)
+        self.assertIn("MatmMax workstation E00", output)
         self.assertIn("\nalive\n", console.command("echo alive"))
 
     def test_missing_psram_keeps_console_usable(self):

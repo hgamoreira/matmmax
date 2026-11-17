@@ -3,20 +3,20 @@
 2026-11-16. **Diagnostic candidate; no physical probe result yet.** This is a
 fallback inside the unresolved L01 Wi-Fi investigation, not a new workstation
 milestone. It uses the same pinned core3.1.2 / GCC10.3 / SDK190703, CPU80 MHz,
-26 MHz crystal and 4 MB DIO40 MHz flash profile as MathSmith Light.
+26 MHz crystal and 4 MB DIO40 MHz flash profile as MatmMax Light.
 
 Since L01-r9, the browser firmware selects the standard low-memory feature1
 lwIP variant for DHCP compatibility; this retained probe uses feature0 like
 the earlier L01 images. Account for that difference in any radio/engine
 comparison. The rebuilt probe binary remains identical to its r1 baseline.
 
-It omits MathSmith, matrices, the browser server, GPIO commands and workspace
+It omits MatmMax, matrices, the browser server, GPIO commands and workspace
 allocation. Its dedicated continuation stack is **4096 bytes**, rather than
 L01's16384. Only serial input, Wi-Fi station join/status and a disconnect-event
 counter remain. The SDK still allocates radio/network memory at runtime.
 There is no website at the printed IP address; this program tests association/IP.
 
-## Use current MathSmith diagnostics first
+## Use current MatmMax diagnostics first
 
 The user reports no URL and persistent status7; r3 then reports SDK1 through
 140seconds with no disconnect events. R3 memory readings do not show obvious
@@ -50,7 +50,7 @@ Keep the exact probe ELF/map/config for crash-address decoding.
 Native tests use the existing POSIX adapter with injected SDK states. They
 check input/masking/recovery, not actual Wi-Fi. Target checks verify CRC/load
 segments/startup IRAM, input freshness, a 4136-byte continuation object and
-the absence of the MathSmith entry points from the linked image.
+the absence of the MatmMax entry points from the linked image.
 The RAM comparison test also needs an existing L01 target build.
 
 ## Linked memory map
@@ -99,7 +99,7 @@ No16KiB engine budget, matrix values or1024-byte browser ring is allocated.
    It prints the actual IP even if SDK status remains7: a nonzero address
    with a stale status is evidence worth reporting, not an automatic FAIL.
 
-4. To restore MathSmith, close the probe monitor and run:
+4. To restore MatmMax, close the probe monitor and run:
 
    ```sh
    esp8266/scripts/webrepl.sh flash /dev/ttyUSB0
@@ -107,5 +107,5 @@ No16KiB engine budget, matrix values or1024-byte browser ring is allocated.
    ```
 
    PASS: L01-r4 returns. Its credentials/workspace are RAM-only, so enter them
-   again. Do not call the MathSmith Wi-Fi problem solved solely because the
+   again. Do not call the MatmMax Wi-Fi problem solved solely because the
    probe connects. No probe has been flashed or radio tested by the assistant.

@@ -1,4 +1,4 @@
-/* Independent radio/SDK comparison: no MathSmith, WebSocket, GPIO or file service. */
+/* Independent radio/SDK comparison: no MatmMax, WebSocket, GPIO or file service. */
 #ifdef MS_WEB_NATIVE
 #include "native_hal.h"
 #else
@@ -101,7 +101,7 @@ void setup()
     disconnected=WiFi.onStationModeDisconnected([](const WiFiEventStationModeDisconnected& e) {
         reason=(unsigned)e.reason; ++events;
     });
-    Serial.println("\nWIFI-PROBE-r1: Wi-Fi only; MathSmith/browser not linked. Dedicated 4 KiB stack.");
+    Serial.println("\nWIFI-PROBE-r1: Wi-Fi only; MatmMax/browser not linked. Dedicated 4 KiB stack.");
     diagnostics(); Serial.println("Type :wifi join for separate SSID/password prompts."); prompt();
 }
 void loop()

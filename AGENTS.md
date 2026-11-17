@@ -1,7 +1,7 @@
-# MathSmith OS working rules
+# MatmMax working rules
 
 Read `PROGRESS.md` first. Work on one agreed milestone at a time, with the
-existing MathSmith engine as the behavior reference. Keep platform services
+existing MatmMax engine as the behavior reference. Keep platform services
 separate from portable logic. Do not rewrite validated code for style.
 
 Test behavior on the host and in the applicable emulator before requesting a

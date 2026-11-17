@@ -1,6 +1,6 @@
-# ESP8266 MathSmith Light
+# ESP8266 MatmMax Light
 
-**Current: L01-r14 on a Wemos D1 mini, ESP8266EX / 4 MB flash.**
+**Current software: L01-r15. Hardware baseline: L01-r14 on a Wemos D1 mini, ESP8266EX / 4 MB flash.**
 Core browser, math, saved Wi-Fi, autonomous boot, editor and LED workflows
 are user-confirmed on the real board. Remaining peripheral/stress checks
 are recorded in [PROGRESS.md](../PROGRESS.md).

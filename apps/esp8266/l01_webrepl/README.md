@@ -1,123 +1,16 @@
-# L01 — ESP8266 browser MathSmith and direct GPIO
+# L01 — ESP8266 browser MatmMax and direct GPIO
 
-**Current candidate: L01-r14 — scriptable GPIO.** The user-selected pinmode,
-digitalwrite, digitalread, analogread and cancellable delay(ms) functions are
-implemented for console expressions and programs. Console commands share pin
-configuration. Label/argument checks and reserved pins remain enforced.
-**R14 physical blink PASS:** the numbered retest gives five visible flashes,
-printed counts through5 and LED off on unchanged firmware. Original read1 and
-connected :mem: heap15128/largest14312/frag6%, stack free-min10808/16384,
-engine4928/5379 of16384. Delay cancellation/input/ADC/stability remain open. R13 core editor tests
-now have hardware PASS, including active Stop; recovery images are preserved.
-All88 L01 checks,19 L00/6 probe regressions and Chrome checks PASS off-board.
-[GPIO guide and numbered hardware test](../../../esp8266/docs/SCRIPT_GPIO_L01.md).
+L01-r15 introduces the MatmMax name. The board results below are from earlier
+builds. The hostname `mathsmith.local` and stored-browser settings retain
+their existing identifiers for compatibility.
 
-**Previous editor step: L01-r13 — browser program editor.** User-approved editor,
-local Open/Save and bounded Run Program/Stop are implemented. Source stays in
-the browser; only one acknowledged line is sent at a time. Real engine errors
-halt the remaining queue; disconnect never replays a program. R12 Wi-Fi/key
-behavior remains. **R13 hardware partial PASS:** the user's editor loop returns
-36 and connected :mem remains usable (17 November). Heap15256/largest14376,
-fragmentation6%, stack minimum-free12288/16384, engine4904/5292 of16384.
-The user clarifies that this run used a saved/reopened file: Save/Open/Run
-also PASS. Runtime error halts the tail (a remains1, a=99 skipped): PASS.
-Stop on an unfinished console block restores the prompt and2+2 works: PASS.
-Active execution Stop preserves a=1/skips999 and2+2 works: PASS.
-Other robustness/repeated-use hardware checks remain open.
-All80 L01 checks and Chrome editor/console checks PASS off-board.
-[Editor manual and numbered board test](../../../esp8266/docs/BROWSER_EDITOR_L01.md).
+## Hardware validation
 
-**Working baseline: L01-r12 — home Wi-Fi/browser PASS (17 November 2026).**
-The user confirms it works and the browser is accessible without a serial USB
-connection to this computer. A further user report confirms browser
-reconnection after a command-line software reboot and after complete power
-removal/USB-charger startup. R12 requests broadcast replies before
-acquiring an address. Keep this validated workaround; the earlier short-reply
-origin remains unresolved. Full numbered L01 validation remains open.
-All77 L01 checks,19 L00/6 probe regressions and Chrome check PASS off-board.
-[R12 behavior and test record](../../../esp8266/docs/DHCP_BROADCAST_L01.md).
-
-**Earlier R6 results (2026-11-16):** R6 hotspot connection and reported settings save
-PASS at172.20.10.2 within9seconds, without DHCP recovery. R4 also passes on the
-hotspot. R4/R6 currently fail to obtain an address at home; cause unconfirmed.
-The next reported software reboot **passes saved-record load, automatic join
-by6seconds and unchanged key**. Next: cold power/USB charger and browser check;
-no reflash needed. [Comparison guide](../../../esp8266/docs/R4_COMPARISON.md).
-The next user report confirms **cold power/charger startup and browser2+2 PASS**
-on the hotspot. Client hostname resolution is unspecified. The earlier diagnostic history is
-the [home-network investigation](../../../esp8266/docs/HOME_NETWORK_DIAGNOSIS.md).
-R6 is not a confirmed home-network fix.
-R4 has user-confirmed browser access at 192.168.10.157, arithmetic, a small
-matrix solve and browser reconnect with variables retained. R6 saved Wi-Fi/key
-reload after software reboot now passes on the hotspot; the rest remains open.
-Native/socket/linked-image checks and a real headless Chrome UI check cover
-the candidate; current results are recorded in `PROGRESS.md`.
-All 19 L00 regression tests PASS; its rebuilt firmware remains byte-identical
-to the working candidate. These are off-board results only.
-Scope approved by the user's instruction to start browser work and expose pins
-(XD112). L00's working serial candidate is retained separately. L01 uses the
-same bounded double-precision engine and adds a flash-hosted browser console,
-Wi-Fi station mode and direct digital/ADC commands. R5 also links the pinned
-core's mDNS library.
-
-The user's first L01 report reached the serial prompt but could not complete
-Wi-Fi setup: masking both fields was confusing, and arrow-key Esc prefixes
-cancelled the line and left `A`/`[B` text. This candidate adds guided visible
-SSID/hidden password entry and consumes unsupported serial editing sequences.
-That first report did not yet establish Wi-Fi association or browser use.
-
-**Earlier corrected user report:** on L01-r2 guided prompts work, but no browser
-URL appears and status remains7. The earlier selected answer saying a URL
-appeared was superseded by that explicit correction; Wi-Fi/IP/browser success
-is unconfirmed. L01-r3 exposes SDK state/reason/elapsed diagnostics. Install r3,
-join once, wait30seconds, then record `:wifi` and `:mem`. No credential or router
-fault is established from status7 alone. The next actual r3 report remained
-SDK1/status7 at21,114,140seconds, with no disconnect events. Idle free heap21288,
-largest20768 and stack minimum-free15096 do not show obvious exhaustion.
-[Recorded report (local hardware log omitted; see the validation summary).
-
-**L01-r4:** observe association, IP-assignment and DHCP-timeout events and the
-actual station IP. The browser can start after a usable IP assignment even
-when SDK status is stale. This addresses a documented core/SDK status-handling
-case, with native regression coverage. An explicit disconnect/timeout
-invalidates readiness.
-
-**R4 hardware reports:** after r4 was supplied, the user explicitly reports
-connecting in a browser and that it worked at **192.168.10.157**.
-Recorded report (local hardware log omitted; see the validation summary). This confirms
-browser reachability. The follow-up memory report (local hardware log omitted; see the validation summary)
-confirms **L01-r4**: free heap18696, largest block13824, fragmentation23%,
-minimum free stack11708/16384 and engine live/peak4984/5329 of16384. These
-readings show headroom for that workload. The user subsequently explicitly
-confirms `2+2` gives4 and the 2x2 solve gives column[2;3]. Repeated-workload
-stability, Stop and physical GPIO checks remain individually unreported.
-Browser disconnect/reconnect retaining `x=41` and returning42 is now confirmed.
-Event counters were not pasted, so the precise SDK cause of the earlier stall
-is not established.
-
-**L01-r5 (XD113):** configure once over serial. A successful matching association
-and fresh IP assignment save SSID/password and the browser key. Later boots
-join automatically without a PC attached. Serial `:wifi join` replaces settings
-only after success; `:wifi forget` deletes them and rotates the key. `:wifi off`
-is session-only. Optional browser key storage and best-effort `mathsmith.local`
-discovery support everyday use. Variables remain RAM-only. The pinned core's
-mDNS library is now linked; no new external dependency is downloaded.
-
-**L01-r6:** the user's R5 report shows association but no address/GotIP event
-after98seconds, with no obvious heap/stack exhaustion. Settings remain pending.
-Exact report (local hardware log omitted; see the validation summary). R6 restores the R4 cold
-`mode(STA)`/`begin` sequence, removing R5's disconnect of a newly enabled station.
-A replacement attempt on an existing station resets the interface before
-enabling it again. SDK reconnect policy is enabled after readiness. After15
-seconds associated without an address, one outer-loop DHCP stop/config restart
-is attempted and reported. No fixed IP or indefinite restart loop. `:wifi` adds
-DHCP state/recovery diagnostics. This policy is tested off-board; the exact
-cause and physical fix remain unconfirmed.
-
-Everyday instructions: [L01 user manual](../../../esp8266/docs/USER_MANUAL_L01.md).
-Wire protocol: [HTTP/WebSocket and ownership](../../../esp8266/docs/WEB_PROTOCOL_L01.md).
-Memory: [L01 layout and runtime measurements required](../../../esp8266/docs/MEMORY_MAP_L01.md).
-Persistence: [flash format and interruption handling](../../../esp8266/docs/SETTINGS_L01.md).
+Earlier firmware ran on a Wemos D1 mini. L01-r12 connected on the home
+network and reconnected after reboot and power removal. L01-r13 ran
+programs reopened from the browser editor and passed the reported Stop
+checks. L01-r14 blinked the onboard LED five times and finished with it off.
+The numbered procedure below covers the remaining L01-r15 board checks.
 
 ## Browser programs (R13)
 
@@ -202,8 +95,8 @@ is required to check the onboard LED. The assistant has not flashed this board.
    esp8266/scripts/webrepl.sh monitor /dev/ttyUSB0
    ```
 
-   PASS: flash completes and `MathSmith Light L01-r14` / `Ready. Type help.` appears.
-   `:info` must also show `Build: L01-r14`. R4 does not retain Wi-Fi credentials.
+   PASS: flash completes and `MatmMax Light L01-r15` / `Ready. Type help.` appears.
+   `:info` must also show `Build: L01-r15`. R4 does not retain Wi-Fi credentials.
    A brief ROM burst at the other baud rate is normal; continuous resets are not.
 
 2. **Serial baseline.** Enter `2+2`, `help`, `:mem`, `:pins`.

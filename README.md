@@ -3,10 +3,10 @@
 MatmMax is the numerical application in the Mini-Max suite, alongside
 WordmMax for writing and CodemMax for programming. The suite grew out of
 work on the Commodore 64 and MS-DOS. This repository covers the ESP8266
-and ESP32-S3 ports of the MATLAB-inspired numerical environment. Earlier
-releases and the firmware shown below use the name MathSmith.
+and ESP32-S3 ports of the MATLAB-inspired numerical environment. The v0.1.0
+source preview predates the MatmMax name.
 
-## Choose where to run MathSmith
+## Choose where to run MatmMax
 
 The WebREPL is the browser interface. **The calculations run in the program
 that the browser connects to.** Choose one of these setups:
@@ -32,7 +32,7 @@ See [image credits](docs/IMAGE_CREDITS.md) for sources and image details.
 
 ## WebREPL screenshot
 
-![MathSmith WebREPL showing the script editor and console solving a linear system, finding eigenvalues and checking the result](esp8266/docs/images/webrepl.png)
+![MatmMax WebREPL showing the script editor and console solving a linear system, finding eigenvalues and checking the result](esp8266/docs/images/webrepl.png)
 
 **Screenshot: the PC demo running entirely on Linux, with no ESP8266 connected.**
 The browser displays the editor and results; the local Linux program performs
@@ -41,11 +41,11 @@ firmware installed on a real ESP8266 board.
 
 | Target | Working version | Validation |
 |---|---|---|
-| **ESP8266 Wemos D1 mini, 4 MB** | **L01-r14**: serial and browser console, saved Wi-Fi, browser script editor, scriptable GPIO | Real-board boot, math, home Wi-Fi, autonomous reconnect, editor Run/Stop and onboard LED confirmed by the user. The full peripheral/stress procedure remains open. |
-| **ESP32-S3 N16R8** | **E03**: serial MathSmith, FFT, app launcher, separate ELF apps uploaded over serial | Tested in Espressif QEMU. Physical board validation pending. |
+| **ESP8266 Wemos D1 mini, 4 MB** | **L01-r15**: serial and browser console, saved Wi-Fi, browser script editor, scriptable GPIO | Board checks were reported for L01-r14. The renamed L01-r15 build awaits board testing. The full peripheral/stress procedure remains open. |
+| **ESP32-S3 N16R8** | **E03**: serial MatmMax, FFT, app launcher, separate ELF apps uploaded over serial | Tested in Espressif QEMU. Physical board validation pending. |
 | RP2350 with PSRAM | Architecture draft | No working RP2350 firmware yet. |
 
-Both working targets use **64-bit doubles** and the same portable MathSmith
+Both working targets use **64-bit doubles** and the same portable MatmMax
 engine. ESP8266 limits matrices to 64 elements (8×8 square), with 16 variables
 and a 16 KiB engine payload budget. ESP32-S3 allows 4096 elements (64×64
 square) and uses PSRAM. Limits are allocations, not a promise that every
@@ -124,7 +124,7 @@ installation, expected results, tests, troubleshooting, and running the
 
 ## Use a real ESP8266 board
 
-**In this setup, MathSmith and the WebREPL server run on the ESP8266.** Your
+**In this setup, MatmMax and the WebREPL server run on the ESP8266.** Your
 computer's browser displays the editor and sends commands over Wi-Fi. The
 ESP8266 performs the calculations and controls its physical GPIO pins.
 
@@ -155,7 +155,7 @@ end
 
 The ESP32-S3 has a foreground app launcher and a versioned API. A separately
 compiled demo can be uploaded and run without reflashing the OS; returning
-preserves MathSmith variables. Uploaded apps are trusted native code in the
+preserves MatmMax variables. Uploaded apps are trusted native code in the
 same address space. Uploads are RAM-only and disappear after reboot.
 
 ## Current limits

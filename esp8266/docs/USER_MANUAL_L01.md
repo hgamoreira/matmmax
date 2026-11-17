@@ -1,60 +1,13 @@
-# MathSmith Light L01 — browser and pin commands
+# MatmMax Light L01 — browser and pin commands
 
-**Current candidate: L01-r14, GPIO functions in programs.** Use pinmode,
-digitalwrite, digitalread, analogread and delay(ms) in expressions/loops.
-Console commands and functions share pin configuration. The first hardware
-run reports4flashes/final read1 and a usable memory snapshot. The numbered
-retest confirms five visible flashes/counts through5/LED off: blink PASS.
-Delay/other pin/watchdog/stability hardware checks remain pending. [GPIO guide and board test](SCRIPT_GPIO_L01.md).
+L01-r15 introduces the MatmMax name. The board results below are from earlier
+builds. The hostname `mathsmith.local` and stored-browser settings retain
+their existing identifiers for compatibility.
 
-
-**Previous editor step: L01-r13, browser program editor.** Open/Save files on your
-computer and Run/Stop multiline MathSmith programs in the new Program panel.
-The R12 home-network workaround and saved Wi-Fi/key behavior remain.
-The first user R13 editor loop returns36 and :mem remains usable: heap15256,
-largest14376, fragmentation6%, minimum-free stack12288/16384. This is a partial
-hardware PASS. The user clarifies this was a saved/reopened file, so Save/Open/Run
-also PASS. An undefined-name error stops before a=99, leaving a=1: PASS.
-Stop on an unfinished console block returns >> and2+2=4: PASS.
-Active execution Stop preserves a=1/skips999 and2+2 works: PASS.
-Other robustness and sustained-use hardware checks remain open.
-[Editor guide and board test](BROWSER_EDITOR_L01.md).
-
-
-17 November 2026. **Browser access is confirmed; full L01 hardware validation
-remains open.** After the r4 candidate was supplied, the user reports a working
-browser connection at **192.168.10.157**. The user also confirms `2+2` gives4,
-the small linear solve gives column[2;3], and provides browser-workload memory
-readings. Browser disconnect/reconnect with variables retained is also confirmed.
-Stop, repeated-use stability and physical GPIO/ADC still need hardware checks.
-**Working baseline: L01-r12.** The user confirms home-network connection and
-browser access without a serial USB connection to the development computer. A later
-report also confirms browser reconnection after a command-line software reboot
-and after complete power removal followed by startup from a USB charger.
-R12 requests broadcast DHCP replies before acquiring an IP; this is a working
-home-network workaround. The origin of earlier short replies remains unknown.
-This report does not separately establish repeated cold boots, key retention,
-a specific R12 calculation result or fresh memory readings.
-See [R12 result and procedure](DHCP_BROADCAST_L01.md) and
-[packet interpretation](DHCP_PACKETS_L01.md).
-The R5 board report reached association but no address after98seconds. R6
-changes the initial join sequence and adds one bounded DHCP recovery attempt.
-L00 remains serial recovery.
-
-**Latest R6 result:** hotspot join/save and saved-record load after software
-reboot pass. It reconnects automatically at172.20.10.2 by6seconds with the same
-key and no DHCP recovery. The subsequent user report confirms cold USB-charger
-startup and browser2+2 on the hotspot. Client hostname discovery is unspecified.
-Current home-network joins fail in both R4 and R6; the cause remains unresolved.
-R12 now passes home browser access; the [investigation history](HOME_NETWORK_DIAGNOSIS.md)
-records the preceding failures. See the
-[comparison history and current procedure](R4_COMPARISON.md).
-
-L01 adds a local browser console and direct GPIO access to the same MathSmith
-calculator/programming engine. The [math language manual](USER_MANUAL.md)
-continues to describe arithmetic, matrices, functions and programs. Its L00
-statements about absent Wi-Fi/browser/pin support apply to L00 only.
-In a standalone release, that language guide is `MATH_LANGUAGE.md`.
+Earlier builds were tested on a Wemos D1 mini for browser access,
+automatic reconnection, program editing and onboard LED output. See the
+[firmware README](../../apps/esp8266/l01_webrepl/README.md#hardware-validation)
+for the validation status.
 
 ## Set up Wi-Fi once
 
@@ -65,7 +18,7 @@ open the serial monitor at 115200 8N1:
 esp8266/scripts/webrepl.sh monitor /dev/ttyUSB0
 ```
 
-Use **L01-r14**, shown in the boot banner or `:info`. Close an existing monitor
+Use **L01-r15**, shown in the boot banner or `:info`. Close an existing monitor
 with Ctrl+] before flashing:
 
 ```sh
@@ -135,7 +88,7 @@ network/computer, use the printed numeric **Browser URL**. A bare URL opens
 the page too: supply the 32-character key in **Access key** unless the browser
 already remembers it. `:wifi` repeats URLs/key on serial.
 
-The user's board was reached at `http://192.168.10.157/` in the reported test.
+The user's board was reached at `http://192.0.2.10/` in the reported test.
 This is an observed DHCP address, not a fixed firmware default; use the current
 serial URL or the router's DHCP client list if the address changes and the
 named address is unavailable. No fixed IP address is configured.
@@ -232,7 +185,7 @@ Delay is in integer milliseconds0..60000 and services Wi-Fi/Stop; it is not a
 hard real-time scheduler. Outputs retain the last written level on Stop/error.
 
 The colon forms below are **platform prompt commands**, usable from either console. They are
-not MathSmith expression functions: you cannot assign `v=:read D1`, use them
+not MatmMax expression functions: you cannot assign `v=:read D1`, use them
 inside engine loops or combine several with semicolons. Enter each command
 on its own line. Pin reads print values; they do not set `ans`.
 
@@ -284,7 +237,7 @@ board's divider: the bare ESP8266 ADC is 0..1 V, while D1 mini revisions can
 include a divider. Verify the module before applying an external voltage.
 No fixed count is expected from an unconnected A0.
 
-The app leaves pin modes untouched at startup. A MathSmith `:reset`, browser
+The app leaves pin modes untouched at startup. A MatmMax `:reset`, browser
 disconnect, Stop or math error **does not undo GPIO changes**; an output remains
 at its configured level until changed or the board resets. Use `:pin Dn input`
 to release it. Pin-mode state is not workspace variable state.
@@ -303,13 +256,13 @@ Do not attach a circuit that holds GPIO2 low during reset.
 ## Other commands and limits
 
 `help`, `:help`, `who`, `clear`, `format short`, `format long`, `:mem`, `:info`,
-`:reset` and `:reboot` retain their MathSmith meanings. `exit`/`quit` keep the
+`:reset` and `:reboot` retain their MatmMax meanings. `exit`/`quit` keep the
 firmware's main prompt. Ctrl+] closes the supplied serial monitor.
 
 `:wifi` and `:web` report status. With a connection established, they repeat
 the URL/key **over serial only**. Wi-Fi setup, `:wifi off` and `:wifi forget` are serial-only;
 reclaim serial control first if a browser is attached. `:wifi off` leaves
-serial MathSmith and its existing workspace available.
+serial MatmMax and its existing workspace available.
 
 `:wifi diag` prints a read-only station/interface/DHCP snapshot from either
 console, including before an IP is assigned. It does not print passwords or

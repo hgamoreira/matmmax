@@ -5,7 +5,7 @@ board's CP2102 serial bridge, not USB mass storage. Real CP2102 behaviour is
 not hardware-validated yet; QEMU pipes and a QEMU PTY exercise the byte stream
 and host serial-device code.
 
-The workstation must be at its completed MathSmith `>> ` prompt. Finish/abort
+The workstation must be at its completed MatmMax `>> ` prompt. Finish/abort
 any open block and exit the active program. Do not run another terminal on the
 same port while uploading. The supplied host tool handles framing/pacing;
 binary data must not be pasted as console text.

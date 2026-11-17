@@ -19,7 +19,7 @@ static void prompt(void)
 }
 static void help(void)
 {
-    ms_write("MathSmith Light: expressions, variables, functions, loops, small matrices.\n"
+    ms_write("MatmMax Light: expressions, variables, functions, loops, small matrices.\n"
              "Limits: 16 variables, 64 elements/matrix (8x8 square), double=8 bytes.\n"
              "Platform: :help :info :mem :reset :reboot :wifi :web :pins\n"
              "GPIO: :pin Dn input|pullup|output [0|1], :read Dn, :write Dn 0|1, :analog A0\n"
@@ -83,7 +83,7 @@ static void evaluate(void)
         if (session) ml_close(session);
         session=ml_open(sink,NULL); pending=0;
         last_result=session ? 0 : 1;
-        ms_write(session ? "New MathSmith workspace.\n" : "Not enough memory for MathSmith.\n");
+        ms_write(session ? "New MatmMax workspace.\n" : "Not enough memory for MatmMax.\n");
     } else if (*input==':') { last_result=1; ms_write("Unknown platform command; use :help.\n"); }
     else if (!session) { last_result=1; ms_write("Engine unavailable; use :mem or :reset.\n"); }
     else if (!safe_depth(input)) { last_result=1; ms_write("Expression nesting/unary limit is 8; line discarded.\n"); }
@@ -91,14 +91,14 @@ static void evaluate(void)
         result=ml_eval(session,input);
         last_result=result==ML_ERROR || result==ML_QUIT;
         pending=result==ML_MORE;
-        if (result==ML_QUIT) ms_write("MathSmith is the main prompt; workspace kept.\n");
+        if (result==ML_QUIT) ms_write("MatmMax is the main prompt; workspace kept.\n");
     }
     memset(input,0,sizeof(input)); length=0; overflow=0; prompt();
 }
 void ms_console_start(void)
 {
     mat_poll_hook=ms_poll;
-    ms_write("\nMathSmith Light " MS_WEB_BUILD " - ESP8266 browser + GPIO\n");
+    ms_write("\nMatmMax Light " MS_WEB_BUILD " - ESP8266 browser + GPIO\n");
     ms_diagnostics();
     session=ml_open(sink,NULL);
     ms_write(session ? "Ready. Type help.\n" : "Engine allocation failed; diagnostics remain available.\n");
@@ -144,7 +144,7 @@ int ms_console_result(void) { return last_result; }
 int ms_console_setup_active(void) { return wifi_setup!=0; }
 int ms_console_wifi_setup(void)
 {
-    if (pending) { ms_write("Use abort to finish the open MathSmith block before Wi-Fi setup.\n"); return 0; }
+    if (pending) { ms_write("Use abort to finish the open MatmMax block before Wi-Fi setup.\n"); return 0; }
     wifi_setup=1; memset(wifi_ssid,0,sizeof(wifi_ssid));
     ms_write("Wi-Fi setup: enter SSID, then password, each followed by Enter.\n"
              "SSID is visible; password shows *. Backspace edits; Ctrl+C/Esc cancels.\n");

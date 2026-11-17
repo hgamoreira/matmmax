@@ -6,7 +6,7 @@ native/emulator checks and distinguish these from physical hardware reports.
 The current validation record is `PROGRESS.md`.
 
 The setup/build commands are in `docs/GETTING_STARTED.md` in the dedicated
-MathSmith OS export. In the workstation repository, use
+MatmMax export. In the workstation repository, use
 `sharing/GETTING_STARTED.md` instead. After building the relevant candidates:
 
 ```sh

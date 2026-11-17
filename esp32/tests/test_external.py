@@ -17,7 +17,7 @@ from upload_external import Stream, UploadError, upload
 
 class ExternalFirmware(workstation_tests.WorkstationFirmware):
     build_dir = BUILD
-    banner = 'MathSmith E03'
+    banner = 'MatmMax E03'
 
     def transfer(self,c,data):
         stream = Stream(c.process.stdout.fileno(),c.process.stdin.fileno())
@@ -43,7 +43,7 @@ class ExternalFirmware(workstation_tests.WorkstationFirmware):
     def check_old_app(self,c):
         self.open_external(c)
         c.send(b'exit\r')
-        self.assertIn('Returned to MathSmith',c.read_until())
+        self.assertIn('Returned to MatmMax',c.read_until())
         self.near(self.numbers(c,'x+1'),[42])
 
     def test_separately_compiled_sample_loads_and_returns(self):

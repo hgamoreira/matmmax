@@ -1,6 +1,8 @@
 /* Force-included only for E01's build of the shared engine/kernel sources. */
 #ifndef MS_S3_ENGINE_PORT_H
 #define MS_S3_ENGINE_PORT_H
+#define MS_PRODUCT_NAME "MatmMax"
+
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>

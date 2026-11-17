@@ -34,7 +34,7 @@ Demo program. Text is echoed here, not evaluated.
 demo> x=999
 Demo echo: x=999
 demo> exit
-Returned to MathSmith; workspace kept.
+Returned to MatmMax; workspace kept.
 >> x+1
 ans = 42
 ```
@@ -49,14 +49,14 @@ QEMU runner. The `exit` above returns from the demo; it does not exit QEMU.
 
 ## Commands, ownership and limits
 
-- MathSmith inherits E01's double arithmetic, 4096 elements/matrix, FFTs,
+- MatmMax inherits E01's double arithmetic, 4096 elements/matrix, FFTs,
   cooperative cancellation, 4 MiB engine payload limit and UART0 115200 8N1.
   `:apps` and `:app NAME [literal arguments]` retain the E02 lifecycle.
 - `sample` is an external ELF embedded as package bytes, relocated at runtime.
   `uploaded` is the single serial-installed package slot. B's distinctive
   greeting is absent from the OS firmware; uploading B runs new code without
   reflashing the OS. Finish/abort pending math blocks before app launch/upload.
-- `:unload` removes the uploaded package. `:reset` resets MathSmith variables;
+- `:unload` removes the uploaded package. `:reset` resets MatmMax variables;
   `:reboot` resets the whole board and loses the uploaded app. There is no SD,
   filesystem, persistence or multiple installed filenames in this milestone.
 - MSAP v1 packages identify ESP32-S3, Xtensa and ABI v1, with exact length and

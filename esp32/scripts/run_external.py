@@ -15,7 +15,7 @@ def main():
     with tempfile.TemporaryDirectory(prefix="qemu-", dir=BUILD) as directory:
         flash = Path(directory)/"flash.bin"
         shutil.copyfile(BUILD/"flash.bin", flash)
-        print("MathSmith E03 in QEMU. Try :app sample.", flush=True)
+        print("MatmMax E03 in QEMU. Try :app sample.", flush=True)
         return subprocess.call(qemu_command(flash, serial="mon:stdio"))
 
 

@@ -5767,11 +5767,15 @@ static int word_is(const char *p, const char *word)
     return strncmp(p, word, n) == 0 && !(isalnum((unsigned char)p[n]) || p[n] == '_');
 }
 
+#ifndef MS_PRODUCT_NAME
+#define MS_PRODUCT_NAME "MathSmith"
+#endif
+
 static const char *help_text =
 #ifdef MS_LINUX
-    "MathSmith help\n"
+    MS_PRODUCT_NAME " help\n"
 #else
-    "MathSmith help          arrows, PgUp, PgDn move   F3 find   Esc closes\n"
+    MS_PRODUCT_NAME " help          arrows, PgUp, PgDn move   F3 find   Esc closes\n"
 #endif
     "\n"
     "THE BASICS\n"
