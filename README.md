@@ -5,6 +5,12 @@ MathSmith, calculate with matrices and scripts, and build toward a standalone
 workstation. This is early firmware with two working targets and different
 capabilities; it is not a general-purpose multitasking OS.
 
+![MathSmith WebREPL showing the script editor and console solving a linear system, finding eigenvalues and checking the result](esp8266/docs/images/webrepl.png)
+
+*The browser editor and console running a matrix script: solve a system, find
+its eigenvalues, and check the result. Captured with the native firmware test
+harness, using the same WebREPL interface served by the ESP8266.*
+
 | Target | Working version | Validation |
 |---|---|---|
 | **ESP8266 Wemos D1 mini, 4 MB** | **L01-r14**: serial and browser console, saved Wi-Fi, browser script editor, scriptable GPIO | Real-board boot, math, home Wi-Fi, autonomous reconnect, editor Run/Stop and onboard LED confirmed by the user. The full peripheral/stress procedure remains open. |
@@ -74,7 +80,8 @@ backups and generated firmware stay outside Git. See
 [RELEASING.md](docs/RELEASING.md) for GitHub Pages and source releases.
 
 This repository is a curated source snapshot from the larger workstation
-project. `EXPORT_MANIFEST.json` records provenance and file checksums.
+project. `EXPORT_MANIFEST.json` records the initial export's provenance and file
+checksums; later changes are tracked in Git.
 Original project source is [MIT licensed](LICENSE); downloaded SDKs and tools
 retain their [own licenses](THIRD_PARTY_NOTICES.md). The initial public
 release is source-only.
