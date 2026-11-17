@@ -16,6 +16,21 @@ that the browser connects to.** Choose one of these setups:
 | **ESP8266 WebREPL PC demo — no board** | In a Linux program on your computer | Open the local program's `127.0.0.1` address in your browser. [PC demo setup](#esp8266-pc-demo-on-linux-no-board). |
 | **ESP32-S3 in QEMU — no board** | In ESP32-S3 firmware inside the emulator on your computer | Use the terminal console. [QEMU setup](#esp32-s3-firmware-in-qemu-no-board). |
 
+## Hardware reference photos
+
+| Wemos D1 mini (ESP8266) | ESP32-S3 development board |
+|:---:|:---:|
+| <img src="esp8266/docs/images/wemos-d1-mini.jpg" alt="Wemos D1 mini ESP8266 development board, front view" height="240"> | <img src="esp32/docs/images/esp32-s3.jpg" alt="ESP32-S3 development board with two USB connectors" height="240"> |
+
+Reference photos; board revisions vary. The ESP32-S3 photo illustrates the
+board family and does not confirm the N16R8 target's memory configuration.
+Photos by [Tpkull](https://commons.wikimedia.org/wiki/File:WeMos_D1_Mini_front.jpg)
+and [VectorVoyager](https://commons.wikimedia.org/wiki/File:ESP32-S3_on_paper.jpg),
+[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+See [image credits](docs/IMAGE_CREDITS.md) for sources and image details.
+
+## WebREPL screenshot
+
 ![MathSmith WebREPL showing the script editor and console solving a linear system, finding eigenvalues and checking the result](esp8266/docs/images/webrepl.png)
 
 **Screenshot: the PC demo running entirely on Linux, with no ESP8266 connected.**

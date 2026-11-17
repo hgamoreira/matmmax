@@ -20,6 +20,14 @@ absent: the installers fetch pinned upstream dependencies separately.
 | Espressif QEMU | `esp_develop_9.2.2_20260417`, installer `tools/setup_esp_qemu.sh` | GPL 2.0 with component-specific notices. QEMU is a host emulator, not firmware linked into MathSmith. |
 | esptool / pyserial | Installed separately for flashing / serial monitoring | esptool: GPL 2.0; pyserial: BSD. These host tools are not included in the source export. |
 
+## Documentation photographs
+
+The Wemos D1 mini photo by Tpkull and ESP32-S3 development-board photo by
+VectorVoyager are **CC BY-SA 4.0**, separate from the project's MIT license.
+Their source pages, photographer credits, license links, image versions and
+checksums are listed in the [image credits](https://github.com/hgamoreira/mathsmith-os/blob/main/docs/IMAGE_CREDITS.md).
+Retain these credits and the images' license when sharing the photographs.
+
 ## Binary releases
 
 A locally generated `releases/` folder is a development candidate, not a
