@@ -31,6 +31,27 @@ ans =
    3
 ```
 
+## Try without hardware
+
+Run the ESP32-S3 firmware in Espressif QEMU on **x86_64 Linux**. After
+installing the [Linux prerequisites](docs/EMULATOR_QUICKSTART.md#1-install-linux-prerequisites):
+
+```sh
+git clone https://github.com/hgamoreira/mathsmith-os.git
+cd mathsmith-os
+tools/setup_esp_idf.sh
+tools/setup_esp_qemu.sh
+tools/setup_elf_loader.sh
+esp32/scripts/external.sh build
+python3 esp32/scripts/upload_external.py --qemu build/esp32/e03_external/demo_b.msp
+```
+
+At `>>`, try `2+2`, then `x=41`, `:app uploaded`, `exit`, and `x+1` (42).
+Press **Ctrl+]** to close the emulator console. Enter each line at its current
+prompt. The [full emulator guide](docs/EMULATOR_QUICKSTART.md) covers tool
+installation, expected results, tests, troubleshooting, and running the
+**WebREPL on your computer** with the native ESP8266 test harness.
+
 ## Start here
 
 - [Build and first use](docs/GETTING_STARTED.md): ESP8266 on a board or ESP32-S3 in QEMU.

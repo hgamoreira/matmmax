@@ -55,39 +55,13 @@ uses files on the computer, not board flash. No board filesystem is implemented.
 
 ## ESP32-S3: run E03 in QEMU
 
-```sh
-tools/setup_esp_idf.sh
-tools/setup_esp_qemu.sh
-tools/setup_elf_loader.sh
-esp32/scripts/console.sh build
-esp32/scripts/mathsmith.sh build
-esp32/scripts/workstation.sh build
-esp32/scripts/external.sh build
-esp32/scripts/external.sh test
-esp32/scripts/external.sh qemu
-```
+Follow the [step-by-step emulator guide](EMULATOR_QUICKSTART.md) for Linux
+prerequisites, the pinned SDK/QEMU installation, E03 build, serial console,
+external app upload, expected results and emulator checks. No board is needed.
 
-Building E00–E02 as well is required by the combined 82-check suite. QEMU
-boots a disposable flash copy; these commands do not flash a physical board.
-Try `x=41`, `:apps`, `:app sample`, `exit`, then `x+1` (42).
-
-For an independent program upload, exit the first QEMU session and run:
-
-```sh
-python3 esp32/scripts/upload_external.py --qemu build/esp32/e03_external/demo_b.msp
-```
-
-Try `:app uploaded`, then `exit` to return. Ctrl+] exits this uploader's
-host console. The older direct QEMU console uses Ctrl+A then X; if a terminal
-intercepts the shortcut, close that session. Uploaded programs are RAM-only.
-See the [E03 guide](../apps/esp32/e03_external/README.md).
-
-The upstream loader checks require a separate fixture download:
-
-```sh
-python3 tools/setup_elf_loader_tests.py
-python3 esp32/scripts/test_elf_upstream.py
-```
+The same guide also explains how to try the **ESP8266 WebREPL on a computer**
+using its native Linux test harness. That route exercises the browser editor
+and mathematical engine; it does not emulate the ESP8266 CPU or radio.
 
 ## Website preview
 
