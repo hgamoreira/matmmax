@@ -1,0 +1,47 @@
+format long
+A = [4 -2 1; -2 4 -2; 1 -2 4]; b = [11; -16; 17];
+x = A\b
+inv(A)
+det(A)
+B = [1 2 3; 4 5 6; 7 8 10];
+inv(B), det(B), B^3, B.^0.5
+lstsq = [1 1; 1 2; 1 3; 1 4] \ [2; 3; 5; 6]
+R = rand(6) - 0.5;
+S = R + R';
+[V, D] = eig(S);
+diag(D)'
+norm(S*V - V*D) < 1e-9
+eigc(R)
+e = eigc(R); sum(e(:,1)) - trace(R), sum(e(:,1).^2 - e(:,2).^2) - trace(R*R)
+eig([2 -1 0; -1 2 -1; 0 -1 2])'
+eigc([4 1 2 0; 1 3 0 1; 2 7 5 1; 0 1 1 2])
+[6 -11 6; 1 0 0; 0 1 0]; eig(ans)'
+svd(R)'
+svd([1 2; 3 4; 5 6])'
+[U, Sg, W] = svd(rand(5, 3)); norm(U'*U - eye(3)) < 1e-9
+norm(R), norm(R, 1), norm(R, Inf), norm(R, 'fro'), cond(R)
+pinv([1 2; 3 4; 5 6])
+rank(B), trace(B)
+roots([1 -6 11 -6])'
+rootsc([1 2 3 4 5])
+polyfit(1:8, [2.1 3.9 6.2 7.8 10.1 12.2 13.8 16.1], 1)
+polyfit(0:5, (0:5).^3 - 2*(0:5), 3)
+polyval([1 -2 3], 1:4)
+f = @(t) exp(-t.^2) .* cos(3*t);
+integral(f, -2, 2)
+integral(@sin, 0, pi), integral(@(t) 1./(1 + t.^2), 0, 1)
+fzero(@(t) t^3 - 2*t - 5, 2)
+fminbnd(@(t) (t - 1)^2 + sin(t), -3, 4)
+deriv(@sin, 1), deriv(@(t) t^3, 2, 2)
+median([5 3 9 1 7 2]), std([2 4 4 4 5 5 7 9]), var(1:10), diff([1 4 9 16 25]), cumprod(1:7), trapz([0 1 2 3], [0 1 4 9])
+[m, i] = max([3 9 2 9 5]); [m i]
+[s, k] = sort([3 1 2 1 5]); [s; k]
+mean([1 2; 3 4], 2)', sum([1 2; 3 4], 1)
+total = 0; for k = 1:50, total = total + mod(k, 7) * sqrt(k); end; total
+c = 0; for k = 1:30, if mod(k, 3) == 0 && k > 5, c = c + k^2; end, end; c
+v = zeros(1, 8); for k = 1:8, v(k) = k^2 - 3*k + 1; end; v
+fibs = [1 1]; for k = 3:12, fibs(k) = fibs(k-1) + fibs(k-2); end; fibs
+1/0, -1/0, 0/0, sqrt(-1)
+sprintf('%d %5.2f %s', 7, pi, 'ok')
+x = linspace(0, 1, 5); y = x.^2; trapz(x, y)
+quit

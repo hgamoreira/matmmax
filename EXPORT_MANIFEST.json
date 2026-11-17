@@ -1,0 +1,736 @@
+{
+  "format": 1,
+  "project": "mathsmith-os",
+  "source_commit": "ccfe140cd66d47a0531515c71d7dee8309d14378",
+  "release_kind": "source-only",
+  "files": {
+    ".github/workflows/pages.yml": {
+      "sha256": "f4b49bdfc0293c9f3a081437b57f20bb1227427aed11541731170af632fb96d1",
+      "executable": false
+    },
+    ".gitignore": {
+      "sha256": "f3fbdf0f7e0bd4d7cb2c217f0601588d56a4f4a8dee2ec85bc6db0d13893e232",
+      "executable": false
+    },
+    "AGENTS.md": {
+      "sha256": "967ea8aeda5154e97f691e6c64893dd4496dd964ed7f7a8e8cf2bf3e5e4d5927",
+      "executable": false
+    },
+    "CONTRIBUTING.md": {
+      "sha256": "ea885a2e68a614614f44e0baaaef956e12aef0ef3603cd6f018f0f23f3e3accc",
+      "executable": false
+    },
+    "LICENSE": {
+      "sha256": "a3218e7aa49d7f9a5e81c7ea1f79cb85433fbbf1f326c88a53af005ca71b21fd",
+      "executable": false
+    },
+    "PROGRESS.md": {
+      "sha256": "27b86877e346fbd1451f08373a6720eb86a5aa6b47db9466751a6de0b7a91640",
+      "executable": false
+    },
+    "README.md": {
+      "sha256": "e2f87719bde39c7ed79394ad8046e062b1a65a72c87f36e070a73d5b6b6f0103",
+      "executable": false
+    },
+    "THIRD_PARTY_NOTICES.md": {
+      "sha256": "38ed92d34ad5e2e43c204de60bb8d4255c4d082f11b8e525286e7f537b8dbcf2",
+      "executable": false
+    },
+    "apps/esp32/e00_console/CMakeLists.txt": {
+      "sha256": "c233de32a63a35980072a57a06b37808363b6c4cb35dfd8b79a7e3864d19d17c",
+      "executable": false
+    },
+    "apps/esp32/e00_console/README.md": {
+      "sha256": "a18e4822c993e3c53cdb00028ffb3ce8d1aa9d438e23092f053553dd428ffea0",
+      "executable": false
+    },
+    "apps/esp32/e00_console/main/CMakeLists.txt": {
+      "sha256": "a562a553a09bca42388fd34c0f3f4ddbdcd241ca1335d8cb2c8526e17a848371",
+      "executable": false
+    },
+    "apps/esp32/e00_console/main/console.c": {
+      "sha256": "d1a3a667fcdb652df7da6b3b1eecf3d11090171fbabcad5e6309aee183407557",
+      "executable": false
+    },
+    "apps/esp32/e00_console/sdkconfig.defaults": {
+      "sha256": "c82451a7e52c5dcaf00b01278f9dfb894f6f3060b30cf4435cf469185ae48814",
+      "executable": false
+    },
+    "apps/esp32/e01_mathsmith/CMakeLists.txt": {
+      "sha256": "66cfa3b847669326b0a18a13ab7d5cb2fcd1a12ce32b45cab5169cf493de38f0",
+      "executable": false
+    },
+    "apps/esp32/e01_mathsmith/README.md": {
+      "sha256": "9ec8389534bb76382c3aaf76ae330487be18f8851d67eaadd8b6e3b8c9ca608e",
+      "executable": false
+    },
+    "apps/esp32/e01_mathsmith/main/CMakeLists.txt": {
+      "sha256": "6765dccaa42eced394db324cc1109b736f8a4793533ac7418a11731e59440fbe",
+      "executable": false
+    },
+    "apps/esp32/e01_mathsmith/main/console.c": {
+      "sha256": "f285715adec47ef34d75ca98e3ae7460d184d23c5531d25f7dd64651090ff141",
+      "executable": false
+    },
+    "apps/esp32/e01_mathsmith/main/engine_port.h": {
+      "sha256": "5be586be88e1b0aceb485da39c935746e640ad5481701ec7f4d9412b805192a6",
+      "executable": false
+    },
+    "apps/esp32/e01_mathsmith/main/platform.c": {
+      "sha256": "a88d9024763c68726377474d143864243b32a49c3612206449ba8aaa82c6796d",
+      "executable": false
+    },
+    "apps/esp32/e01_mathsmith/main/platform.h": {
+      "sha256": "4ac0576eb53b96f83d9d18b597715edccca46db8503993514a944f3c79b17ffb",
+      "executable": false
+    },
+    "apps/esp32/e01_mathsmith/sdkconfig.defaults": {
+      "sha256": "4476f080fe38e963d50fc2b86faf2aa791e52ead0fdc8b9a737d2ba9ba95e59d",
+      "executable": false
+    },
+    "apps/esp32/e02_launcher/CMakeLists.txt": {
+      "sha256": "1a6aff60a65871c9ab9f67be8883a570757717639f784a7411c40c6f5a507cbf",
+      "executable": false
+    },
+    "apps/esp32/e02_launcher/README.md": {
+      "sha256": "c891ace7998a29d7c58a84c3209ab91c162a12209a36c0815577e51173df0c97",
+      "executable": false
+    },
+    "apps/esp32/e02_launcher/main/CMakeLists.txt": {
+      "sha256": "77ebba27082d38a01ded54c4fff8f3f6bc5394c76f42866e326065a8b21bc1ea",
+      "executable": false
+    },
+    "apps/esp32/e02_launcher/main/app_console.c": {
+      "sha256": "e8e797e155d8d2999835cbfefcd422cf4a2bf43ff22f8a371a41c1ea32c9ef58",
+      "executable": false
+    },
+    "apps/esp32/e02_launcher/main/app_console.h": {
+      "sha256": "8584aa8bbf7fd212b6d66cf794e03c3a6625e0d7893f73366591f3a04af7584f",
+      "executable": false
+    },
+    "apps/esp32/e03_external/CMakeLists.txt": {
+      "sha256": "ce7c7cd26955aadd7fd897243757e67d2e2b8301bd5335934eccb2df575c8e6d",
+      "executable": false
+    },
+    "apps/esp32/e03_external/README.md": {
+      "sha256": "5acab3df5c3ece98cd7ca5aca79951d6202419e57a942109f09ccdb3e490ec66",
+      "executable": false
+    },
+    "apps/esp32/e03_external/main/CMakeLists.txt": {
+      "sha256": "353f665e7bdbdef48b8740f5d269dc0aef129c1ecb0a8b6d2798c6c31c51629a",
+      "executable": false
+    },
+    "apps/esp32/e03_external/main/external_apps.c": {
+      "sha256": "da33e9ebb2f4f59da4384acabddb6a897d899c83a0a6fdb2a5e11c7f23f05559",
+      "executable": false
+    },
+    "apps/esp32/e03_external/main/external_apps.h": {
+      "sha256": "7e24fadc3662419ce8403bd14eaaa81de988da0b35306dcfc68061e77b441101",
+      "executable": false
+    },
+    "apps/esp32/e03_external/sdkconfig.defaults": {
+      "sha256": "2827926b2765ea90c3619f4dabdd96f679771be19ad1f42042e618202c026059",
+      "executable": false
+    },
+    "apps/esp8266/l00_mathsmith/README.md": {
+      "sha256": "a5d068cf4724a311f1709d8fa0ecde66b90b25a549a98694ae3a3a5b8457dc5b",
+      "executable": false
+    },
+    "apps/esp8266/l00_mathsmith/allocator.c": {
+      "sha256": "f9cf71f05fe1a9b0d8af47e96e3807d27e9f5946dbb682f136b1efd61771ac31",
+      "executable": false
+    },
+    "apps/esp8266/l00_mathsmith/console.c": {
+      "sha256": "f4189e8a3f06100ac67290b333f9caaa8a4b736dcc1a10dba25e42b7d2c5c445",
+      "executable": false
+    },
+    "apps/esp8266/l00_mathsmith/firmware.cpp": {
+      "sha256": "2cf352d1c6cdb4590ebc618e98d92207edd35129f80c85be2e0901a7d0ef542f",
+      "executable": false
+    },
+    "apps/esp8266/l00_mathsmith/port.h": {
+      "sha256": "ff87c59a0adf4bc86f7ad0130c12a2599d5909b2edf403cc3e5b1a2f0dae7484",
+      "executable": false
+    },
+    "apps/esp8266/l01_webrepl/README.md": {
+      "sha256": "4200c631ba4931f2f05121e59b2e33b5eea730b9025b75f6f6fdaee550ea2f94",
+      "executable": false
+    },
+    "apps/esp8266/l01_webrepl/commands.c": {
+      "sha256": "a0896d4f140f5633a268b64d2a7c6042d6d241ed5299697891df3860d661263d",
+      "executable": false
+    },
+    "apps/esp8266/l01_webrepl/console.c": {
+      "sha256": "9e4dd8c5e71f80d2d8e520c8c8b8f66b68deb2576009b48f2baab498997eec41",
+      "executable": false
+    },
+    "apps/esp8266/l01_webrepl/dhcp_broadcast.c": {
+      "sha256": "44a1b0e066fd44ef53a7fb7574c92c0ea0bce8a98323d30f1a14720a30667875",
+      "executable": false
+    },
+    "apps/esp8266/l01_webrepl/dhcp_broadcast.cpp": {
+      "sha256": "969b389f80f6a1208b8efc4548bdcf41ada0298ce1080627e649249dc4864092",
+      "executable": false
+    },
+    "apps/esp8266/l01_webrepl/dhcp_broadcast.h": {
+      "sha256": "3f7d76ed61a147310ce07ad45a35086ec3066ca6e7fd0ecc6f4fb56318148014",
+      "executable": false
+    },
+    "apps/esp8266/l01_webrepl/dhcp_recovery.cpp": {
+      "sha256": "804ee08c6c6f200165b8a05b95e849035abf247d5f706a254ab8c346c22ffd75",
+      "executable": false
+    },
+    "apps/esp8266/l01_webrepl/dhcp_trace.c": {
+      "sha256": "8ee131c4f6f5bff8bfeca185023b8ccf55a6a15ed8488927a7370aad8db68c50",
+      "executable": false
+    },
+    "apps/esp8266/l01_webrepl/dhcp_trace.h": {
+      "sha256": "b603768353cc7a4bd6a24e4254bcb36cb46eb08e45776706dac021b01e19625a",
+      "executable": false
+    },
+    "apps/esp8266/l01_webrepl/dhcp_trace_io.cpp": {
+      "sha256": "ae55273ff726b3fe0908be655441fb100d1b7cdd5392c408b62016188625de48",
+      "executable": false
+    },
+    "apps/esp8266/l01_webrepl/examples/blink.ms": {
+      "sha256": "ab94150553f0e7f3416b5f3368950f923c54c8a9d65a0ec2c6be49e84d89ea52",
+      "executable": false
+    },
+    "apps/esp8266/l01_webrepl/examples/blink_count.ms": {
+      "sha256": "c650eea9f12aad11fa4abff6c75fb18c4ff1a62b944d7db5e33530dc29aab1df",
+      "executable": false
+    },
+    "apps/esp8266/l01_webrepl/examples/solve.ms": {
+      "sha256": "765dda3074993c201dcc3bc12bd5693c792e8bad424d0835f1aa6d12946785bf",
+      "executable": false
+    },
+    "apps/esp8266/l01_webrepl/examples/square.ms": {
+      "sha256": "0fd857094dbf7a80c4b658ba4af4ececd166a54d1f6b4e830ee6c0fc53c4c10d",
+      "executable": false
+    },
+    "apps/esp8266/l01_webrepl/examples/sum.ms": {
+      "sha256": "b335eaf08cdace516481f01357556379c5d14d5c56b0ca5fd7b6724a6ab6bcaa",
+      "executable": false
+    },
+    "apps/esp8266/l01_webrepl/firmware.cpp": {
+      "sha256": "a4d3c02205ad7215bbbaa1f141d038aa9049b52921abfc4aeab2d17b9f5ea24a",
+      "executable": false
+    },
+    "apps/esp8266/l01_webrepl/gpio_engine.h": {
+      "sha256": "9892d857fffe42123568b6e015f53a811e344e0e140d85f978a4474dc752cb97",
+      "executable": false
+    },
+    "apps/esp8266/l01_webrepl/index.html": {
+      "sha256": "19611de3e5efbda6616d5b635a94ba853861affe12979a8932370abfbe951c6b",
+      "executable": false
+    },
+    "apps/esp8266/l01_webrepl/pins.c": {
+      "sha256": "6dc1e56b68abf70e5c3fc5df5a888e03f43177d37e6d82e0cf52a91bad1c7ce0",
+      "executable": false
+    },
+    "apps/esp8266/l01_webrepl/pins.h": {
+      "sha256": "e53e11bb852e3fae78f169447bb7e73af107a6445b5ceee4f9894394f69c6efd",
+      "executable": false
+    },
+    "apps/esp8266/l01_webrepl/protocol.c": {
+      "sha256": "2ea0e90aefa0c0a2c2f7720b403dd5a58e510a01c7d8e2a2a386ac087262ee0b",
+      "executable": false
+    },
+    "apps/esp8266/l01_webrepl/settings.c": {
+      "sha256": "5449678aa6c84c22e09b26a2c5a091151367940f7a9d37de66fbbbfc8d494555",
+      "executable": false
+    },
+    "apps/esp8266/l01_webrepl/settings.h": {
+      "sha256": "b6695b74ed8f2ea3ead13e8bb7e36bfbdb4bf9482fa4e549f63cb01ad932c228",
+      "executable": false
+    },
+    "apps/esp8266/l01_webrepl/settings_io.cpp": {
+      "sha256": "b944461d1c9083f5e3219e649db3ae4ac01d8d2f189a764d82f13287c5fd1ccf",
+      "executable": false
+    },
+    "apps/esp8266/l01_webrepl/web.h": {
+      "sha256": "6903862cc2f3f5137c2c00d9bd61f59cdccc0651aafdc004a5b3709b48337ced",
+      "executable": false
+    },
+    "apps/esp8266/l01_webrepl/wifi_diag.cpp": {
+      "sha256": "3be7e5195d7175c2584ee2a8b5a8fdeb90c2a9ae6a574dec0e72eec77deba1cd",
+      "executable": false
+    },
+    "apps/esp8266/wifi_probe/README.md": {
+      "sha256": "94126ab7c6d77c619f26c3e7d639eb2bf1ba9b650196b59f7b6a286752436368",
+      "executable": false
+    },
+    "apps/esp8266/wifi_probe/firmware.cpp": {
+      "sha256": "a84dd4a90f7ea5e0954973643455c5aeb2fa0cf2270809c4492ec4e7bcf97a76",
+      "executable": false
+    },
+    "apps/m01_mathsmith/README.md": {
+      "sha256": "ea4fe218af0b4b91098b68f4ccdbfe17e0d137bb328a132cdb8d92a86e1325bc",
+      "executable": false
+    },
+    "apps/m01_mathsmith/engine.c": {
+      "sha256": "e55cec6cf500efefc10933ab20d051102b1bc7c62582f8b60265be7441da960c",
+      "executable": false
+    },
+    "apps/m01_mathsmith/engine.h": {
+      "sha256": "3ef0370d593ecdcca14353ee3f4f9ebda74f064ed0f1b758cc256df6358e87d2",
+      "executable": false
+    },
+    "apps/m01_mathsmith/fft.c": {
+      "sha256": "1f46a79a4aafe8645673a8ae690ae9eaff5c6719c0931ff5478c71ec1355d4a7",
+      "executable": false
+    },
+    "apps/m01_mathsmith/fft.h": {
+      "sha256": "52e018b58748d0385a8e06aabdbfc55ea637b8cfcbbdb86fbc774ff8f16ac895",
+      "executable": false
+    },
+    "apps/m01_mathsmith/linalg.c": {
+      "sha256": "f3d97b08787b27b036bc8f81a3ca7e13571acb415ec9a18023f6ec4ba5493f07",
+      "executable": false
+    },
+    "apps/m01_mathsmith/linalg.h": {
+      "sha256": "0c4c3da38a52428de9cbc67bd08c6b090566c44eecdd929101f951e74e855fc6",
+      "executable": false
+    },
+    "apps/m01_mathsmith/mat.c": {
+      "sha256": "4d3793d342670dd9a8fb491965f8aadda9e86ceeb0cc1b7bc7ca7317f0b5b215",
+      "executable": false
+    },
+    "apps/m01_mathsmith/mat.h": {
+      "sha256": "7246ddfbc2da2581143a609a3975a8674163679a5986bd22c04911bcdc7e25e4",
+      "executable": false
+    },
+    "apps/m01_mathsmith/plot.c": {
+      "sha256": "45afdb916c373bb4135f5be099d18861a57f07978b241d1f7fb2c4e9f7cd10ff",
+      "executable": false
+    },
+    "apps/m01_mathsmith/plot.h": {
+      "sha256": "2f02e322b0d88af15ccfe743d4fd41d1210fa3a0df469a58f2ed2e0b5ed38a59",
+      "executable": false
+    },
+    "apps/m01_mathsmith/repl.c": {
+      "sha256": "ced512a671eb029e0d10d1b5ddfae6f6f0a42f80c4bbc8f3e91275fc3ba06a69",
+      "executable": false
+    },
+    "apps/m01_mathsmith/tests/golden.txt": {
+      "sha256": "2ac180b4e8464acb1ae18ac36ca7eb0807fddf111dec92298dc9ea15cdbac4e5",
+      "executable": false
+    },
+    "apps/m01_mathsmith/version.h": {
+      "sha256": "3b15c81f628f0b258ccb9f5c6f62f5696ca5957e155b98662a78b04b8c0debca",
+      "executable": false
+    },
+    "apps/workstation/demo/README.md": {
+      "sha256": "cf81e022196f303d361e68ac50eee7b2f4b5fec44764c715cd8138b2b70aa019",
+      "executable": false
+    },
+    "apps/workstation/demo/demo.c": {
+      "sha256": "40ec997686aea09ce6cd794c24b5f0136b53cb813dd1dd9a16123fd090feb711",
+      "executable": false
+    },
+    "apps/workstation/demo/demo.h": {
+      "sha256": "eead67146c8998fc86f2b1e7ee891988665f2d6add191d058dec322ef69e218f",
+      "executable": false
+    },
+    "apps/workstation/external_demo/README.md": {
+      "sha256": "0cdcfe5db953ed16d14475f3477b9e5173d97ee34ebc94b42828d14b2485d4b9",
+      "executable": false
+    },
+    "apps/workstation/external_demo/entry.c": {
+      "sha256": "1f262c7cbb4918a0d027b9dbd10c4b0ffb62af4e54a943a8e9f046b1bef95ff2",
+      "executable": false
+    },
+    "common/workstation/README.md": {
+      "sha256": "e212a3676ae628ee9ef53e1c8f572c9630693d3ba8c15e8bc9936ed051270c89",
+      "executable": false
+    },
+    "common/workstation/app_api.h": {
+      "sha256": "a02d110c8ae9c5cda0c4fc0fe37505019ed73098ef9c4f40da500828d60bc762",
+      "executable": false
+    },
+    "common/workstation/launcher.c": {
+      "sha256": "84ddd61fab8588b1eeaad4a6ba0f751c62be5e88e44b636c7f3c35bc6fa70ff5",
+      "executable": false
+    },
+    "common/workstation/launcher.h": {
+      "sha256": "cb7220693922baa6c69b35a4a1029e9fffe4a099b4c10a239980ebfc8efefbcb",
+      "executable": false
+    },
+    "common/workstation/package.c": {
+      "sha256": "f511e932d5e4096a23bd7f04dcffa25a0ce1c88bfb30def3300cfd1bcdd1e8d3",
+      "executable": false
+    },
+    "common/workstation/package.h": {
+      "sha256": "55e88464a9d3032a006a5566429c812e9d570a25c5f59efce519bbee58d7d0ee",
+      "executable": false
+    },
+    "docs/DECISIONS.md": {
+      "sha256": "2c825a255e6f3e00cbc3926a6f06f2af19b446a4aef60eaff4b7633c50992d62",
+      "executable": false
+    },
+    "docs/GETTING_STARTED.md": {
+      "sha256": "1ca92f1519a63394353a46a67813043017c63bf742a6a84841ceaad1e33c65d1",
+      "executable": false
+    },
+    "docs/MATHSMITH_EMULATION.md": {
+      "sha256": "5a96078fbe4579d6ffcb6a304b4e0e56899ea2c324742eca017a69578d8534a1",
+      "executable": false
+    },
+    "docs/RELEASING.md": {
+      "sha256": "caa84c784b287207f4d84a12fea4afac434a9c8ddc865cc7db41b6026a13e544",
+      "executable": false
+    },
+    "docs/WORKSTATION_APP_ABI.md": {
+      "sha256": "a3de5128b8f1d6bac260fbeac35ae56415c0668e4fc1c7052bfa7c56d7631956",
+      "executable": false
+    },
+    "esp32/README.md": {
+      "sha256": "f829ea5ac713b7913c48cdfa56067a67daa0d46d7d88b49410e739f312be3fd4",
+      "executable": false
+    },
+    "esp32/components/ms_elf_loader/CMakeLists.txt": {
+      "sha256": "4c33b458a7a74b66cb151aa8574b42a33b0e78e57c89d16aa726172f7462b05f",
+      "executable": false
+    },
+    "esp32/components/ms_elf_loader/Kconfig": {
+      "sha256": "2e6d2c7aca97f9ac944f2b139ae1ebcf6e48d35eae7810d3699a0fdfafe0522e",
+      "executable": false
+    },
+    "esp32/docs/MEMORY_MAP_E00.md": {
+      "sha256": "336153fefc5d52152a11b0acddd25283b2a1610ddccac6b9abe50da1f1a73e7e",
+      "executable": false
+    },
+    "esp32/docs/MEMORY_MAP_E01.md": {
+      "sha256": "4d0e1b2e5ff53870c6567c16d31041e26e53ce7056779503dd852478986e9869",
+      "executable": false
+    },
+    "esp32/docs/MEMORY_MAP_E02.md": {
+      "sha256": "606c271c46e0d9dab614386811aaad014bcb8e110f8de3b0269126241067be58",
+      "executable": false
+    },
+    "esp32/docs/MEMORY_MAP_E03.md": {
+      "sha256": "e703e348e5cf43fbc0d1768ddf47a50090d8272b8c45e5233110e8207250af08",
+      "executable": false
+    },
+    "esp32/docs/SERIAL_UPLOAD.md": {
+      "sha256": "99d2e8ebf26e83410e0523890b7ba5777b0394a972cd7942b51639381da1e59e",
+      "executable": false
+    },
+    "esp32/scripts/build_external.py": {
+      "sha256": "9c4b11c0a4ce91645119916ec4641d344782ba468d03c9b582a004de46c3df4e",
+      "executable": false
+    },
+    "esp32/scripts/console.sh": {
+      "sha256": "f491be43a5fc1e8e8cbe45e31d2b49576740b3a51d85f22cb40a6b1aba464e74",
+      "executable": true
+    },
+    "esp32/scripts/external.sh": {
+      "sha256": "47996c2d3de0dac2c7b124ff6e1a2233bbfa7966225657486c7c96f012216596",
+      "executable": true
+    },
+    "esp32/scripts/idf.sh": {
+      "sha256": "a45f2edbb3e446ce9fceb34fd6963ff6eafbd5c80b8883cbf1277bf87bc8bc4c",
+      "executable": true
+    },
+    "esp32/scripts/mathsmith.sh": {
+      "sha256": "514a7cddf92bf80228a77bf04ac281aec956f9367790026ecb34797b5b1bbc27",
+      "executable": true
+    },
+    "esp32/scripts/release_console.py": {
+      "sha256": "4345380259831c4e7cd47a52397973b640b00224bd0ba997e5c8debb1767440a",
+      "executable": false
+    },
+    "esp32/scripts/release_external.py": {
+      "sha256": "192beef386bd051e219dd1d7378a2f8e1abb5a938cdfa1066294cd1d8c32eaa5",
+      "executable": false
+    },
+    "esp32/scripts/release_mathsmith.py": {
+      "sha256": "d53c32ed55774de44f041a23c9442f4175127974a6a6f136fa1688548c88e9fc",
+      "executable": false
+    },
+    "esp32/scripts/release_workstation.py": {
+      "sha256": "7c65060e935996d708c486a659c2b010bd92d359a513c75c71a8b59139a416ab",
+      "executable": false
+    },
+    "esp32/scripts/run_console.py": {
+      "sha256": "9cecae4b362ce5526592de0142c0d10a78d257352a62f3b907fe2c52339241b6",
+      "executable": false
+    },
+    "esp32/scripts/run_external.py": {
+      "sha256": "04935468891c1ba296331fce98298f483134052b73e9282a5575b72f3b0d8b3b",
+      "executable": false
+    },
+    "esp32/scripts/run_mathsmith.py": {
+      "sha256": "0831b75627ff04bb36d09e3100b35942e29f8709db24f5729085625449b99109",
+      "executable": false
+    },
+    "esp32/scripts/run_workstation.py": {
+      "sha256": "8d5f54ed5b011db705e0e679ad7c44defb28f21b33f540778a896a6376f9c974",
+      "executable": false
+    },
+    "esp32/scripts/test_elf_upstream.py": {
+      "sha256": "5ba81d46adc404647fc1ac87a567174b4613a3749375f4ae5154b9db1ad81bb5",
+      "executable": false
+    },
+    "esp32/scripts/upload_external.py": {
+      "sha256": "d082f42c5f333ec56d123cb1fb06fe8d05f8b3930aff214ec45101627ffd50a2",
+      "executable": false
+    },
+    "esp32/scripts/workstation.sh": {
+      "sha256": "6edbb13090551bb99c20d21d82cb6cf9b874bf8cbbab0ca4a11e45bf8af44272",
+      "executable": true
+    },
+    "esp32/tests/test_alloc.py": {
+      "sha256": "a1b2db74df22e5f2457aa50faba3c86cdcc64a9c9d37475ea7fcff11754777de",
+      "executable": false
+    },
+    "esp32/tests/test_console.py": {
+      "sha256": "1ff8e9abbbdba657d8a01f20e362060ed28bbf132e2eda3eeaa3f6cebbe9947f",
+      "executable": false
+    },
+    "esp32/tests/test_external.py": {
+      "sha256": "c4926753781e9c9534931f84ea220975baaa5a9012599dc4f67f1392b35cdbad",
+      "executable": false
+    },
+    "esp32/tests/test_launcher_native.py": {
+      "sha256": "9ec465c1d7149340538fa6d8012c9561d1096579ae8e34403ab1726b98c28dbe",
+      "executable": false
+    },
+    "esp32/tests/test_mathsmith.py": {
+      "sha256": "be72c65786bfe7a03f3bc33007fc586127e4538a949cb96ac1f17fcabd1cc1bd",
+      "executable": false
+    },
+    "esp32/tests/test_package.py": {
+      "sha256": "9b623e0c7a68d8e7dc23c371917c21aee594f09eb9c29af259890a6db24aa7b5",
+      "executable": false
+    },
+    "esp32/tests/test_qemu.py": {
+      "sha256": "bad51619321411595f467151488b58897c3d9b98925a8b200cd4601aa9613707",
+      "executable": false
+    },
+    "esp32/tests/test_workstation.py": {
+      "sha256": "dad950639f12195649c602961f9dc1a758991e1ce83f5d3caae21cc75c36cd4b",
+      "executable": false
+    },
+    "esp8266/README.md": {
+      "sha256": "5a1172de390e37735ab19443d1bcd28dd216e07409c98960849177ff8e0cab1e",
+      "executable": false
+    },
+    "esp8266/docs/BROWSER_EDITOR_L01.md": {
+      "sha256": "bda91d4fa36be61a6ea46dc62d622b35320bf0a2a32778a994f9e170d64eee52",
+      "executable": false
+    },
+    "esp8266/docs/DHCP_BROADCAST_L01.md": {
+      "sha256": "f6f054ac694d9e243cc3f7f7eb5aae8b5a7be403e839bd9f4471591d8214f826",
+      "executable": false
+    },
+    "esp8266/docs/DHCP_COMPATIBILITY_L01.md": {
+      "sha256": "fc5f7393bfd7728988f9c6dde9f142f6a5a69dec1e792b6364dd4c3642cd8245",
+      "executable": false
+    },
+    "esp8266/docs/DHCP_PACKETS_L01.md": {
+      "sha256": "28be13cd503e0823bba3d570da0a4cfd4037c9bf6a9cea59b037f9511a7f915a",
+      "executable": false
+    },
+    "esp8266/docs/DHCP_RECOVERY_L01.md": {
+      "sha256": "654e4b41101e8feba71e02437056c10529c68fc4c6f99bd0d08f8ccf33ff6ad8",
+      "executable": false
+    },
+    "esp8266/docs/HOME_NETWORK_DIAGNOSIS.md": {
+      "sha256": "0768f2399ca3d70a4e34e04caf6b260aa4b722c49c769853424bda7ad0961f0d",
+      "executable": false
+    },
+    "esp8266/docs/MEMORY_MAP_L00.md": {
+      "sha256": "3e36e82a4f103d694a099a1e72f8795dc496125a2c38835e3fc847da0c3a7ce2",
+      "executable": false
+    },
+    "esp8266/docs/MEMORY_MAP_L01.md": {
+      "sha256": "91a1feab06c4874c8d3e538f455b3d088dcda4f5a6df9b6cc1f110ffc67ef5dd",
+      "executable": false
+    },
+    "esp8266/docs/NETWORK_DIAGNOSTICS_L01.md": {
+      "sha256": "bc5b505b35341011985f92369ae30554c644303e2f5d1732c7cae47758aecd05",
+      "executable": false
+    },
+    "esp8266/docs/OLED_PS2_WIRING.md": {
+      "sha256": "0a07b7e62edffb5ae1cea9e22fc0bf426aba83fe912a14f6ab37c3c5e56bdf80",
+      "executable": false
+    },
+    "esp8266/docs/PERIPHERAL_BUDGET.md": {
+      "sha256": "68dd0cfc6880a8ab843899fd117531fbdd92f3c61b09f07d078686ae0b8a2dde",
+      "executable": false
+    },
+    "esp8266/docs/R4_COMPARISON.md": {
+      "sha256": "cc65ae37bba1f070506fe88f808d68666e94062fbea16e12adfb17898da94dce",
+      "executable": false
+    },
+    "esp8266/docs/SCRIPT_GPIO_L01.md": {
+      "sha256": "47fa9fb60c2925d14e37b63336de4f113c6b74675b5049a53fb21141670b2ceb",
+      "executable": false
+    },
+    "esp8266/docs/SETTINGS_L01.md": {
+      "sha256": "e5bfd7389445014bb3c2e83ac4c8eec727d7b8b6ad48fc4ac23a0aa32b30d9a1",
+      "executable": false
+    },
+    "esp8266/docs/USER_MANUAL.md": {
+      "sha256": "6d099309e84d35be4b8c904db60eb0a6119d942a86fa63a27b3902aca69979f2",
+      "executable": false
+    },
+    "esp8266/docs/USER_MANUAL_L01.md": {
+      "sha256": "5a8d16e05cbe47a4e5292167e386ffebd8b01d0e1281bb0d02926258b2cc70ce",
+      "executable": false
+    },
+    "esp8266/docs/WEBREPL_PLAN.md": {
+      "sha256": "1622acc9ffbc618195682bbdc45e9f4d069933fcda864eecd6e08f86d49da847",
+      "executable": false
+    },
+    "esp8266/docs/WEB_PROTOCOL_L01.md": {
+      "sha256": "abcd821f1b1867a39eee40a249e63f78d667e0b6c49ea515a40e65bcf09513bd",
+      "executable": false
+    },
+    "esp8266/scripts/build.py": {
+      "sha256": "9cdffd3870c9c3868ff004ef476edfa51c57f3c9560a1fdfda1370bf06e6bb20",
+      "executable": false
+    },
+    "esp8266/scripts/check_browser.js": {
+      "sha256": "2d60aac42f18d61f5f5386e17f502c387395c97bbbfb936f53688c8d5115925e",
+      "executable": false
+    },
+    "esp8266/scripts/check_editor.js": {
+      "sha256": "e4707bc5814ef1c8900fed6d9bebdc6e1b0f0f61a9f02b71ea1e4c19a1cde211",
+      "executable": false
+    },
+    "esp8266/scripts/check_image.py": {
+      "sha256": "39c4493b65005747c2c263ed6e8a7f41ccd436c2447804c13a9c47831350cdcc",
+      "executable": false
+    },
+    "esp8266/scripts/check_manual.py": {
+      "sha256": "f7e21282d17bcc53ae5a30108505cf50defb91041f978f3fd08cd2a3bd10fdb7",
+      "executable": false
+    },
+    "esp8266/scripts/light_profile.py": {
+      "sha256": "c89a01d57b371ee3b5618643105333249e65065929aa74eb80b2720f7da2c788",
+      "executable": false
+    },
+    "esp8266/scripts/mathsmith.sh": {
+      "sha256": "bc33696ae92b9ad15e4919af946a667c97ce6ec7b5e7563a4f7f860917c42404",
+      "executable": true
+    },
+    "esp8266/scripts/native.py": {
+      "sha256": "7d5963340b9c27fa12045caee8e11851b68d6f2e70327086ba72258ba3b5dccf",
+      "executable": false
+    },
+    "esp8266/scripts/release.py": {
+      "sha256": "b1ce7dbfed983755ca282199799c920f3a3107b248c96229251e50e079795130",
+      "executable": false
+    },
+    "esp8266/scripts/webrepl.sh": {
+      "sha256": "5aaa6e7eb08404fbb6b1d794702c820397b0bbb2a43cb7803ed942091723480c",
+      "executable": true
+    },
+    "esp8266/scripts/wifi_probe.py": {
+      "sha256": "64c016c0d9caa632c8e57702d8656aa49cc48513bed0ce4217b208c521e7027b",
+      "executable": false
+    },
+    "esp8266/tests/native.c": {
+      "sha256": "a66762eec1d6f8ced0acb379a4b95e17053fcfafcc0341b3b10897ff0697b0d2",
+      "executable": false
+    },
+    "esp8266/tests/test_light.py": {
+      "sha256": "a6f5a6159a280b34d05b71d4f5b428f59050c0121ba95a4456325a0326351e85",
+      "executable": false
+    },
+    "esp8266/tests_probe/main.cpp": {
+      "sha256": "e50cddff1cea6e813e7d60d927ab03e3402a77eb05fdef3bbe857d0516c91dd5",
+      "executable": false
+    },
+    "esp8266/tests_probe/test_probe.py": {
+      "sha256": "7613577a494bdb0e30763108d43c758a40f61b631dc84449fe3b861eaa7a33de",
+      "executable": false
+    },
+    "esp8266/tests_web/dhcp_trace_bounds.c": {
+      "sha256": "c98e0b114a2e508ecc2fffceaad1ae85e109f530e7609f9fd3edfff818868eff",
+      "executable": false
+    },
+    "esp8266/tests_web/dhcp_trace_output.cpp": {
+      "sha256": "6678400e34de7c3d27f7ac02d7caf898ee3500fceb616f7eba49eb8a4f0045a9",
+      "executable": false
+    },
+    "esp8266/tests_web/native_hal.h": {
+      "sha256": "6793a9942e6fee5f0df532782bdb8b94d00da03dd7dfd6b659b855fdb03a3773",
+      "executable": false
+    },
+    "esp8266/tests_web/native_main.cpp": {
+      "sha256": "f234a1cb821d7dfc0d7c2dcb61e6072946db0049d29ad14705d51b7b8792fd43",
+      "executable": false
+    },
+    "esp8266/tests_web/settings_fixture.c": {
+      "sha256": "f62f5932dc620c3bc44d8587383bfa57290dd866c1a2de25a657c3fea1aa18d3",
+      "executable": false
+    },
+    "esp8266/tests_web/test_dhcp_broadcast.py": {
+      "sha256": "9a022ce6831220c3f000bdb79b0245531ca7e0217d19dbb0d023e6a9e7c80ad4",
+      "executable": false
+    },
+    "esp8266/tests_web/test_dhcp_trace.py": {
+      "sha256": "fbe90177859ff8138d8d9124a52e39e12c623138b5737bf277b4f8406c229262",
+      "executable": false
+    },
+    "esp8266/tests_web/test_recovery_command.py": {
+      "sha256": "924bb1f770e484eb8bd841e388e2e0fdc1d432e862ee2084efd497ece1a94e54",
+      "executable": false
+    },
+    "esp8266/tests_web/test_settings.py": {
+      "sha256": "2f7fe48b556c6ecb45d8d107e0452fd496a0089850f117c87dbf4d1642db95f1",
+      "executable": false
+    },
+    "esp8266/tests_web/test_web.py": {
+      "sha256": "b1dfd04ad8faf085e0755aba52759e75df4ee735a9b270d8570dd1b7e0203fe7",
+      "executable": false
+    },
+    "rp2350/README.md": {
+      "sha256": "f5f2d5876941d4714213be31a646dcd10d0f21da59dd24b22f774be5ecc78467",
+      "executable": false
+    },
+    "tools/setup_elf_loader.sh": {
+      "sha256": "4fd85c537e88a786fe5f1d776781a3b2fcb5f1475f912274df0bc45793afb93c",
+      "executable": true
+    },
+    "tools/setup_elf_loader_tests.py": {
+      "sha256": "6a0006a25cd16d8a847d8e071b69314c56f93f2dd69fed822dd55559ecef1675",
+      "executable": false
+    },
+    "tools/setup_esp8266.py": {
+      "sha256": "04047d38bba59cbb11ded37a585ba4e557578f2c6706f175dd276b414ec1a469",
+      "executable": false
+    },
+    "tools/setup_esp_idf.sh": {
+      "sha256": "7fed16c9f587abce2d41c103827f4fafe6ae15df175545d40dc6701f7c53a8fb",
+      "executable": true
+    },
+    "tools/setup_esp_qemu.sh": {
+      "sha256": "383bb703b0dd559d45f126313511640c03164cda53ff71fc4823a6bb5b6bf4e5",
+      "executable": true
+    },
+    "website/build.py": {
+      "sha256": "b0b6f9aed817a9db289bfa046d8127aac9856a6ab92ebbb5c6e6e5fb46faf1c0",
+      "executable": false
+    },
+    "website/check_browser.js": {
+      "sha256": "269ecf85e0c5f91fcac7671d56f946e431bd51233808bbd2e894c2a7c7f293af",
+      "executable": false
+    },
+    "website/index.html": {
+      "sha256": "719c6d911433d4d724d746cd12799b7bbbe109a25f4c81bad23a40b405ce3e4e",
+      "executable": false
+    },
+    "website/style.css": {
+      "sha256": "22d7601e1d41f0b441ddf19bd8e8dfd6b97d9aab17971ebf5e13a643c99a8292",
+      "executable": false
+    },
+    "website/tests/test_site.py": {
+      "sha256": "cf1f8dfada367d33c2b8d877f8ec69517b8ac92285000eacf3038da703e6045d",
+      "executable": false
+    }
+  }
+}

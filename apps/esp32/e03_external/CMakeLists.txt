@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.16)
+set(SDKCONFIG_DEFAULTS "${CMAKE_CURRENT_LIST_DIR}/../e01_mathsmith/sdkconfig.defaults;${CMAKE_CURRENT_LIST_DIR}/sdkconfig.defaults")
+set(EXTRA_COMPONENT_DIRS "${CMAKE_CURRENT_LIST_DIR}/../../../esp32/components/ms_elf_loader")
+include($ENV{IDF_PATH}/tools/cmake/project.cmake)
+idf_build_set_property(MINIMAL_BUILD ON)
+project(mathsmith_load VERSION 0.1.0)

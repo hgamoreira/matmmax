@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MathSmith Light</title>
+<style>
+:root{color-scheme:dark;font:16px system-ui;background:#121921;color:#e4edf5}body{max-width:960px;margin:24px auto;padding:0 16px}h1{font-size:1.6rem;margin-bottom:4px}h2{font-size:1.15rem;margin:8px 0}.sub,small{color:#a9bacb}section{padding:12px 0}label{display:inline-block}input,button,textarea{font:inherit;padding:9px;border:1px solid #526272;border-radius:5px;background:#1c2937;color:inherit}button{cursor:pointer}button:disabled{opacity:.45;cursor:default}#key{width:24em;max-width:65vw}#command,#program{width:100%;box-sizing:border-box;font:14px/1.5 monospace}#program{height:26vh;min-height:180px;resize:vertical;tab-size:4;background:#090f15}pre{height:32vh;min-height:180px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;background:#090f15;padding:14px;border:1px solid #354554;border-radius:5px;font:14px/1.5 monospace}#state,#programstate{color:#a9d9be}.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.editor{border-top:1px solid #354554;margin-top:16px}#filename{width:15em;max-width:65vw}#programstate{min-height:1.5em;margin-top:8px}#file{display:none}#clear,#download{margin-left:6px}
+</style>
+<h1>MathSmith Light</h1>
+<div class="sub">ESP8266 · browser console and program editor · L01-r14</div>
+<section class="row"><label>Access key <input id="key" type="password" autocomplete="off" spellcheck="false" placeholder="Key printed in the serial console"></label><button id="connect">Connect</button><button id="disconnect" disabled>Disconnect</button><span id="state" role="status">Disconnected</span></section>
+<label><input id="remember" type="checkbox"> Remember key on this browser</label><small id="storagehint"></small>
+<section class="editor" aria-labelledby="editorheading">
+<h2 id="editorheading">Program</h2>
+<div class="row"><label>File name <input id="filename" value="example.ms" maxlength="64" spellcheck="false"></label><button id="newprogram" type="button">New</button><button id="openprogram" type="button">Open file</button><button id="saveprogram" type="button">Save file</button><span id="dirty"></span></div>
+<input id="file" type="file" accept=".ms,.m,.txt,text/plain" aria-label="Open a MathSmith program">
+<label for="program">MathSmith source</label>
+<textarea id="program" maxlength="32768" spellcheck="false" autocomplete="off" autocapitalize="off" wrap="off">s=0;
+for k=1:8
+    s=s+k;
+end
+s
+</textarea>
+<div class="row"><button id="runprogram" type="button" disabled>Run program</button><button id="programstop" type="button" disabled>Stop</button><small>Ctrl+Enter runs. Files open and save on this device. Programs run on the ESP8266.</small></div>
+<div id="programstate" role="status">Connect to run a program.</div>
+<small>Up to 32 KiB / 1024 lines; 191 characters per line. Tab indentation becomes four spaces. Console commands beginning with : are entered below.</small>
+</section>
+<h2>Console</h2>
+<pre id="output" aria-label="Console output" aria-live="off"></pre>
+<form id="form"><label for="command">Command <span id="prompt">&gt;&gt;</span></label><input id="command" maxlength="191" autocomplete="off" spellcheck="false" disabled placeholder="Try help, :mem or :pins"><section class="row"><button id="run" disabled>Run</button><button id="stop" type="button" disabled>Stop (Esc)</button><button id="clear" type="button">Clear display</button><button id="download" type="button">Save transcript</button></section></form>
+<small>One browser controls the shared RAM workspace. Disconnect keeps variables; reset or power loss clears them. GPIO commands use D0–D8 labels and 3.3 V signals. Local network connection; traffic is unencrypted.</small>
+<script>
+'use strict';
+const $=id=>document.getElementById(id), dec=new TextDecoder();
+const MAX_SOURCE=32768,MAX_LINES=1024,MAX_LINE=191;
+let ws=null,ready=false,block=false,resultSupport=false,stopping=false;
+let history=[],index=0,draft='',text='',program=null,dirty=false,loading=false;
+function append(s){text=(text+s).slice(-65536);$('output').textContent=text;$('output').scrollTop=$('output').scrollHeight;}
+function status(s){$('state').textContent=s;}
+function programStatus(s){$('programstate').textContent=s;}
+function controls(){
+ const open=ws&&ws.readyState===WebSocket.OPEN, busy=!!program||stopping;
+ $('connect').disabled=!!ws;$('disconnect').disabled=!ws;
+ $('command').disabled=!open||!ready||busy;$('run').disabled=!open||!ready||busy;
+ $('stop').disabled=!open;$('programstop').disabled=!open;
+ $('runprogram').disabled=!open||!ready||busy||loading||!resultSupport;
+ $('newprogram').disabled=busy||loading;$('openprogram').disabled=busy||loading;
+ $('program').readOnly=busy||loading;$('filename').readOnly=busy||loading;
+ $('saveprogram').disabled=loading;
+}
+function changed(value=true){dirty=value;$('dirty').textContent=dirty?'Unsaved changes':'';}
+function normalizeSource(s){return s.replace(/^\ufeff/,'').replace(/\r\n?/g,'\n').replace(/\t/g,'    ');}
+function prepareSource(s){
+ s=normalizeSource(s);
+ if(s.length>MAX_SOURCE)throw Error('Program exceeds 32 KiB after expanding tabs.');
+ const lines=s.split('\n');
+ if(lines.length>MAX_LINES)throw Error('Program exceeds 1024 source lines.');
+ const queue=[];
+ for(let i=0;i<lines.length;i++){
+  const line=lines[i];
+  if(!/^[\x20-\x7e]*$/.test(line))throw Error('Line '+(i+1)+': use printable ASCII text.');
+  if(line.length>MAX_LINE)throw Error('Line '+(i+1)+': exceeds 191 characters.');
+  if(/^\s*(?::|(?:abort|quit|exit)(?:\s|[;,]|$))/i.test(line))throw Error('Line '+(i+1)+': use this control command in the console, not in a program.');
+  if(line.trim())queue.push({line:i+1,text:line});
+ }
+ if(!queue.length)throw Error('Program is empty.');
+ return {source:s,queue};
+}
+function download(content,name){
+ const url=URL.createObjectURL(new Blob([content],{type:'text/plain;charset=utf-8'})),a=document.createElement('a');
+ a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function endProgram(message){program=null;stopping=false;programStatus(message);controls();}
+function cleanupProgram(message){
+ program.cleanup=message;stopping=true;ready=false;ws.send('S');controls();
+}
+function nextLine(){
+ if(!program||program.cleanup||stopping)return;
+ if(program.at===program.queue.length){
+  if(block){cleanupProgram('Incomplete block at end of program; add the missing end.');return;}
+  endProgram('Program finished.');return;
+ }
+ const item=program.queue[program.at++];program.line=item.line;ready=false;
+ programStatus('Running line '+item.line+' of '+program.lines+'…');
+ ws.send('C'+item.text);controls();
+}
+function onReady(bytes){
+ if(!ws||ws.readyState!==WebSocket.OPEN)return;
+ ready=true;block=bytes[1]===49;resultSupport=bytes.length>=3&&bytes[2]>=48&&bytes[2]<=50;
+ const result=resultSupport?bytes[2]-48:0;
+ $('prompt').textContent=block?'..>':'>>';status('Ready');
+ if(stopping){
+  if(resultSupport&&result!==2){ready=false;controls();return;}
+  const message=program&&program.cleanup?program.cleanup:'Program stopped; completed assignments remain.';
+  if(program)endProgram(message);else{stopping=false;controls();}
+  return;
+ }
+ if(program){
+  if(result){
+   const message=(result===2?'Program stopped at':'Error while processing')+' source line '+program.line+'.';
+   if(block)cleanupProgram(message);else endProgram(message);
+  }else nextLine();
+ }else{
+  controls();if(!resultSupport)programStatus('This firmware supports the console only; update to run editor programs.');
+  else if($('programstate').textContent==='Connect to run a program.')programStatus('Ready to run a program.');
+  $('command').focus();
+ }
+}
+try{const saved=localStorage.getItem('mathsmith.access-key');if(/^[a-f0-9]{32}$/.test(saved||'')){$('key').value=saved;$('remember').checked=true;}}catch(e){}
+$('remember').onchange=()=>{try{if(!$('remember').checked)localStorage.removeItem('mathsmith.access-key');else if(ws&&ws.readyState===WebSocket.OPEN)localStorage.setItem('mathsmith.access-key',ws.protocol.slice(10));}catch(e){$('storagehint').textContent=' Browser storage unavailable; keep a copy of the access key.';}};
+const fragment=location.hash.slice(1);if(/^[a-f0-9]{32}$/.test(fragment)){$('key').value=fragment;window.history.replaceState(null,'',location.pathname);}
+$('connect').onclick=()=>{
+ const key=$('key').value.trim();if(!/^[a-f0-9]{32}$/.test(key)){status('Enter the 32-character access key from serial.');return;}
+ ready=false;block=false;resultSupport=false;stopping=false;status('Connecting…');
+ const socket=new WebSocket('ws://'+location.host+'/ws','mathsmith.'+key);ws=socket;socket.binaryType='arraybuffer';controls();
+ socket.onopen=()=>{try{if($('remember').checked)localStorage.setItem('mathsmith.access-key',key);else localStorage.removeItem('mathsmith.access-key');}catch(e){$('storagehint').textContent=' Browser storage unavailable; keep a copy of the access key.';}status('Connected');controls();};
+ socket.onmessage=ev=>{if(socket!==ws)return;const b=new Uint8Array(ev.data);if(b[0]===79)append(dec.decode(b.subarray(1)));else if(b[0]===82)onReady(b);};
+ socket.onerror=()=>{if(socket===ws)status('Connection failed; check the access key and device address.');};
+ socket.onclose=()=>{
+  if(socket!==ws)return;
+  if(program)endProgram('Connection lost at source line '+program.line+'; program will not resume automatically.');
+  ws=null;ready=false;stopping=false;resultSupport=false;
+  append('\n[Disconnected; completed assignments stay on the board.]\n');status('Disconnected');controls();
+ };
+};
+$('disconnect').onclick=()=>{
+ if(!ws)return;
+ if(program)endProgram('Disconnected at source line '+program.line+'; program will not resume automatically.');
+ ready=false;ws.close();controls();
+};
+$('form').onsubmit=ev=>{
+ ev.preventDefault();if(!ready||!ws||program||stopping)return;
+ const s=$('command').value;if(!/^[\x20-\x7e]*$/.test(s)){status('Use printable ASCII, one line at a time.');return;}
+ ready=false;ws.send('C'+s);
+ if(s&&s!==history[history.length-1]){history.push(s);if(history.length>100)history.shift();}
+ index=history.length;draft='';$('command').value='';status('Running…');controls();
+};
+function stop(){
+ if(!ws||ws.readyState!==WebSocket.OPEN||stopping)return;
+ stopping=true;ready=false;if(program)program.cleanup='Program stopped; completed assignments remain.';
+ ws.send('S');controls();
+}
+$('stop').onclick=stop;$('programstop').onclick=stop;
+document.addEventListener('keydown',ev=>{if(ev.key==='Escape'){ev.preventDefault();stop();}});
+$('command').addEventListener('keydown',ev=>{if(ev.key!=='ArrowUp'&&ev.key!=='ArrowDown')return;ev.preventDefault();if(index===history.length)draft=$('command').value;index=Math.max(0,Math.min(history.length,index+(ev.key==='ArrowUp'?-1:1)));$('command').value=index===history.length?draft:history[index];});
+$('program').addEventListener('input',()=>changed());$('filename').addEventListener('input',()=>changed());
+$('program').addEventListener('keydown',ev=>{if(ev.key==='Enter'&&(ev.ctrlKey||ev.metaKey)){ev.preventDefault();if(!$('runprogram').disabled)$('runprogram').click();}});
+window.addEventListener('beforeunload',ev=>{if(dirty){ev.preventDefault();ev.returnValue='';}});
+$('newprogram').onclick=()=>{
+ if(program||loading||(dirty&&!window.confirm('Discard unsaved program changes?')))return;
+ $('program').value='';$('filename').value='untitled.ms';changed(false);programStatus('New program.');
+};
+$('openprogram').onclick=()=>{if(!program&&!loading)$('file').click();};
+$('file').onchange=async()=>{
+ const file=$('file').files[0];$('file').value='';if(!file||program||loading)return;
+ if(dirty&&!window.confirm('Replace unsaved program changes?'))return;
+ if(file.size>MAX_SOURCE){programStatus('File exceeds 32 KiB; current program kept.');return;}
+ loading=true;controls();
+ try{
+  const source=normalizeSource(await file.text());
+  if(source.length>MAX_SOURCE)throw Error('File exceeds 32 KiB after expanding tabs.');
+  $('program').value=source;$('filename').value=file.name.slice(0,64);changed(false);programStatus('Opened '+file.name+'.');
+ }catch(e){programStatus('Could not open file: '+e.message+' Current program kept.');}
+ finally{loading=false;controls();}
+};
+$('saveprogram').onclick=()=>{
+ let name=$('filename').value.trim().replace(/[^a-zA-Z0-9_. -]/g,'_').replace(/^\.+/,'')||'untitled.ms';
+ if(!/\.(ms|m|txt)$/i.test(name))name+='.ms';
+ $('filename').value=name;download($('program').value,name);changed(false);programStatus('Download requested: '+name+'.');
+};
+$('runprogram').onclick=()=>{
+ if(!ready||!ws||program||stopping||loading||!resultSupport)return;
+ if(block){programStatus('Finish the open console block or press Stop before running a program.');return;}
+ try{
+  const prepared=prepareSource($('program').value);
+  if(prepared.source!==$('program').value){$('program').value=prepared.source;changed();}
+  program={queue:prepared.queue,at:0,line:0,lines:prepared.source.split('\n').length,cleanup:''};
+  append('\n[Program: '+($('filename').value||'untitled.ms')+']\n');nextLine();
+ }catch(e){programStatus(e.message);controls();}
+};
+$('clear').onclick=()=>{text='';$('output').textContent='';};
+$('download').onclick=()=>download(text,'mathsmith-transcript.txt');
+controls();
+</script></html>

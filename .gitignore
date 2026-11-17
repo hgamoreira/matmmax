@@ -1,0 +1,9 @@
+.venv/
+.venv-flash/
+build/
+releases/
+__pycache__/
+*.pyc
+third_party/
+host/sample_root/.c64trash/
+host/sample_root/**/.c64upload-*
