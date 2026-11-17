@@ -33,6 +33,35 @@ ans =
 
 ## Try without hardware
 
+Choose either route below. If you already cloned the repository, use its
+existing folder and skip the clone/cd lines.
+
+### ESP8266: try the WebREPL in your browser
+
+On **x86_64 Linux**, you need Python **3.12+**, Git and GCC/G++. On
+Ubuntu/Debian, `sudo apt-get install git python3 build-essential` supplies the
+packages; check that your distribution's Python meets the version requirement.
+No ESP8266 board, USB adapter, ESP-IDF, QEMU or cross-compiler is needed.
+
+```sh
+git clone https://github.com/hgamoreira/mathsmith-os.git
+cd mathsmith-os
+MS_NATIVE_WIFI=1 esp8266/scripts/webrepl.sh native
+```
+
+Keep the terminal open. Copy the complete **Browser URL** it prints into a
+browser on the same computer, then click **Connect**. Try `2+2` in the console,
+use the program editor, and open/save scripts on your computer. Stop the
+harness with **Ctrl+C** in the terminal when finished.
+
+This runs the real ESP8266 WebREPL interface and math engine as a Linux
+program. GPIO/ADC and network setup are simulated; it does not emulate the
+ESP8266 CPU or physical Wi-Fi. See the
+[WebREPL walkthrough](docs/EMULATOR_QUICKSTART.md#6-try-the-webrepl-screenshots-interface-without-an-esp8266)
+for the matrix example shown above.
+
+### ESP32-S3: run the firmware in QEMU
+
 Run the ESP32-S3 firmware in Espressif QEMU on **x86_64 Linux**. After
 installing the [Linux prerequisites](docs/EMULATOR_QUICKSTART.md#1-install-linux-prerequisites):
 

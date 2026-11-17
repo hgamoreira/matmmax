@@ -7,6 +7,11 @@ curl, tar and xz; ESP-IDF also needs the prerequisites in its
 [Linux setup documentation](https://docs.espressif.com/projects/esp-idf/en/v5.5.6/esp32s3/get-started/linux-macos-setup.html).
 Installers need internet access and place dependencies under `third_party/`.
 
+**No hardware?** Follow the [ESP8266 browser walkthrough](EMULATOR_QUICKSTART.md#6-try-the-webrepl-screenshots-interface-without-an-esp8266)
+for a native Linux build: `MS_NATIVE_WIFI=1 esp8266/scripts/webrepl.sh native`.
+It serves the same WebREPL UI on localhost, with simulated platform services.
+No SDK or cross-compiler is required for that route.
+
 ## ESP8266: a real Wemos D1 mini, 4 MB
 
 ```sh

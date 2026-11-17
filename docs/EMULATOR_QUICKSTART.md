@@ -155,12 +155,19 @@ physical ESP32-S3 board validation remains pending.
 
 ## 6. Try the WebREPL screenshot's interface without an ESP8266
 
-From the same repository root, compile the native harness:
+This is the board-free route for the ESP8266 browser interface in the README.
+Only Python **3.12+**, Git and GCC/G++ are needed; no ESP8266 SDK, cross-compiler,
+QEMU, Wi-Fi setup or USB connection is involved. If you want only this route,
+skip sections 3–5 above. On Ubuntu/Debian, install `git python3 build-essential`,
+then clone the project as in section 2 and run this from its root:
 
 ```sh
-MS_ESP8266_APP=l01_webrepl python3 esp8266/scripts/native.py
-MS_NATIVE_WIFI=1 build/esp8266/l01_webrepl/native/mathsmith_light
+MS_NATIVE_WIFI=1 esp8266/scripts/webrepl.sh native
 ```
+
+The wrapper builds the native harness and immediately starts it with the
+browser service enabled. `MS_NATIVE_WIFI=1` selects simulated network setup;
+it does not join a real Wi-Fi network.
 
 Keep the process and terminal open. It prints a **Browser URL** similar to
 `http://127.0.0.1:PORT/#ACCESS_KEY`, with an actual port and generated key.
