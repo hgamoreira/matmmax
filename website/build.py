@@ -29,7 +29,7 @@ def build(repository, output=None):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--repository', default=os.environ.get('GITHUB_REPOSITORY', 'hgamoreira/mathsmith-os'))
+    parser.add_argument('--repository', default=os.environ.get('GITHUB_REPOSITORY', 'hgamoreira/matmmax'))
     parser.add_argument('--output', type=Path)
     args = parser.parse_args()
     print(build(args.repository, args.output))

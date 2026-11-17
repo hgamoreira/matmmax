@@ -7,7 +7,7 @@ MathSmith originated in Hugo Moreira's workstation projects; the portable
 engine and platform code are included as source, rather than as a proprietary
 binary dependency. Existing third-party notices must be retained.
 
-The dedicated `mathsmith-os` export is **source-only**. Its export manifest
+The dedicated `matmmax` export is **source-only**. Its export manifest
 records the workstation source commit. SDKs and build products are deliberately
 absent: the installers fetch pinned upstream dependencies separately.
 
@@ -25,7 +25,7 @@ absent: the installers fetch pinned upstream dependencies separately.
 The Wemos D1 mini photo by Tpkull and ESP32-S3 development-board photo by
 VectorVoyager are **CC BY-SA 4.0**, separate from the project's MIT license.
 Their source pages, photographer credits, license links, image versions and
-checksums are listed in the [image credits](https://github.com/hgamoreira/mathsmith-os/blob/main/docs/IMAGE_CREDITS.md).
+checksums are listed in the [image credits](https://github.com/hgamoreira/matmmax/blob/main/docs/IMAGE_CREDITS.md).
 Retain these credits and the images' license when sharing the photographs.
 
 ## Binary releases

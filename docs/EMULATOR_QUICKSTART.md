@@ -1,4 +1,4 @@
-# Try MathSmith without a board
+# Try MatmMax without a board
 
 There are two ways to try the project on a computer:
 
@@ -45,8 +45,8 @@ on Ubuntu/Debian), but does not need ESP-IDF, QEMU or the cross-compiler.
 ## 2. Get the source
 
 ```sh
-git clone https://github.com/hgamoreira/mathsmith-os.git
-cd mathsmith-os
+git clone https://github.com/hgamoreira/matmmax.git
+cd matmmax
 python3 --version
 uname -m
 ```

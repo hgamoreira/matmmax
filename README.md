@@ -1,9 +1,10 @@
-# MathSmith OS
+# MatmMax
 
-A small mathematical programming environment for microcontrollers. Boot into
-MathSmith, calculate with matrices and scripts, and build toward a standalone
-workstation. This is early firmware with two working targets and different
-capabilities; it is not a general-purpose multitasking OS.
+MatmMax is the numerical application in the Mini-Max suite, alongside
+WordmMax for writing and CodemMax for programming. The suite grew out of
+work on the Commodore 64 and MS-DOS. This repository covers the ESP8266
+and ESP32-S3 ports of the MATLAB-inspired numerical environment. Earlier
+releases and the firmware shown below use the name MathSmith.
 
 ## Choose where to run MathSmith
 
@@ -75,8 +76,8 @@ packages; check that your distribution's Python meets the version requirement.
 No ESP8266 board, USB adapter, ESP-IDF, QEMU or cross-compiler is needed.
 
 ```sh
-git clone https://github.com/hgamoreira/mathsmith-os.git
-cd mathsmith-os
+git clone https://github.com/hgamoreira/matmmax.git
+cd matmmax
 MS_NATIVE_WIFI=1 esp8266/scripts/webrepl.sh native
 ```
 
@@ -98,8 +99,8 @@ Run the ESP32-S3 firmware in Espressif QEMU on **x86_64 Linux**. After
 installing the [Linux prerequisites](docs/EMULATOR_QUICKSTART.md#1-install-linux-prerequisites):
 
 ```sh
-git clone https://github.com/hgamoreira/mathsmith-os.git
-cd mathsmith-os
+git clone https://github.com/hgamoreira/matmmax.git
+cd matmmax
 tools/setup_esp_idf.sh
 tools/setup_esp_qemu.sh
 tools/setup_elf_loader.sh
@@ -119,7 +120,7 @@ installation, expected results, tests, troubleshooting, and running the
 - [ESP8266 browser/GPIO manual](esp8266/docs/USER_MANUAL_L01.md) and [math language manual](esp8266/docs/USER_MANUAL.md).
 - [ESP32-S3 external apps](apps/esp32/e03_external/README.md) and [app ABI](docs/WORKSTATION_APP_ABI.md).
 - [Validation status](PROGRESS.md), including the remaining hardware checks.
-- [Project website](https://hgamoreira.github.io/mathsmith-os/).
+- [Project website](https://hgamoreira.github.io/matmmax/).
 
 ## Use a real ESP8266 board
 

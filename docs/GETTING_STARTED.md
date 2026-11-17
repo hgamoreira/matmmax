@@ -1,6 +1,6 @@
 # Build and first use
 
-Run these commands from the dedicated `mathsmith-os` repository root.
+Run these commands from the dedicated `matmmax` repository root.
 The same paths work from the workstation repository. Current installers are
 tested on x86_64 Linux. You need Python 3.12 or newer, GCC/G++, Git, make,
 curl, tar and xz; ESP-IDF also needs the prerequisites in its
@@ -75,7 +75,7 @@ and mathematical engine; it does not emulate the ESP8266 CPU or radio.
 ## Website preview
 
 ```sh
-python3 website/build.py --repository hgamoreira/mathsmith-os
+python3 website/build.py --repository hgamoreira/matmmax
 python3 -m http.server 8000 --bind 127.0.0.1 --directory build/github-pages
 ```
 

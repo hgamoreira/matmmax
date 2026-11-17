@@ -1,4 +1,4 @@
-# Sharing MathSmith OS on GitHub
+# Sharing MatmMax on GitHub
 
 The first public release is a **source snapshot**, with ESP8266 L01-r14
 hardware results and ESP32-S3 E03 emulator results clearly separated.
@@ -8,6 +8,9 @@ Binary redistribution materials remain a separate release task; see
 
 ## Repository
 
+The existing public repository is `hgamoreira/matmmax`. The first source
+release was published under the former MathSmith OS name.
+
 The workstation project prepares a clean standalone export using
 `sharing/export.py`. It copies an explicit selection from one committed
 revision, creates a new README/progress file, omits hardware logs and DOS
@@ -16,19 +19,11 @@ history. The exported `docs/DECISIONS.md` is the portable-platform excerpt;
 personal network identifiers in exported Markdown are replaced with examples.
 Source code is copied byte-for-byte. Credentials and SDKs are not included.
 
-The prepared repository is intended for `hgamoreira/mathsmith-os`. Create
-that empty repository on GitHub without adding a README or license, then
-from the prepared folder (which has its own initial commit):
+From a clone, push reviewed changes to the existing repository:
 
 ```sh
-git remote add origin https://github.com/hgamoreira/mathsmith-os.git
-git push -u origin main
+git push origin main
 ```
-
-Creating/pushing the remote makes the selected source public if the
-repository is public. Local preparation does not create or publish a remote.
-Afterward set the repository description and topics such as `mathsmith`,
-`esp8266`, `esp32-s3`, `matrix`, `firmware`, and add the Pages URL as Website.
 
 ## GitHub Pages
 
@@ -38,7 +33,7 @@ The workflow validates and builds only `website/`, uploads a Pages artifact,
 and deploys to the `github-pages` environment. It is manually triggered, so
 a source push alone does not publish or update the website.
 
-Expected project URL: `https://hgamoreira.github.io/mathsmith-os/`.
+Project URL: `https://hgamoreira.github.io/matmmax/`.
 Links derive from the actual repository name at build time. The site needs
 no API key, hosted database or external JavaScript library. It hosts project
 information, not the live board's HTTP/WebSocket interface.
