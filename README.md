@@ -5,11 +5,23 @@ MathSmith, calculate with matrices and scripts, and build toward a standalone
 workstation. This is early firmware with two working targets and different
 capabilities; it is not a general-purpose multitasking OS.
 
+## Choose where to run MathSmith
+
+The WebREPL is the browser interface. **The calculations run in the program
+that the browser connects to.** Choose one of these setups:
+
+| Setup | Where calculations run | How you use it |
+|---|---|---|
+| **Real ESP8266 board** | On your Wemos D1 mini | Open the board's Wi-Fi address in your browser. [Hardware setup](#use-a-real-esp8266-board). |
+| **ESP8266 WebREPL PC demo — no board** | In a Linux program on your computer | Open the local program's `127.0.0.1` address in your browser. [PC demo setup](#esp8266-pc-demo-on-linux-no-board). |
+| **ESP32-S3 in QEMU — no board** | In ESP32-S3 firmware inside the emulator on your computer | Use the terminal console. [QEMU setup](#esp32-s3-firmware-in-qemu-no-board). |
+
 ![MathSmith WebREPL showing the script editor and console solving a linear system, finding eigenvalues and checking the result](esp8266/docs/images/webrepl.png)
 
-*The browser editor and console running a matrix script: solve a system, find
-its eigenvalues, and check the result. Captured with the native firmware test
-harness, using the same WebREPL interface served by the ESP8266.*
+**Screenshot: the PC demo running entirely on Linux, with no ESP8266 connected.**
+The browser displays the editor and results; the local Linux program performs
+this matrix calculation. The same browser interface is also available from
+firmware installed on a real ESP8266 board.
 
 | Target | Working version | Validation |
 |---|---|---|
@@ -31,12 +43,16 @@ ans =
    3
 ```
 
-## Try without hardware
+## Run on your computer — no board required
 
 Choose either route below. If you already cloned the repository, use its
 existing folder and skip the clone/cd lines.
 
-### ESP8266: try the WebREPL in your browser
+### ESP8266 PC demo on Linux (no board)
+
+**In this setup, both the WebREPL server and the math engine run on your
+computer. No ESP8266 is connected.** Your browser connects to that local
+program, using an address beginning with `http://127.0.0.1:`.
 
 On **x86_64 Linux**, you need Python **3.12+**, Git and GCC/G++. On
 Ubuntu/Debian, `sudo apt-get install git python3 build-essential` supplies the
@@ -54,13 +70,14 @@ browser on the same computer, then click **Connect**. Try `2+2` in the console,
 use the program editor, and open/save scripts on your computer. Stop the
 harness with **Ctrl+C** in the terminal when finished.
 
-This runs the real ESP8266 WebREPL interface and math engine as a Linux
-program. GPIO/ADC and network setup are simulated; it does not emulate the
-ESP8266 CPU or physical Wi-Fi. See the
+This is a PC demonstration of the ESP8266 version, built from the same UI
+and math sources. It is a native Linux program, rather than ESP8266 CPU
+emulation. GPIO/ADC and Wi-Fi use test stubs; they do not control real pins
+or connect a board to a network. See the
 [WebREPL walkthrough](docs/EMULATOR_QUICKSTART.md#6-try-the-webrepl-screenshots-interface-without-an-esp8266)
 for the matrix example shown above.
 
-### ESP32-S3: run the firmware in QEMU
+### ESP32-S3 firmware in QEMU (no board)
 
 Run the ESP32-S3 firmware in Espressif QEMU on **x86_64 Linux**. After
 installing the [Linux prerequisites](docs/EMULATOR_QUICKSTART.md#1-install-linux-prerequisites):
@@ -87,18 +104,28 @@ installation, expected results, tests, troubleshooting, and running the
 - [ESP8266 browser/GPIO manual](esp8266/docs/USER_MANUAL_L01.md) and [math language manual](esp8266/docs/USER_MANUAL.md).
 - [ESP32-S3 external apps](apps/esp32/e03_external/README.md) and [app ABI](docs/WORKSTATION_APP_ABI.md).
 - [Validation status](PROGRESS.md), including the remaining hardware checks.
-- [Project website](https://hgamoreira.github.io/mathsmith-os/) (available after GitHub Pages is enabled).
+- [Project website](https://hgamoreira.github.io/mathsmith-os/).
 
-## What is available now
+## Use a real ESP8266 board
 
-The ESP8266 serves its own browser console on your local network. Configure
-Wi-Fi once over serial; after a successful connection, credentials and the
-browser key are saved and subsequent boots reconnect. The browser editor
+**In this setup, MathSmith and the WebREPL server run on the ESP8266.** Your
+computer's browser displays the editor and sends commands over Wi-Fi. The
+ESP8266 performs the calculations and controls its physical GPIO pins.
+
+1. Connect a Wemos D1 mini with 4 MB flash over USB and follow the
+   [firmware build/flash instructions](docs/GETTING_STARTED.md#esp8266-a-real-wemos-d1-mini-4-mb).
+2. In its serial console, enter `:wifi join` and supply your network details.
+3. Enter `:wifi`, then open the complete **Browser URL** it prints. This is
+   the board's network address, not the PC demo's `127.0.0.1` address.
+
+After a successful connection, network credentials and the browser key are
+saved, and subsequent boots reconnect automatically. The browser editor
 opens and saves `.ms` files **on your computer**, then sends acknowledged
 lines to the board. Stop cancels running code. The browser console exposes
-the same workspace as serial.
+the same workspace as serial. After setup, a USB power supply can power the
+board; a serial connection to the computer is not needed for browser use.
 
-GPIO can be used inside a script. This blinks the D1 mini's active-low LED:
+On the physical board, GPIO can be used inside a script. This blinks the D1 mini's active-low LED:
 
 ```text
 pinmode('D4','output',1);
@@ -107,6 +134,8 @@ for k=1:5
     digitalwrite('D4',1); delay(500);
 end
 ```
+
+## ESP32-S3 application support
 
 The ESP32-S3 has a foreground app launcher and a versioned API. A separately
 compiled demo can be uploaded and run without reflashing the OS; returning
@@ -118,8 +147,9 @@ same address space. Uploads are RAM-only and disappear after reboot.
 Neither microcontroller build includes AI integration, an attached keyboard,
 OLED driver or SD storage. Those remain future milestones. ESP8266 has no
 FFT, graphics or native app launcher. Its HTTP/WebSocket browser console is
-intended for a trusted local network. The project website hosts documentation;
-open the board's own URL to use MathSmith.
+intended for a trusted local network. The project website hosts documentation.
+To use the WebREPL, open the URL printed by your board or by the PC demo,
+depending on the setup you chose.
 
 ## Development and sharing
 

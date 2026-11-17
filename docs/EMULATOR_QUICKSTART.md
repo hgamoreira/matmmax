@@ -5,7 +5,7 @@ There are two ways to try the project on a computer:
 | Route | What runs | What you can try |
 |---|---|---|
 | **ESP32-S3 in Espressif QEMU** | The actual ESP32-S3 firmware, with an emulated CPU, flash and PSRAM | Serial math, FFT, app launch/return and external program upload |
-| **WebREPL on the native test harness** | The ESP8266 front end and bounded math engine compiled for Linux, with simulated platform services | The browser console and script editor shown in the README |
+| **ESP8266 WebREPL PC demo — no board** | The WebREPL server and math engine run as a Linux program on your computer | Open its localhost URL in a browser on that computer |
 
 The supplied installers support **x86_64 Linux**. Use Python **3.12 or newer**
 and a terminal. Native Windows/macOS installers are not provided here.
@@ -155,7 +155,10 @@ physical ESP32-S3 board validation remains pending.
 
 ## 6. Try the WebREPL screenshot's interface without an ESP8266
 
-This is the board-free route for the ESP8266 browser interface in the README.
+**Everything in this section runs on your Linux computer. No ESP8266 board
+is connected.** The local Linux program performs the calculations; the browser
+only displays its editor and results. This is the PC demo shown in the README
+screenshot. On a real board, the ESP8266 performs those calculations instead.
 Only Python **3.12+**, Git and GCC/G++ are needed; no ESP8266 SDK, cross-compiler,
 QEMU, Wi-Fi setup or USB connection is involved. If you want only this route,
 skip sections 3–5 above. On Ubuntu/Debian, install `git python3 build-essential`,

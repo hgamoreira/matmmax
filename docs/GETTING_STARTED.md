@@ -9,10 +9,14 @@ Installers need internet access and place dependencies under `third_party/`.
 
 **No hardware?** Follow the [ESP8266 browser walkthrough](EMULATOR_QUICKSTART.md#6-try-the-webrepl-screenshots-interface-without-an-esp8266)
 for a native Linux build: `MS_NATIVE_WIFI=1 esp8266/scripts/webrepl.sh native`.
-It serves the same WebREPL UI on localhost, with simulated platform services.
+In this PC demo, the WebREPL server and calculations run entirely on your
+Linux computer. The browser connects to localhost; no ESP8266 is connected.
 No SDK or cross-compiler is required for that route.
 
 ## ESP8266: a real Wemos D1 mini, 4 MB
+
+**The instructions in this section install firmware on a physical board.**
+MathSmith then runs on the ESP8266; your browser connects to its Wi-Fi address.
 
 ```sh
 python3 tools/setup_esp8266.py
