@@ -1,0 +1,32 @@
+Optional MatmMax assistant for the Toshiba DOS preview
+======================================================
+
+MSASK.EXE is a separate helper. Put it in the same DOS directory as
+MATHSMTH.EXE, and copy MSASK.SMP to MSASK.CFG. Edit the settings before
+starting the helper. The IP addresses in MSASK.SMP are documentation
+examples. Replace server, ip, netmask and gateway with the values for
+your network. The server port defaults to 8064.
+
+Start a DOS packet driver and working IP connection before using ASK.
+The reference Toshiba used serial SLIP through an external gateway.
+The serial device, cable, gateway, packet driver and baud rate depend
+on your setup. A working DOS network is needed only for the assistant.
+
+On the host computer, start the Mini-Max workstation server and Ollama.
+Configure the server for the Toshiba client and use a model installed
+on that host. Point MSASK.CFG at the host running the workstation server.
+MSASK talks to that server, which in turn sends the request to Ollama.
+
+Before testing, check the free conventional memory in the main Math
+prompt. Aim for at least 240K on the Math status line. Start with a
+short request:
+
+      ask what is a matrix transpose?
+
+The helper displays its progress and returns to the math workspace.
+Generated code can be inspected before it is run. If the helper cannot
+connect, check your DOS network, configured host and listening port.
+
+The assistant has emulator coverage. The full Toshiba hardware test
+procedure remains open. This source preview supplies the optional helper and host server source.
+Provide a DOS boot disk and a packet driver for your hardware.

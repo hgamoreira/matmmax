@@ -3,8 +3,9 @@
 MatmMax is the numerical application in the Mini-Max suite, alongside
 WordmMax for writing and CodemMax for programming. The suite grew out of
 work on the Commodore 64 and MS-DOS. This repository covers the ESP8266
-and ESP32-S3 ports of the MATLAB-inspired numerical environment. The v0.1.0
-source preview predates the MatmMax name.
+and ESP32-S3 ports of the MATLAB-inspired numerical environment, plus the
+[Toshiba T2100 DOS source preview](dos/toshiba/README.md). The v0.1.0
+microcontroller source preview predates the MatmMax name.
 
 ## Choose where to run MatmMax
 

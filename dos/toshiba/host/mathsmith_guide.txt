@@ -1,0 +1,201 @@
+MATHSMITH LANGUAGE GUIDE
+MathSmith looks like MATLAB or Octave but is a much smaller program. Everything this guide does not list does not exist: using it gives the error "undefined variable or function" or "unexpected ...". Write only what is here.
+
+DATA
+- Every value is a matrix of real numbers (double precision). A number is 1x1. There are NO complex numbers, no integer types, no true or false (write 1 and 0), no cell arrays {}, no structs (a.b), no matrices of more than two dimensions.
+- Constants: pi eps Inf NaN (inf and nan also) and ans (the last unassigned result). There is no e, i or j: write exp(1).
+- Matrices: [1 2 3; 4 5 6]. Ranges: 1:5 and 0:0.5:2 and 10:-2:0.
+- Strings: 'text' (a quote inside is doubled: 'it''s') or "text". A string is a row of character codes: ['ab' 'cd'] joins, s(2) picks, 'a'+1 is 98.
+- Indices start at 1. A(2,3) A(:,1) A(2,:) A(end) A(end,1) A(2:3,[1 3]) A(:) (all, as a column). A(A>2) picks the elements, A(A>2) = 0 assigns them. x(end+1) = v appends. A(2,:) = [] deletes a row. Assigning outside the matrix makes it grow (filled with zeros); reading outside is an error.
+- Only a variable can be indexed. f(x)(2), [1 2 3](2) and zeros(3)(1) are errors: put the value in a variable first.
+- Operators: + - * / \ ^ and ' (transpose). Element by element: .* ./ .^ . Comparisons == ~= < > <= >= (the result is 1 or 0). & | ~ work element by element; && || are for single values. There is NO != ! ++ += -= ^= . A\b solves A*x = b.
+- * is the matrix product: use .* for element-wise, and x*y' for the dot product of two row vectors. ^ is a matrix power (a square matrix and an integer): use .^ for element-wise powers, always in functions meant to take vectors: f = @(x) x.^2.
+- A comment starts with % (not #). A line has at most 255 characters and cannot be continued (no ...).
+- Everything is case sensitive.
+
+STATEMENTS
+- A statement ending with ; shows nothing. Without ; its value is printed (x = 5). Several statements on a line are separated by ; or , .
+- if cond ... elseif cond ... else ... end
+- for k = 1:n ... end    (also for k = v over the elements of a vector)
+- while cond ... end    with break and continue; return leaves a function or script.
+- Every block closes with the plain word end. endif, endfor, endwhile, endfunction do NOT exist. There is no switch, try/catch, do-until, global, input, or ++.
+- A block on ONE line needs a comma after its header: if x > 3, disp(x), end    for k = 1:3, disp(k), end    while n > 1, n = n/2; end . Without that comma it is an error ("unexpected 'd' in the condition", "the loop limits must be single numbers").
+- A condition on a vector is true when all its elements are non-zero.
+
+FUNCTIONS AND FILES
+- A script is a .m file of statements. It runs when the user types its name or run name; its variables stay in the workspace.
+- A function file myfun.m starts (first statement) with: function y = myfun(a, b) ... end . The function has ONE output (no [a, b] = ...) and must be named like the file. Its variables are local: pass in everything it needs as parameters. It must assign its output (y = ...). Inside it nargin is the number of arguments given. Helper functions may follow the main one in the same file; they work after the main function has been called once. A function without an output is written function show(x).
+- A file that BEGINS with function is a function file: put NO other statements after its functions (no disp(...), no calls). To keep functions and the code that uses them in ONE script, start the script with a line  1;  then define each function BEFORE the line that calls it, then the calling code.
+- Anonymous functions: f = @(x) x.^2 + 1;  g = @(x, y) x + y;  h = @sin;  They are called f(3). At most 3 parameters. The variables they use are read when they are called. Each one kept in a variable counts toward a small limit on user functions: reuse names.
+
+BUILT-IN FUNCTIONS (this is the complete list)
+- Maths: abs sqrt exp log log10 sin cos tan asin acos atan atan2(y,x) floor ceil round fix sign mod(a,b) rem(a,b). round has one argument (round(x*100)/100 rounds to 2 decimals). There is no sinh cosh tanh log2 hypot gamma factorial nchoosek gcd lcm primes isprime isnan isinf xor.
+- Making matrices: zeros(n) zeros(r,c) ones eye rand (rand, rand(n), rand(r,c)) linspace(a,b,n) diag reshape(A,r,c) transpose. Sizes must be plain numbers: zeros(size(A)) is an error, write zeros(size(A,1), size(A,2)). There is no randn randi magic repmat cross kron fliplr flipud unique triu tril.
+- Size and tests: size(A) size(A,1) [r,c] = size(A) length numel isempty any all find(v) (one result: the positions).
+- Totals: sum prod mean median std var cumsum cumprod diff trapz(y) trapz(x,y) dot(a,b) norm(v) norm(A,p) (p = 1 2 Inf 'fro'). sum, prod and mean take a dimension: sum(A,2). max and min: max(v), max(a,b), [m,i] = max(v), and for the whole matrix max(max(A)); they take NO dimension argument. sort(v) sorts ascending only; [s,k] = sort(v) also gives the positions. cumsum and cumprod take no dimension.
+- Linear algebra: inv det trace rank cond pinv eig(A) (real eigenvalues; [V,D] = eig(S) for a symmetric S) eigc(A) (complex eigenvalues as two columns [re im]) svd(A) [U,S,V] = svd(A) (economy size: for A of m x n, U is m x n, S and V are n x n; A = U*S*V', and the pseudo-inverse is V*inv(S)*U', or just pinv(A)) roots(p) rootsc(p) (complex roots as [re im]) polyfit(x,y,n) polyval(p,x) and A\b.
+- Calculus: integral(f,a,b) (quad is the same), fzero(f,x0) or fzero(f,[a b]) with a bracket where f changes sign, fminbnd(f,a,b), deriv(f,x) and deriv(f,x,2), arrayfun(f,A). Each gives ONE result. f is @(x) expression or @name (the name of a function file or a built-in function).
+- Text and output: disp(x) shows a value or a string (one argument: disp(['a = ' num2str(a)])). fprintf(format, values...) prints; the format comes first (no file number) and the line ends with \n. sprintf(format, values...) returns the string. Formats: %d %i %f %g %e %s %c %x %5.2f %-8s %%. When there are more values than formats, the format repeats. num2str(x) takes ONE argument; for control write sprintf('%.3f', x). error('text %d', n) stops with a message. strcmp(a,b) compares two strings (1 or 0). There is no printf, input, strcat, upper, lower, strrep, str2num, mat2str, int2str, double, char, regexp, cellfun, isnumeric, exist, warning, pause, close, figure.
+- Time: tic and toc (toc gives the seconds).
+- Commands without parentheses: who  clear  clear x  format short  format long  clc  help  quit .
+
+PLOTS
+- plot(x,y) plot(y) plot(x,y,'r--') plot(x1,y1,x2,y2) plot(x,M) (a curve for each column of M). The style string comes right after the data it belongs to: lines - -- : and markers . o + * x; one of the colour letters r g b c m y k w may be added ('r--', 'bo'). The colour shows on the 486's colour screen only. No LineWidth or 'color' options.
+- After plot: title('text') xlabel('text') ylabel('text') (text in quotes, one argument) grid on  grid off  axis([x1 x2 y1 y2])  axis tight  axis auto  xlim([a b]) ylim([a b])  hold on  hold off  clf  shg.
+- There is no legend figure subplot bar hist scatter semilogy fplot ezplot surf contour. The plot appears when the script or line ends and the user presses a key to come back, so put the plot commands last.
+
+ERROR MESSAGES AND THEIR USUAL CAUSE
+- undefined variable or function 'name': a misspelt name; a function MathSmith does not have (see the list); a variable used before it is assigned; a function defined below the line that calls it; a script variable used inside a function (functions only see their parameters); the function name differs from the file name.
+- unexpected 'd' in the condition / in the for line / the loop limits must be single numbers: if, for or while followed by a statement on the same line without a comma. Write if x > 3, disp(x), end or put the body on the next line.
+- missing end for the if (for, while, function) on line N: a block without its end. Remember endif, endfor and so on do not exist.
+- end without a matching if, for, while or function / else without a matching if: one end too many, or an else outside of an if.
+- A function file that prints its results twice and ends with "undefined variable or function": the file begins with function and has script statements after the functions. Start it with  1;  or move the functions to their own files.
+- unexpected '(' : indexing the result of an expression, as in f(x)(2) or [1 2 3](2). unexpected '{' : cell arrays. unexpected '!' or '#' or '.' : ! # and ... do not exist. unexpected 'i' : complex numbers. unexpected '=' : += -= ^= do not exist.
+- subscript indices must be positive integers (got 0): an index of 0 or 1.5; indices start at 1.
+- index 7 exceeds the matrix dimension 5: reading beyond the end.
+- matrix dimensions must agree (1x2 and 1x3): an element-wise operation (+ - .* ./ comparisons) on matrices of different sizes.
+- inner matrix dimensions must agree (1x3 times 1x3): * is the matrix product; use .* or x*y'. Do not swap the operands to hide it (A*B is not B*A): find which operand is built wrongly. In a least-squares fit use  c = A\y  or  c = pinv(A)*y.
+- ^ needs a square matrix and a scalar integer power (use .^ for element-wise): ^ was used on a vector; write .^
+- wrong number of arguments for max (3 given): a call with arguments the function does not take: max(A,[],2), sort(v,'descend'), round(x,2), num2str(x,4), cumsum(A,2). Rewrite with what exists.
+- this function takes 1 argument (2 given) / name takes 2 arguments (1 given): a call with the wrong number of arguments.
+- horizontal dimensions are not consistent (1 rows and 2 rows): [ 'text' num2str(v) ] with v a column: write num2str(v').
+- vertical dimensions are not consistent: the rows of [1 2; 3] have different lengths.
+- zeros needs a scalar here: zeros(size(A)) and the like. Use two numbers.
+- the right side gives 1 result, not 2: [a, b] = f(...) with a function that has one output.
+- a function has one output name: function [a, b] = f(x). Use one output (a column vector may hold several values).
+- a function takes at most 3 parameters / too many functions: an anonymous function with more than 3 parameters (pass a vector, or use a function file); too many anonymous functions defined.
+- name did not set its output 'y': the function never assigns its output variable on some path.
+- functions are nested too deep: a function calls itself without a stopping condition.
+- matrix is singular to working precision: inv or \ of a singular matrix.
+- fzero: no sign change found: give a bracket, fzero(f,[a b]), where f(a) and f(b) have opposite signs.
+- plot: x and y must have the same number of points / plot: 'LineWidth' is not a line style / xlabel: there is no plot yet: plot first, give x and y the same length, use only the styles listed.
+- out of memory or matrix larger than N elements / too many variables / too many function evaluations: the program is too big for the machine; use smaller sizes.
+- the expression is incomplete / missing ] / missing ) / the string is not closed: an unfinished line.
+- sqrt(-1) is NaN, 1/0 is Inf, 0/0 is NaN: these are not errors.
+
+RULES FOR THE CODE YOU WRITE
+- Write plain ASCII, with comments after %. A short comment at the top says what the script does.
+- Use only what this guide lists. When MATLAB has a function that is not listed, build it from the listed ones.
+- Keep a statement on one line of at most 255 characters. Use ; to hide intermediate results. Show results with disp or fprintf and a \n.
+- Prefer a clear loop to a clever trick. Index from 1.
+- Put the plot commands last.
+
+%% CHECKLIST
+Before you answer, check the WHOLE script against this list (MathSmith is not MATLAB) and correct every item that applies, not only the error that was reported:
+1. There is no true, false, e, i, j: write 1 and 0, exp(1).
+2. There is no printf: use fprintf('text %d\n', x). Output a value with disp(x).
+3. A one-line if, for or while needs a comma after its header: if x > 3, disp(x), end
+4. Close each block with end. endif, endfor, endwhile and endfunction do not exist.
+5. If the script's FIRST line is function, the file is a function file and the statements after the functions do not run as a script: put a line  1;  above the first function (then each function must be defined BEFORE the line that calls it).
+6. Only a variable can be indexed: t = f(x); t(2). Never f(x)(2) or a(2:3)(1).
+7. Sizes are plain numbers: zeros(size(A,1), size(A,2)), never zeros(size(A)).
+8. max, min, sort, cumsum, round and num2str take no extra argument (no dimension, no 'descend', no digits): use max(max(A)), s(end:-1:1), sprintf('%.2f', x).
+9. Element-wise operators are .* ./ .^ ; * is the matrix product.
+10. Comments start with %, not #. There is no != ! ++ += : write ~= ~ and x = x + 1.
+11. A user function has ONE output; an anonymous function has at most 3 parameters.
+12. A function that is not in the BUILT-IN FUNCTIONS list does not exist: build it from the listed ones.
+13. Never cure a size error by swapping the operands of a product or adding a transpose unless the maths stays the same: A*B is not B*A. Work out what the result must be and which earlier line builds an operand wrongly.
+14. num2str of a column vector is a column of text and cannot be joined to a row: write num2str(v') (a row) inside disp(['text ' num2str(v')]).
+%% END
+
+%% FFT
+This copy has four functions that the list below does not mention (there are still no complex numbers: a complex list is two columns [real imaginary]): F = fft(x) is the Fourier transform of a real vector x (any length, row or column) and gives n by 2 [real imaginary]; x = ifft(F) is the inverse and also gives n by 2 (column 1 is the real part); fft and ifft also take such an n by 2 matrix as their input; cabs(F) is the magnitude and cangle(F) the phase of [real imaginary] as a column. Example, the spectrum of a signal: F = fft(x); a = cabs(F); plot(a(1:end/2)). fft(x) is not MATLAB's: abs(fft(x)) is wrong here, write cabs(fft(x)).
+%% END
+
+%% FFT16
+On this machine the length of the list given to fft or ifft must be a power of 2 (1, 2, 4, 8 ... 2048), or there is an error: pad the list with zeros first, for example x = [x zeros(1, 128 - length(x))].
+%% END
+
+%% FILE collatz.m
+function n = collatz(x)
+  % the number of steps of the Collatz sequence from x to 1
+  n = 0;
+  while x ~= 1
+    if mod(x, 2) == 0
+      x = x / 2;
+    else
+      x = 3 * x + 1;
+    end
+    n = n + 1;
+  end
+end
+%% END
+
+EXAMPLES THAT RUN IN MATHSMITH
+
+%% EXAMPLE a table and a plot
+x = 0:0.5:5;
+y = x.^2;
+for k = 1:length(x)
+  fprintf('%4.1f %6.2f\n', x(k), y(k));
+end
+plot(x, y, 'r-');
+title('squares'); xlabel('x'); ylabel('x^2'); grid on
+%% END
+
+%% EXAMPLE a script with its own function
+1;
+function r = newton_sqrt(a)
+  % the square root of a by Newton's method
+  r = a;
+  for k = 1:20
+    r = (r + a / r) / 2;
+  end
+end
+disp(newton_sqrt(2))
+fprintf('%.6f\n', sqrt(2));
+%% END
+
+%% EXAMPLE a function file used from a script (collatz.m above)
+for k = 1:6
+  fprintf('%d takes %d steps\n', k, collatz(k));
+end
+%% END
+
+%% EXAMPLE a straight line fitted to data
+x = (1:6)';
+y = [2.1 3.9 6.2 7.8 10.1 12.2]';
+p = polyfit(x, y, 1);
+fprintf('slope %.3f, intercept %.3f\n', p(1), p(2));
+res = y - polyval(p, x);
+fprintf('largest error %.3f\n', max(abs(res)));
+%% END
+
+%% EXAMPLE a linear system and eigenvalues
+A = [4 -2 1; -2 4 -2; 1 -2 4];
+b = [11; -16; 17];
+x = A \ b
+lambda = eig(A)'
+%% END
+
+%% EXAMPLE primes with while and break
+p = [];
+n = 2;
+while n < 30
+  isp = 1;
+  for d = 2:floor(sqrt(n))
+    if mod(n, d) == 0
+      isp = 0;
+      break
+    end
+  end
+  if isp, p(end+1) = n; end
+  n = n + 1;
+end
+disp(p)
+%% END
+
+%% EXAMPLE a root and an area
+f = @(x) x.^3 - 2*x - 5;
+r = fzero(f, [2 3]);
+fprintf('root %.6f\n', r);
+area = integral(@(x) exp(-x.^2), 0, 1);
+fprintf('area %.6f\n', area);
+%% END
+
+%% EXAMPLE several curves
+t = linspace(0, 2*pi, 60);
+plot(t, sin(t), 'b-', t, cos(t), 'r--');
+title('sine and cosine'); grid on
+axis([0 6.5 -1.2 1.2])
+%% END

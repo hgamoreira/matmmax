@@ -1,0 +1,9 @@
+; Sample addresses. Replace with settings for your own DOS network.
+server=192.0.2.10
+port=8064
+ip=192.0.2.20
+netmask=255.255.255.0
+gateway=192.0.2.1
+mss=536
+rwin=1100
+wait=20
