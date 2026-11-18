@@ -1,5 +1,5 @@
-Optional MatmMax assistant for the Toshiba DOS preview
-======================================================
+Optional MatmMax assistant for DOS
+==================================
 
 MSASK.EXE is a separate helper. Put it in the same DOS directory as
 MATHSMTH.EXE, and copy MSASK.SMP to MSASK.CFG. Edit the settings before
@@ -13,9 +13,8 @@ The serial device, cable, gateway, packet driver and baud rate depend
 on your setup. A working DOS network is needed only for the assistant.
 
 On the host computer, start the Mini-Max workstation server and Ollama.
-Configure the server for the Toshiba client and use a model installed
-on that host. Point MSASK.CFG at the host running the workstation server.
-MSASK talks to that server, which in turn sends the request to Ollama.
+Use a model installed on the host. Point MSASK.CFG at that host. The
+workstation server forwards MSASK requests to Ollama.
 
 Before testing, check the free conventional memory in the main Math
 prompt. Aim for at least 240K on the Math status line. Start with a
@@ -27,6 +26,6 @@ The helper displays its progress and returns to the math workspace.
 Generated code can be inspected before it is run. If the helper cannot
 connect, check your DOS network, configured host and listening port.
 
-The assistant has emulator coverage. The full Toshiba hardware test
-procedure remains open. This source preview supplies the optional helper and host server source.
+The assistant has emulator coverage. The Toshiba hardware test remains
+open. The preview supplies source for the helper and the host server.
 Provide a DOS boot disk and a packet driver for your hardware.

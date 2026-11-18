@@ -2,13 +2,13 @@ MatmMax for DOS | 8086/CGA preview
 =================================
 
 MatmMax is the numerical program in the Mini-Max suite. This source preview
-targets the Toshiba T2100. The built executable displays its original
+targets compatible 8086/CGA DOS PCs. The executable displays its original
 MathSmith M08 name when it starts.
 
 Start here
 ----------
 1. Start DOS and extract or copy the files to a writable directory.
-   A DOS-formatted 720 KB floppy is enough on a Toshiba T2100.
+   The program and examples fit on a DOS-formatted 720 KB floppy.
 2. Change to that directory and enter MATHSMTH.
 3. Try these lines at the prompt:
 
@@ -23,11 +23,11 @@ Start here
 
 Machine and display
 -------------------
-The reference machine is the Toshiba T2100 running DOS 3.30, with an
-8086, 640 KB conventional RAM and a CGA-compatible display. Arithmetic
-uses software floating point. Graphics plotting uses BIOS CGA mode 6
-(640 by 200). For example, try plot(1:5,[3 1 4 1 5]). Press a key to
-return from the graph. The IBM XT text-only and the IBM PS/1 486 VGA
+The target configuration is an 8086 with 640 KB conventional RAM,
+DOS 3.30 and a CGA-compatible display. Arithmetic uses software
+floating point. Plots use BIOS CGA mode 6 (640 by 200). Try
+plot(1:5,[3 1 4 1 5]) and press a key to return from the graph. The
+IBM XT text-only and IBM PS/1 486 VGA
 builds have their own release and validation status.
 
 In DOSBox-X, select a CGA display, mount the extracted directory as a
@@ -47,8 +47,6 @@ helper has separate setup instructions.
 
 Validation
 ----------
-The project confirmed core math, scripts and plotting on the actual
-T2100 in earlier revisions. The later editor and assistant do not have
-a complete physical PASS/FAIL record. The offline preview is tested
-on the rebuilt M08 executable in DOSBox-X. Other physical DOS machines
-with compatible hardware are candidates for testing.
+Earlier builds passed core math, script and plot tests on a Toshiba
+T2100. The editor and assistant still need full hardware checks. The
+rebuilt M08 executable passed the offline preview tests in DOSBox-X.

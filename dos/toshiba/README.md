@@ -1,10 +1,10 @@
 # MatmMax for DOS (8086/CGA preview)
 
-Run MatmMax on an 8086-class DOS PC or in DOSBox-X. The
-reference machine is a Toshiba T2100 with an Intel 8086, 640 KB of
-conventional RAM, DOS 3.30 and CGA-compatible graphics. Plotting uses
-BIOS mode 6 (640×200). The app uses software floating point and works
-offline. It needs a writable directory for editing scripts.
+MatmMax targets compatible DOS PCs with an Intel 8086, 640 KB of
+conventional RAM, DOS 3.30, and CGA-compatible graphics. You can also
+run it in DOSBox-X. Plotting uses BIOS mode 6 (640×200). The app uses
+software floating point and works offline. Use a writable directory
+for editing scripts.
 
 The executable and its banner retain the original names
 `MATHSMTH.EXE` and MathSmith M08.
@@ -45,10 +45,10 @@ then run `make WATCOM=/opt/open-watcom test` from the same directory.
 ## Run on a DOS PC
 
 Copy the contents of `build/dos-run` to a writable DOS directory. A
-DOS-formatted 720 KB floppy also works if your machine has that drive. Boot DOS and type `MATHSMTH` from that
-directory. Try the solve, script and plot above. For an editor check,
-enter `edit hello`, type `disp(20)`, press F2 to save and press F5 to
-run. The result should be 20.
+DOS-formatted 720 KB floppy also works if your machine has that drive.
+Boot DOS and type `MATHSMTH` from that directory. Try the solve, script
+and plot above. To check the editor, enter `edit hello`, type
+`disp(20)`, press F2 to save and press F5 to run. Expect 20.
 
 Core calculations, scripts and CGA plots were tested on a Toshiba T2100
 in earlier builds. The source preview is tested in DOSBox-X. A fresh

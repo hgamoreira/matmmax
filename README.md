@@ -13,10 +13,10 @@ Mini-Max suite alongside WordmMax for writing and CodemMax for programming.
 
 ## DOS preview
 
-The preview targets the following configuration. Use it as a starting point
-when evaluating another DOS PC.
+MatmMax for DOS is designed for compatible PCs with the configuration
+below. The Toshiba T2100 was used for hardware testing.
 
-| Component | Reference configuration |
+| Component | Target configuration |
 |---|---|
 | CPU | Intel 8086 with software floating point |
 | Memory | 640 KB conventional RAM |
@@ -30,9 +30,9 @@ The executable displays its original MathSmith M08 banner.
 Calculations, FFTs, scripts, the editor and plots work offline. The optional
 AI helper uses DOS networking and a host running Ollama. [DOS build guide, emulator instructions and AI setup](dos/toshiba/README.md)
 
-Earlier builds ran core calculations, scripts and plots on the reference
-machine, a Toshiba T2100. The current source preview passed 243 native and
-DOSBox-X checks and awaits a fresh physical test.
+Earlier hardware tests covered core calculations, scripts and plots.
+The current source preview passed 243 native and DOSBox-X checks and
+awaits a fresh physical test.
 
 ## Microcontroller builds
 
