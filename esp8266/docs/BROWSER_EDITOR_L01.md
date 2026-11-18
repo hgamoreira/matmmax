@@ -45,7 +45,7 @@ Save transcript still downloads console output separately from source files.
 
 ## Limits and behavior
 
-Programs are MathSmith text, not separately loaded machine-code applications.
+Programs are MatmMax text, not separately loaded machine-code applications.
 The ESP8266 retains its 16-variable,64-element matrix,64-bit double and16KiB
 engine payload limits. Source is held and queued in the browser; the board
 still receives one <=191-character input line at a time. Loops/functions use

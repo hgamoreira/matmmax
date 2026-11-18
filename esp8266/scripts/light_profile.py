@@ -66,6 +66,13 @@ def generate():
             extra='    {"pinmode", 2, 3, b_pinmode}, {"digitalwrite", 2, 2, b_digitalwrite},\n'
             extra+='    {"digitalread", 1, 1, b_digitalread}, {"analogread", 0, 1, b_analogread}, {"delay", 1, 1, b_delay},\n'
             text=text.replace(entries,extra+entries)
+            # XD118 program store: scripts are read from flash through a
+            # read-only stream; the console asks whether a word is a variable.
+            text=('#include "store.h"\n#undef fopen\n#define fopen ms_store_fopen\n'+text+
+                  '\nint ms_engine_is_variable(void *s, const char *name)\n'
+                  '{\n    return name_is_variable((MlSession *)s, name);\n}\n')
+            if text.count('static int name_is_variable(MlSession *s, const char *p)\n')!=1:
+                raise SystemExit('Review name_is_variable anchor for the program store')
         (dest/name).write_text(text)
         hashes[name] = hashlib.sha256(original).hexdigest()
     (BUILD/'engine_sources.json').write_text(json.dumps(hashes,indent=2)+'\n')

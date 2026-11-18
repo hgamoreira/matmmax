@@ -57,11 +57,11 @@ ans =
       <div class="cards">
         <article class="card">
           <div class="card-top"><span class="target-number">01 / REAL BOARD</span><span class="badge hardware">Hardware tested*</span></div>
-          <h3>ESP8266</h3><p class="board">Wemos D1 mini · 4 MB flash · L01-r15</p>
+          <h3>ESP8266</h3><p class="board">Wemos D1 mini · 4 MB flash · L02-r2</p>
           <p>A tiny network calculator you can program from your browser. Set up Wi-Fi once, then use a USB power supply and connect over your local network.</p>
-          <ul><li>Serial and browser console with saved Wi-Fi</li><li>Script editor with computer-side Open/Save and Run/Stop</li><li>Digital GPIO, ADC input and cancellable delay</li><li>16 variables; matrices up to 64 elements</li></ul>
+          <ul><li>Serial and browser console with saved Wi-Fi</li><li>Script editor with Run/Stop; programs saved on the board or the computer</li><li>Digital GPIO, ADC input and cancellable delay</li><li>16 variables; matrices up to 64 elements</li></ul>
           <a class="text-link" href="@@REPO_URL@@/blob/main/esp8266/docs/USER_MANUAL_L01.md">Read the ESP8266 manual ↗</a>
-          <p class="card-note">* Core workflows and LED output confirmed on L01-r14. Full peripheral and stress checks remain open. L01-r15 awaits board testing.</p>
+          <p class="card-note">* Core workflows and LED output confirmed on L01-r14; L02-r2 and its program store run on the board. Full peripheral and stress checks remain open.</p>
         </article>
         <article class="card">
           <div class="card-top"><span class="target-number">02 / EMULATOR</span><span class="badge emulator">QEMU tested</span></div>
@@ -86,7 +86,7 @@ for k=1:5
     delay(500);
     digitalwrite('D4',1);
     delay(500);
-end</pre><p>Editor files live on your computer. Math and pin operations run on the board.</p>
+end</pre><p>Save it on the board and type its name to run it again. Math and pin operations run on the board.</p>
       </div>
     </section>
     <section id="start" class="section start-section"><div class="wrap">

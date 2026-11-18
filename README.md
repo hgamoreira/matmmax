@@ -41,13 +41,17 @@ The [MatmMax DOS User’s Guide and Reference Manual (PDF)](docs/MATMMAX_MANUAL.
 ### ESP8266
 
 The Wemos D1 mini build provides a serial console, a browser console
-(WebREPL), a browser script editor and scriptable GPIO. The matrix limit is
+(WebREPL), a browser script editor, programs saved on the board's flash and
+scriptable GPIO. The matrix limit is
 64 elements (8×8 square). On a physical board, the ESP8266 runs the math
 engine and serves the WebREPL over Wi-Fi. In the PC demo, both run in a Linux
 program that your browser reaches at `127.0.0.1`. [ESP8266 user manual](esp8266/docs/USER_MANUAL_L01.md)
 
-Board checks were reported for L01-r14. The renamed L01-r15 build awaits
-physical validation.
+The current build, L02-r2, runs on a D1 mini at `matmmax.local`. Saved
+programs are listed with `ls` and run by name; nothing runs by itself at
+power-up. The user reports boot, Wi-Fi, browser connection and their own
+program-store tests working; the store's numbered procedure is not yet
+reported step by step. [Program store guide](esp8266/docs/PROGRAM_STORE_L02.md)
 
 ![MatmMax WebREPL on Linux showing the script editor, a matrix solve and eigenvalues](esp8266/docs/images/webrepl.png)
 

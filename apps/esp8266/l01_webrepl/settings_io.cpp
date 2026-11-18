@@ -50,7 +50,8 @@ extern "C" int ms_settings_write(unsigned slot,size_t offset,const void *in,size
 extern "C" { extern const char _FS_start, _FS_end, _EEPROM_start; }
 static bool layout_ok()
 {
-    return ESP.getFlashChipRealSize()==4194304 && (uintptr_t)&_FS_start==0x405fa000U &&
+    /* XD118: the program store ends where settings slot 0 begins. */
+    return ESP.getFlashChipRealSize()==4194304 && (uintptr_t)&_FS_start==0x40500000U &&
         (uintptr_t)&_FS_end==0x405fa000U && (uintptr_t)&_EEPROM_start==0x405fb000U;
 }
 extern "C" int ms_settings_read(unsigned slot,void *out,size_t n)

@@ -1,5 +1,11 @@
 # L01-r6 saved Wi-Fi settings
 
+**L02-r1 (XD118) changes the reservation described below:** the build now uses the
+core's unmodified `eagle.flash.4m1m.ld`, so `_FS_start` is `0x40500000` (physical
+`0x300000`) and `_FS_end` stays `0x405FA000`; LittleFS ends where settings slot 0
+begins. The settings adapter's layout check was updated to match; the record format,
+sectors and behaviour are unchanged. See [PROGRAM_STORE_L02.md](PROGRAM_STORE_L02.md).
+
 17 November2026: the user confirms R12 home Wi-Fi/browser access without serial
 USB to this PC. This establishes independent browser access; this sentence alone
 does not separately measure repeated cold boot or unchanged browser key.
@@ -46,7 +52,7 @@ record, disables networking and rotates the current key. An interrupted old-slot
 cleanup cannot reactivate the older credentials. If cleanup fails, the command
 reports it and asks for another `:wifi forget`. A failure before the deletion
 commit reports that the old saved network may remain. Configure again with
-`:wifi join`. These commands never save MathSmith variables, functions or pins.
+`:wifi join`. These commands never save MatmMax variables, functions or pins.
 
 Passwords and access keys are **unencrypted on flash**. A backup of the board
 can contain them, including an older record retained for interrupted-write
@@ -119,7 +125,7 @@ saved-settings boot still runs. `MS_TEST_SETTINGS_FAIL=1` injects save failure.
 These are developer fixtures and do not contain the user's network credentials.
 
 Real Chrome checks exercise optional key storage, removal, page reload and a
-native-device process restart. They map `mathsmith.local` to localhost; they do
+native-device process restart. They map `matmmax.local` to localhost; they do
 not prove physical multicast DNS discovery. R5 adds mDNS runtime allocations,
 so obtain a fresh browser-connected `:mem` report on the board.
 

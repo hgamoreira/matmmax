@@ -1,8 +1,10 @@
 # L01 — ESP8266 browser MatmMax and direct GPIO
 
-L01-r15 introduces the MatmMax name. The board results below are from earlier
-builds. The hostname `mathsmith.local` and stored-browser settings retain
-their existing identifiers for compatibility.
+**Current build: L02-r2.** It adds programs saved on the board's flash: `ls`,
+`run NAME` or just `NAME`, `type`, `rm`, `:store`, and Save to board / Open
+from board / Run on board in the editor. See the
+[program store guide](../../../esp8266/docs/PROGRAM_STORE_L02.md). The board now answers as `matmmax.local`; the old
+`mathsmith.local` name is no longer used, so a browser asks for the key once.
 
 ## Hardware validation
 
@@ -10,7 +12,10 @@ Earlier firmware ran on a Wemos D1 mini. L01-r12 connected on the home
 network and reconnected after reboot and power removal. L01-r13 ran
 programs reopened from the browser editor and passed the reported Stop
 checks. L01-r14 blinked the onboard LED five times and finished with it off.
-The numbered procedure below covers the remaining L01-r15 board checks.
+L02-r2 runs on the same board: boot, saved Wi-Fi, connection at
+`matmmax.local` and the user's program-store tests are reported working; the
+store's numbered procedure has no step-by-step report yet. The numbered
+procedure below covers the remaining browser and GPIO board checks.
 
 ## Browser programs (R13)
 
@@ -95,8 +100,8 @@ is required to check the onboard LED. The assistant has not flashed this board.
    esp8266/scripts/webrepl.sh monitor /dev/ttyUSB0
    ```
 
-   PASS: flash completes and `MatmMax Light L01-r15` / `Ready. Type help.` appears.
-   `:info` must also show `Build: L01-r15`. R4 does not retain Wi-Fi credentials.
+   PASS: flash completes and `MatmMax Light L02-r2` / `Ready. Type help.` appears.
+   `:info` must also show `Build: L02-r2`. R4 does not retain Wi-Fi credentials.
    A brief ROM burst at the other baud rate is normal; continuous resets are not.
 
 2. **Serial baseline.** Enter `2+2`, `help`, `:mem`, `:pins`.
@@ -128,7 +133,7 @@ is required to check the onboard LED. The assistant has not flashed this board.
 4. **Browser connection.** Open that full URL in Chrome/Firefox on the same LAN.
    Click Connect. PASS: Ready, usable command field, `2+2` returns 4. No Internet,
    CDN or PC workstation server is required. Try the printed Named URL at
-   `mathsmith.local`; numeric IP is the fallback. A bare URL needs its serial
+   `matmmax.local`; numeric IP is the fallback. A bare URL needs its serial
    key entered unless remembered. Check **Remember key on this browser** and
    reload: the key remains available and Connect works. Uncheck/reload: no
    remembered key. Check again and connect for the later power-cycle test.
@@ -205,7 +210,7 @@ is required to check the onboard LED. The assistant has not flashed this board.
     key works, `2+2` returns4 and `x` is undefined (RAM workspace). Save `:mem`
     with the browser connected. Then close the monitor, unplug the computer
     and power the board from a USB charger/power bank. Allow30seconds and open
-    `http://mathsmith.local/` with the remembered/retained key. PASS: browser
+    `http://matmmax.local/` with the remembered/retained key. PASS: browser
     math works with no PC/serial connection. Report named-address discovery
     separately if only the router-reported numeric IP works. No app pin modes
     are restored; external wiring must still respect boot straps.

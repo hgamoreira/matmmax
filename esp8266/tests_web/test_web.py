@@ -65,14 +65,17 @@ class Protocol(unittest.TestCase):
         token=b'a'*32
         request=(b'GET /ws HTTP/1.1\r\nHost: 127.0.0.1:80\r\nOrigin: http://127.0.0.1:80\r\n'
                  b'Upgrade: websocket\r\nConnection: keep-alive, Upgrade\r\nSec-WebSocket-Version: 13\r\n'
-                 b'Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==\r\nSec-WebSocket-Protocol: mathsmith.'+token+b'\r\n\r\n')
+                 b'Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==\r\nSec-WebSocket-Protocol: matmmax.'+token+b'\r\n\r\n')
         def status(data):
             return self.lib.ms_http_request(ctypes.create_string_buffer(data),b'127.0.0.1:80',token,ctypes.create_string_buffer(29))
         self.assertEqual(status(request),101)
-        named=request.replace(b'127.0.0.1:80',b'mathsmith.local:80')
+        named=request.replace(b'127.0.0.1:80',b'matmmax.local:80')
         self.assertEqual(status(named),101)
-        self.assertEqual(status(named.replace(b'Origin: http://mathsmith.local:80',b'Origin: http://evil.test')),403)
-        self.assertEqual(status(named.replace(b'mathsmith.local:80',b'mathsmith.local.evil.test:80')),403)
+        self.assertEqual(status(named.replace(b'Origin: http://matmmax.local:80',b'Origin: http://evil.test')),403)
+        self.assertEqual(status(named.replace(b'matmmax.local:80',b'matmmax.local.evil.test:80')),403)
+        # L02-r2: the MathSmith name is dropped, not kept as an alias.
+        self.assertEqual(status(named.replace(b'matmmax.local:80',b'mathsmith.local:80')),403)
+        self.assertEqual(status(request.replace(b'Protocol: matmmax.',b'Protocol: mathsmith.')),403)
         self.assertEqual(status(request.replace(b'websocket',b'WebSocket')),101)
         for old,new in [(b'Host: 127.0.0.1:80',b'Host: evil.test'),
                         (b'Origin: http://127.0.0.1:80',b'Origin: http://evil.test'),
@@ -114,7 +117,7 @@ class Device(unittest.TestCase):
         s.sendall((f'GET /ws HTTP/1.1\r\nHost: {host}\r\nOrigin: {origin or "http://"+host}\r\n'
             'Upgrade: websocket\r\nConnection: Upgrade\r\nSec-WebSocket-Version: 13\r\n'
             'Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==\r\n'
-            f'Sec-WebSocket-Protocol: mathsmith.{token or self.token}\r\n\r\n').encode())
+            f'Sec-WebSocket-Protocol: matmmax.{token or self.token}\r\n\r\n').encode())
         response=b''
         while not response.endswith(b'\r\n\r\n'):
             part=s.recv(1)
@@ -775,7 +778,9 @@ class Target(unittest.TestCase):
         self.assertNotIn('wifi_station_dhcpc_stop',relocations)
     def test_settings_sectors_are_reserved_before_sdk_flash(self):
         symbols=subprocess.check_output([str(TOOL/'xtensa-lx106-elf-nm'),str(BUILD/'mathsmith_light.elf')],text=True)
-        for name,address in [('_FS_start',0x405fa000),('_FS_end',0x405fa000),('_EEPROM_start',0x405fb000)]:
+        # XD118: LittleFS on the core's 4M1M range ends where settings slot 0 begins.
+        for name,address in [('_FS_start',0x40500000),('_FS_end',0x405fa000),('_FS_block',0x2000),
+                             ('_FS_page',0x100),('_EEPROM_start',0x405fb000)]:
             with self.subTest(name=name):
                 m=re.search(r'(?m)^([0-9a-f]+) \w '+name+'$',symbols)
                 self.assertIsNotNone(m);self.assertEqual(int(m[1],16),address)

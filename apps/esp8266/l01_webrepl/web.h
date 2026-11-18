@@ -1,6 +1,6 @@
 #ifndef MS_WEB_H
 #define MS_WEB_H
-#define MS_WEB_BUILD "L01-r15"
+#define MS_WEB_BUILD "L02-r2"
 #include <stddef.h>
 #include <stdint.h>
 #include "port.h"
@@ -9,6 +9,7 @@ extern "C" {
 #endif
 int ms_platform_command(const char *);
 int ms_console_pending(void);
+void *ms_console_session(void);
 int ms_console_result(void);
 int ms_console_wifi_setup(void);
 int ms_console_setup_active(void);

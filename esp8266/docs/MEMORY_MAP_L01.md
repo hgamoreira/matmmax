@@ -1,5 +1,9 @@
 # L01 memory map — browser console and GPIO
 
+**L02-r1 (XD118):** image 507,936 bytes; static DRAM 57,072 (+668 over R14);
+IRAM code 28,276 (+64, 4,492 left); LittleFS at physical `0x300000..0x3F9FFF`.
+Details and what is still unmeasured: [PROGRAM_STORE_L02.md](PROGRAM_STORE_L02.md).
+
 17 November 2026. Linked target measurements for the Wemos D1 mini, core 3.1.2,
 CPU 80 MHz, 32 KiB instruction cache plus 32 KiB IRAM. **R14 linked layout below;
 runtime readings include the user's R13 post-editor-sum snapshot below.

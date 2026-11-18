@@ -15,6 +15,7 @@ extern "C" {
 #include "pins.h"
 #include "settings.h"
 #include "dhcp_trace.h"
+#include "store.h"
 #include "web_page.h"
 static_assert(sizeof(double)==8,"MatmMax requires doubles");
 static WiFiServer server(80);
@@ -28,6 +29,7 @@ static unsigned long accepted_at;
 static unsigned long last_output;
 static bool listening, websocket, upgrading, sending_page, evaluating, remote_command;
 static bool queued_command, stop_requested, reset_input, takeover, servicing;
+static char queued_kind, out_kind='O';
 static unsigned ready_message;
 static unsigned ready_result;
 static bool command_cancelled;
@@ -157,7 +159,7 @@ static void disconnect_client(bool cancel)
     request_len=reply_len=reply_pos=page_pos=out_head=out_tail=ready_message=0;
     memset(&frame,0,sizeof(frame));
     queued_command=false;
-    if (was_web) { reset_input=true; if (cancel) stop_requested=true; }
+    if (was_web) { ms_store_save_abort(); reset_input=true; if (cancel) stop_requested=true; }
 }
 static bool send_frame(unsigned opcode,const unsigned char *data,unsigned n)
 {
@@ -180,7 +182,7 @@ static void flush_output()
 {
     if (!websocket) return;
     unsigned char data[128]; unsigned n=1, tail=out_tail;
-    data[0]='O';
+    data[0]=(unsigned char)out_kind;
     while (tail!=out_head && n<sizeof(data)) { data[n++]=output[tail]; tail=(tail+1)%sizeof(output); }
     if (n>1 && (n==sizeof(data) || ready_message || millis()-last_output>=8) && send_frame(2,data,n)) {
         out_tail=tail; last_output=millis();
@@ -191,9 +193,9 @@ static void flush_output()
         if (send_frame(2,data,3)) ready_message=0;
     }
 }
-static bool valid_command(const unsigned char *s,unsigned n)
+static bool valid_command(const unsigned char *s,unsigned n,bool lines=false)
 {
-    for (unsigned i=0;i<n;++i) if (s[i]<32 || s[i]>126) return false;
+    for (unsigned i=0;i<n;++i) if ((s[i]<32 || s[i]>126) && !(lines && s[i]=='\n')) return false;
     return true;
 }
 static void received_frame()
@@ -207,16 +209,20 @@ static void received_frame()
     if (frame.length==1 && frame.data[0]=='S') {
         stop_requested=true; queued_command=false; return;
     }
-    if (!frame.length || frame.data[0]!='C' || !valid_command(frame.data+1,frame.length-1) ||
+    /* C command; L list; G name read; B name, D text..., E: save (XD118). */
+    unsigned char kind=frame.length ? frame.data[0] : 0;
+    bool known=kind=='C' || kind=='G' || kind=='B' || kind=='D' ||
+               ((kind=='L' || kind=='E') && frame.length==1);
+    if (!known || !valid_command(frame.data+1,frame.length-1,kind=='D') ||
         queued_command || evaluating) { close_frame(1008); return; }
     memcpy(queued,frame.data+1,frame.length-1); queued[frame.length-1]=0;
-    queued_command=true;
+    queued_kind=(char)kind; queued_command=true;
 }
 static void prepare_reply(int status,const char *accept)
 {
     reply_pos=page_pos=0;
     if (status==101) {
-        reply_len=snprintf(request,sizeof(request),"HTTP/1.1 101 Switching Protocols\r\nUpgrade: websocket\r\nConnection: Upgrade\r\nSec-WebSocket-Accept: %s\r\nSec-WebSocket-Protocol: mathsmith.%s\r\n\r\n",accept,token);
+        reply_len=snprintf(request,sizeof(request),"HTTP/1.1 101 Switching Protocols\r\nUpgrade: websocket\r\nConnection: Upgrade\r\nSec-WebSocket-Accept: %s\r\nSec-WebSocket-Protocol: matmmax.%s\r\n\r\n",accept,token);
         upgrading=true;
     } else if (status==200) {
         reply_len=snprintf(request,sizeof(request),"HTTP/1.1 200 OK\r\nContent-Type: text/html; charset=utf-8\r\nContent-Length: %u\r\nConnection: close\r\nCache-Control: no-store\r\nX-Content-Type-Options: nosniff\r\nContent-Security-Policy: default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'\r\n\r\n",(unsigned)(sizeof(web_page)-1));
@@ -290,6 +296,53 @@ static void service()
         }
     }
     servicing=false;
+}
+/* Browser file data travels as 'F' frames through the same output ring; the
+ * ring is drained before and after so 'O' and 'F' bytes never share a frame. */
+static bool drain_output()
+{
+    unsigned long started=millis(); unsigned last=out_tail;
+    while (websocket && out_head!=out_tail) {
+        service(); optimistic_yield(1000);
+        if (out_tail!=last) { last=out_tail; started=millis(); }
+        else if (millis()-started>5000) { disconnect_client(true); return false; }
+    }
+    return websocket;
+}
+static void file_stream(const char *text,size_t n)
+{
+    for (size_t i=0;i<n && websocket;++i) {
+        unsigned next=(out_head+1)%sizeof(output);
+        if (next==out_tail) {
+            unsigned long started=millis();
+            while (websocket && next==out_tail) {
+                service(); optimistic_yield(1000);
+                if (millis()-started>5000) { disconnect_client(true); return; }
+            }
+            if (!websocket) return;
+        }
+        output[out_head]=(unsigned char)text[i]; out_head=next;
+    }
+    service();
+}
+static unsigned file_request(char kind)
+{
+    char path[MS_STORE_NAME_MAX+4];
+    if (kind=='B') return ms_store_save_begin(queued) ? 0 : 1;
+    if (kind=='D') return ms_store_save_data(queued,strlen(queued)) ? 0 : 1;
+    if (kind=='E') return ms_store_save_end(ms_console_session()) ? 0 : 1;
+    ms_store_save_abort();
+    if (kind=='G') {
+        if (!ms_fs_mounted()) { ms_write("error: the program store is not available; see :store\n"); return 1; }
+        if (!ms_store_path(queued,path) || ms_fs_size(path)<0) { ms_write("error: no saved program with that name\n"); return 1; }
+    } else if (!ms_fs_mounted()) return 0;          /* L: an empty list */
+    if (!drain_output()) return 2;
+    out_kind='F';
+    bool ok=kind=='G' ? ms_store_read(queued,file_stream) : ms_store_list(file_stream);
+    bool sent=drain_output(); out_kind='O';
+    if (!sent) return 2;
+    if (!ok) { ms_write("error: could not read the program store\n"); return 1; }
+    return 0;
 }
 extern "C" int ms_stack_ok(void)
 {
@@ -397,7 +450,7 @@ extern "C" int ms_wifi_command(const char *line)
         snprintf(text,sizeof(text),MS_WEB_BUILD ": Wi-Fi status=%d; browser=%s\nMode=%u; SDK=%d (%s); begin=%d; elapsed=%lu s\nLast disconnect=%u (%s); events=%u\n",(int)WiFi.status(),websocket ? "connected" : "disconnected",(unsigned)WiFi.getMode(),sdk,wifi_state_name(sdk),wifi_begin_status,wifi_attempted ? (millis()-wifi_attempt_at)/1000 : 0,last_wifi_reason,wifi_reason_name(last_wifi_reason),wifi_disconnect_count);
         ms_write(text);
         snprintf(text,sizeof(text),"Saved network=%s; save-pending=%s; discovery=%s\n",
-            settings_saved ? "yes" : "no",settings_pending ? "yes" : "no",mdns_active ? "mathsmith.local" : "numeric IP only");
+            settings_saved ? "yes" : "no",settings_pending ? "yes" : "no",mdns_active ? "matmmax.local" : "numeric IP only");
         ms_write(text);
         snprintf(text,sizeof(text),"IP=%s; associated=%u; associated-events=%u; got-ip-events=%u; dhcp-timeouts=%u; ready=%u\n",
             WiFi.localIP().toString().c_str(),wifi_associated ? 1U : 0U,wifi_associated_count,wifi_ip_count,wifi_dhcp_count,network_ready() ? 1U : 0U);
@@ -415,7 +468,7 @@ extern "C" int ms_wifi_command(const char *line)
 #else
             Serial.printf("Browser URL: http://%s/#%s\n",WiFi.localIP().toString().c_str(),token);
 #endif
-            if (mdns_active) Serial.printf("Named URL: http://mathsmith.local/#%s\n",token);
+            if (mdns_active) Serial.printf("Named URL: http://matmmax.local/#%s\n",token);
         }
         return 1;
     }
@@ -512,7 +565,7 @@ void setup()
     MsSettings stored;
     int loaded=ms_settings_load(&stored); settings_saved=loaded==MS_STORE_OK;
     if (settings_saved) memcpy(token,stored.key,sizeof(token)); else new_access_key();
-    Serial.printf("\nL01 access key: %s\n",token);
+    Serial.printf("\nMatmMax access key: %s\n",token);
     ms_console_start();
     if (settings_saved) {
         ms_write("Saved Wi-Fi found; reconnecting automatically. Browser key retained.\n");
@@ -533,7 +586,7 @@ void loop()
     if (!listening && network_ready()) {
         if (!WiFi.setAutoReconnect(true)) ms_write("SDK automatic retry could not be enabled.\n");
         server.begin(80,1); server.setNoDelay(true); listening=true;
-        mdns_active=MDNS.begin("mathsmith");
+        mdns_active=MDNS.begin("matmmax");
         if (mdns_active) MDNS.addService("http","tcp",80);
         ms_wifi_command(":web");
     }
@@ -545,11 +598,18 @@ void loop()
     if (takeover) { takeover=false; reset_input=true; }
     if (reset_input) { reset_input=false; ms_console_key(27); ready_result=2; ready_message=websocket ? 1 : 0; }
     if (stop_requested) {
-        stop_requested=false; ms_console_key(27); ready_result=2; ready_message=websocket ? 1 : 0;
+        stop_requested=false; ms_store_save_abort(); ms_console_key(27); ready_result=2; ready_message=websocket ? 1 : 0;
+    }
+    if (queued_command && websocket && queued_kind!='C') {
+        queued_command=false; evaluating=true;
+        ready_result=file_request(queued_kind);
+        evaluating=false;
+        ready_message=websocket ? (ms_console_pending() ? 2 : 1) : 0;
     }
     if (queued_command && websocket) {
         queued_command=false; evaluating=remote_command=true;
         command_cancelled=false;
+        ms_store_save_abort();
         for (unsigned i=0;queued[i];++i) ms_console_key((unsigned char)queued[i]);
         ms_console_key('\n');
         evaluating=remote_command=false;

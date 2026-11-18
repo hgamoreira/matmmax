@@ -1,8 +1,10 @@
 # MatmMax Light L01 — browser and pin commands
 
-L01-r15 introduces the MatmMax name. The board results below are from earlier
-builds. The hostname `mathsmith.local` and stored-browser settings retain
-their existing identifiers for compatibility.
+**Current build: L02-r2.** It adds programs saved on the board's flash: `ls`,
+`run NAME` or just `NAME`, `type`, `rm`, `:store`, and Save to board / Open
+from board / Run on board in the editor. See the
+[program store guide](PROGRAM_STORE_L02.md). The board now answers as `matmmax.local`; the old
+`mathsmith.local` name is no longer used, so a browser asks for the key once.
 
 Earlier builds were tested on a Wemos D1 mini for browser access,
 automatic reconnection, program editing and onboard LED output. See the
@@ -18,7 +20,7 @@ open the serial monitor at 115200 8N1:
 esp8266/scripts/webrepl.sh monitor /dev/ttyUSB0
 ```
 
-Use **L01-r15**, shown in the boot banner or `:info`. Close an existing monitor
+Use **L02-r2**, shown in the boot banner or `:info`. Close an existing monitor
 with Ctrl+] before flashing:
 
 ```sh
@@ -73,7 +75,7 @@ Wait for these serial messages:
 ```text
 Wi-Fi and browser key saved. Future boots reconnect automatically.
 Browser URL: http://DEVICE_IP/#ACCESS_KEY
-Named URL: http://mathsmith.local/#ACCESS_KEY
+Named URL: http://matmmax.local/#ACCESS_KEY
 ```
 
 Open the complete **Named URL** in a browser on the same network. Check
@@ -83,7 +85,7 @@ storage. It also works if checked after connecting. Unchecking removes the
 stored copy. Retain a private copy of the key for another browser or computer.
 The page removes the URL fragment from the address bar; it is not an HTTP path.
 
-`mathsmith.local` uses local multicast DNS. If it does not resolve on your
+`matmmax.local` uses local multicast DNS. If it does not resolve on your
 network/computer, use the printed numeric **Browser URL**. A bare URL opens
 the page too: supply the 32-character key in **Access key** unless the browser
 already remembers it. `:wifi` repeats URLs/key on serial.
@@ -103,7 +105,7 @@ serial is needed initially for Wi-Fi configuration and for recovery.
 After the **saved** message, close the monitor and disconnect the board from
 the computer. Power it from a suitable USB charger or power bank. It joins
 the saved network automatically; allow up to 30 seconds. Open
-`http://mathsmith.local/` on a device on that network, supply the retained key
+`http://matmmax.local/` on a device on that network, supply the retained key
 or use the remembered one, then click **Connect**. A numeric URL remains the
 fallback if multicast discovery is unavailable. A phone/tablet browser can be
 the console; the ESP8266 runs the calculations.
@@ -342,8 +344,8 @@ available memory. See the [measured memory map](MEMORY_MAP_L01.md) for the exact
 report and planned repeat-workload checks.
 
 R13 adds source-file Open/Save on the computer and multiline editor execution
-on the ESP8266. No board filesystem, FFT, AI client, graphs, external binaries
-or OLED/PS2 driver is added. R14 now adds expression-level pin functions; browser plot rendering remains
+on the ESP8266. L02 adds programs saved on the board ([program store guide](PROGRAM_STORE_L02.md)).
+No FFT, AI client, graphs, external binaries or OLED/PS2 driver is added. R14 now adds expression-level pin functions; browser plot rendering remains
 a later extension.
 
 Further references: [hardware test](../../apps/esp8266/l01_webrepl/README.md),

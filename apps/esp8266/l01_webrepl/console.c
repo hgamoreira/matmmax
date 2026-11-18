@@ -4,6 +4,7 @@
 #include "mat.h"
 #include "port.h"
 #include "web.h"
+#include "store.h"
 static MlSession *session;
 static char input[192];
 static size_t length;
@@ -21,15 +22,16 @@ static void help(void)
 {
     ms_write("MatmMax Light: expressions, variables, functions, loops, small matrices.\n"
              "Limits: 16 variables, 64 elements/matrix (8x8 square), double=8 bytes.\n"
-             "Platform: :help :info :mem :reset :reboot :wifi :web :pins\n"
+             "Platform: :help :info :mem :reset :reboot :wifi :web :pins :store\n"
+             "Programs on the board: ls, run NAME or NAME, type NAME, rm NAME.\n"
              "GPIO: :pin Dn input|pullup|output [0|1], :read Dn, :write Dn 0|1, :analog A0\n"
              "Programs: pinmode, digitalwrite, digitalread, analogread, delay(ms<=60000).\n"
              "Esc/Ctrl+C cancels; abort ends an open block. Input: 191 characters.\n"
              "Wi-Fi: :wifi join saves after connection; :wifi forget clears saved settings.\n"
              "Wi-Fi diagnostics: :wifi diag reads station/AP and DHCP client state.\n"
              "Serial arrows are ignored; use Backspace. Browser key stays across reboot.\n"
-             "L01 browser console + program editor; script files stay on your computer.\n"
-             "No board files, FFT, graphics or app launcher.\n");
+             "Browser editor: Save to board, Open from board, Run on board.\n"
+             "No FFT, graphics or app launcher.\n");
 }
 /* Bound syntactic recursion before entering the shared recursive parser.
  * Quotes may be strings or transpose; a quote following a value is transpose.
@@ -61,7 +63,7 @@ static int safe_depth(const char *p)
 }
 static void evaluate(void)
 {
-    int result;
+    int result, store;
     last_result=0;
     input[length]='\0';
     if (overflow) { last_result=1; ms_write("Input too long; line discarded.\n"); }
@@ -75,6 +77,7 @@ static void evaluate(void)
             memset(wifi_ssid,0,sizeof(wifi_ssid)); wifi_setup=0;
         }
     }
+    else if ((!pending || *input==':') && (store=ms_store_command(session,input))!=0) last_result=store==2;
     else if (ms_platform_command(input)) { }
     else if (!strcmp(input,":mem") || !strcmp(input,":info")) ms_diagnostics();
     else if (!strcmp(input,":help") || (!pending && !strcmp(input,"help"))) help();
@@ -100,6 +103,7 @@ void ms_console_start(void)
     mat_poll_hook=ms_poll;
     ms_write("\nMatmMax Light " MS_WEB_BUILD " - ESP8266 browser + GPIO\n");
     ms_diagnostics();
+    ms_store_start();
     session=ml_open(sink,NULL);
     ms_write(session ? "Ready. Type help.\n" : "Engine allocation failed; diagnostics remain available.\n");
     prompt();
@@ -139,6 +143,7 @@ void ms_console_key(int c)
         else overflow=1;
     }
 }
+void *ms_console_session(void) { return session; }
 int ms_console_pending(void) { return pending; }
 int ms_console_result(void) { return last_result; }
 int ms_console_setup_active(void) { return wifi_setup!=0; }

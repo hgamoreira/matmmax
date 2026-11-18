@@ -32,7 +32,8 @@ def main():
         sources['DHCP_BROADCAST.md']=ROOT/'esp8266/docs/DHCP_BROADCAST_L01.md'
         sources['BROWSER_EDITOR.md']=ROOT/'esp8266/docs/BROWSER_EDITOR_L01.md'
         sources['SCRIPT_GPIO.md']=ROOT/'esp8266/docs/SCRIPT_GPIO_L01.md'
-        for name in ('sum.ms','solve.ms','square.ms','blink.ms','blink_count.ms'):
+        sources['PROGRAM_STORE.md']=ROOT/'esp8266/docs/PROGRAM_STORE_L02.md'
+        for name in ('sum.ms','solve.ms','square.ms','blink.ms','blink_count.ms','ledtest.m'):
             sources[name]=APP/'examples'/name
     for source in sources.values():
         if not source.is_file(): raise SystemExit('Missing '+str(source))

@@ -1,5 +1,8 @@
 # L01 browser protocol and ownership
 
+**L02-r1 additions:** the `L`, `G`, `B`, `D`, `E` request frames and `F` file-data
+frames of the program store are described in [PROGRAM_STORE_L02.md](PROGRAM_STORE_L02.md).
+
 16 November 2026. Implemented in `apps/esp8266/l01_webrepl/protocol.c` and
 `firmware.cpp`. This is MatmMax's protocol, not MicroPython WebREPL.
 
@@ -16,16 +19,16 @@ connections are immediately closed while one is in use.
 GET `/ws` upgrades using RFC6455 version 13. The request must have:
 
 - `Host` exactly equal to the device's numeric IPv4 address or the fixed alias
-  `mathsmith.local` (no `:80` alias).
+  `matmmax.local` (no `:80` alias).
 - `Origin` exactly `http://` plus that Host.
-- `Sec-WebSocket-Protocol: mathsmith.TOKEN`, where TOKEN is the serial-printed
+- `Sec-WebSocket-Protocol: matmmax.TOKEN`, where TOKEN is the serial-printed
   32-hex-digit random access key. R5 saves it with successful Wi-Fi setup and
   restores it at boot; `:wifi forget` rotates it. The response echoes it.
 - Valid Upgrade, Connection, version and canonical 16-byte base64 key fields.
 
 Relevant duplicate headers and request bodies/Transfer-Encoding are rejected.
 Keys travel in the upgrade header, not the request URL. The native POSIX test
-HAL uses `127.0.0.1:PORT` or `mathsmith.local:PORT` as Host, with matching Origin.
+HAL uses `127.0.0.1:PORT` or `matmmax.local:PORT` as Host, with matching Origin.
 R5 advertises the hostname and HTTP service using the pinned core's mDNS library;
 numeric-IP access remains usable if discovery fails. An upgrade during a serial evaluation
 or while guided serial Wi-Fi setup is active is refused with 409;

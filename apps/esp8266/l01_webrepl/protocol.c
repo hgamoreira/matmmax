@@ -112,12 +112,12 @@ int ms_http_request(char *request,const char *host,const char *token,char accept
         p=end+2;
     }
     char alias[64];
-    snprintf(alias,sizeof(alias),"mathsmith.local%s",strchr(host,':') ? strchr(host,':') : "");
+    snprintf(alias,sizeof(alias),"matmmax.local%s",strchr(host,':') ? strchr(host,':') : "");
     if (!h || (strcmp(h,host) && strcmp(h,alias))) return 403; /* Fixed local alias or numeric address only. */
     if (!websocket) return 200;
     snprintf(expected,sizeof(expected),"http://%s",h);
     if (!origin || strcmp(origin,expected)) return 403;
-    snprintf(expected,sizeof(expected),"mathsmith.%s",token);
+    snprintf(expected,sizeof(expected),"matmmax.%s",token);
     if (!protocol || strcmp(protocol,expected)) return 403;
     if (!upgrade || !equal(upgrade,"websocket") || !connection || !contains_token(connection,"upgrade") ||
         !version || strcmp(version,"13") || !key || strlen(key)!=24 || key[22]!='=' || key[23]!='=') return 400;

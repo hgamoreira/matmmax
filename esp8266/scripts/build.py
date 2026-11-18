@@ -37,7 +37,7 @@ def main(app=APP, output=BUILD, engine_enabled=True, stack_bytes=16384):
     includes=[core,PLATFORM/'variants/d1_mini',sdk/'include',sdk/'lwip2/include',
               sdk/'libc/xtensa-lx106-elf/include',BUILD/'core',engine,APP,BASE,BUILD,
               PLATFORM/'libraries/ESP8266WiFi/src']
-    if APP.name=='l01_webrepl': includes += [PLATFORM/'libraries/ESP8266mDNS/src']
+    if APP.name=='l01_webrepl': includes += [PLATFORM/'libraries/ESP8266mDNS/src',PLATFORM/'libraries/LittleFS/src']
     lwip_features=1 if APP.name=='l01_webrepl' else 0
     (BUILD/'core').mkdir(exist_ok=True)
     (BUILD/'core/Updater_Signing.h').write_text('// No signing key configured.\n')
@@ -53,7 +53,9 @@ def main(app=APP, output=BUILD, engine_enabled=True, stack_bytes=16384):
            '-fstack-usage','-Werror=return-type']+defines+['-I'+str(x) for x in includes]
     sources=list(core.rglob('*.c'))+list(core.rglob('*.cpp'))+list(core.rglob('*.S'))
     sources+=list((PLATFORM/'libraries/ESP8266WiFi/src').glob('*.cpp'))
-    if APP.name=='l01_webrepl': sources+=list((PLATFORM/'libraries/ESP8266mDNS/src').glob('*.cpp'))
+    if APP.name=='l01_webrepl':
+        sources+=list((PLATFORM/'libraries/ESP8266mDNS/src').glob('*.cpp'))
+        sources+=[PLATFORM/'libraries/LittleFS/src'/x for x in ('LittleFS.cpp','lfs.c','lfs_util.c')]
     if len({source.name for source in sources})!=len(sources):
         raise SystemExit('Core/library object basenames collide; review archive naming before building')
     jobs=[]
@@ -96,18 +98,18 @@ def main(app=APP, output=BUILD, engine_enabled=True, stack_bytes=16384):
     # elf2bin patches fixed offsets 0x1010/0x1014. Keep the core's leading
     # CRC words and version ahead of our constants, at their original addresses.
     anchor='    *(.ver_number)'
-    placement='\n    . = ALIGN(4);\n'+''.join(f'    *{x}.c.o(.rodata .rodata.*)\n' for x in ('engine','mat','linalg','plot','console'))
+    placement='\n    . = ALIGN(4);\n'+''.join(f'    *{x}.c.o(.rodata .rodata.*)\n' for x in ('engine','mat','linalg','plot','console','store'))
     assert common.count(anchor)==1
     (BUILD/'common.ld.h').write_text(common.replace(anchor,anchor+placement))
     flash_script=sdk/'ld/eagle.flash.4m.ld'
     if APP.name=='l01_webrepl':
+        # XD118: the core's standard 4M1M layout. LittleFS 0x300000..0x3F9FFF
+        # (1000 KiB), settings slots 0x3FA000/0x3FB000 untouched (XD113).
+        flash_script=sdk/'ld/eagle.flash.4m1m.ld'
         layout=flash_script.read_text()
-        for name in ('_FS_start','_FS_end','_SPIFFS_start','_SPIFFS_end'):
-            old=f'PROVIDE ( {name} = 0x405FB000 );'
-            if layout.count(old)!=1: raise SystemExit('Review settings flash reservation: '+name)
-            layout=layout.replace(old,f'PROVIDE ( {name} = 0x405FA000 );')
-        flash_script=BUILD/'settings.flash.ld'
-        flash_script.write_text(layout)
+        for value in ('_FS_start = 0x40500000','_FS_end = 0x405FA000','_FS_page = 0x100',
+                      '_FS_block = 0x2000','_EEPROM_start = 0x405fb000'):
+            if layout.count(f'PROVIDE ( {value} );')!=1: raise SystemExit('Review store/settings flash layout: '+value)
     for source,dest in ((flash_script,'local.eagle.flash.ld'),(BUILD/'common.ld.h','local.eagle.app.v6.common.ld')):
         run([TOOL/'xtensa-lx106-elf-gcc','-E','-P','-CC','-x','c',*defines,'-I'+str(sdk/'ld'),source,'-o',BUILD/dest])
     elf=BUILD/'mathsmith_light.elf'
@@ -132,6 +134,8 @@ def main(app=APP, output=BUILD, engine_enabled=True, stack_bytes=16384):
         'flash_hz':40000000,'stack_bytes':stack_bytes,'engine_payload_cap':16384 if engine_enabled else 0,
         'variables':16 if engine_enabled else 0,'matrix_elements':64 if engine_enabled else 0,
         'stack_reserve_bytes':6144 if engine_enabled else 0,
+        'program_store':{'filesystem':'LittleFS','flash_start':0x300000,'flash_end':0x3fa000,
+                         'block':0x2000,'page':0x100} if APP.name=='l01_webrepl' else None,
         'defines':defines,'inputs':inputs_fingerprint() if engine_enabled else probe_inputs(APP)},indent=2)+'\n')
 
 if __name__=='__main__': main()

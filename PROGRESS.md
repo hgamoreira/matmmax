@@ -1,4 +1,27 @@
-# MatmMax status — 2026-11-17
+# MatmMax status — 2026-11-18
+
+## ESP8266 L02-r2: programs saved on the board
+
+L02 adds a 1000 KiB LittleFS program store on the ESP8266's flash, below the
+unchanged Wi-Fi settings sectors. The console gains `ls`/`dir`, `run NAME`
+or just `NAME`, `type`, `rm`/`delete` and `:store`. The browser editor gains
+Save to board, Open from board and Run on board. Saves are atomic, the
+store is formatted only when its flash is erased, and there is no boot
+script. L02-r2 also renames the board's network identity to `matmmax.local`.
+
+Off the board: 101 L01/L02 native checks pass, including 12 program-store
+checks. The served page was driven in headless Chrome against the native
+firmware. L00 rebuilds byte-identical. On the board: L02-r2 was flashed on
+the user's D1 mini. Boot, saved-Wi-Fi rejoin and the store mount were
+observed over serial. The user reports the browser connection at
+`matmmax.local` and their own program-store tests working. The numbered
+10-step procedure in `esp8266/docs/PROGRAM_STORE_L02.md` has no step-by-step
+report yet. Heap and stack margins while saving and running large programs
+are not yet measured on the board.
+
+The record below is from 2026-11-17 and describes L01.
+
+## Earlier status — 2026-11-17
 
 The current sources use MatmMax in the microcontroller consoles and WebREPL.
 The ESP8266 branding build is L01-r15. ESP32-S3 E03 was rebuilt and passed

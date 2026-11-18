@@ -21,19 +21,19 @@ const pause=ms=>new Promise(resolve=>setTimeout(resolve,ms));
   let match;
   for(let i=0;i<500&&!match;i++){await pause(10);match=log.match(/Browser URL: (http:\/\/127\.0\.0\.1:\d+\/#([a-f0-9]{32}))/);}
   assert(match,'Native server failed to start: '+log);
-  browser=await chromium.launch({headless:true,executablePath:process.env.CHROME||'/usr/bin/google-chrome',args:['--no-sandbox','--disable-dev-shm-usage','--no-proxy-server','--host-resolver-rules=MAP mathsmith.local 127.0.0.1']});
+  browser=await chromium.launch({headless:true,executablePath:process.env.CHROME||'/usr/bin/google-chrome',args:['--no-sandbox','--disable-dev-shm-usage','--no-proxy-server','--host-resolver-rules=MAP matmmax.local 127.0.0.1']});
   const page=await browser.newPage({viewport:{width:1100,height:850},acceptDownloads:true});
   const errors=[];page.on('pageerror',error=>errors.push(error.message));
-  await page.goto(match[1].replace('127.0.0.1','mathsmith.local'));
+  await page.goto(match[1].replace('127.0.0.1','matmmax.local'));
   assert.equal(await page.locator('#key').inputValue(),match[2]);
   assert.equal(new URL(page.url()).hash,'');
   await page.locator('#remember').check();
   await page.locator('#connect').click();
   await page.waitForFunction(()=>document.getElementById('state').textContent==='Ready');
   await page.locator('#remember').uncheck();
-  assert.equal(await page.evaluate(()=>localStorage.getItem('mathsmith.access-key')),null);
+  assert.equal(await page.evaluate(()=>localStorage.getItem('matmmax.access-key')),null);
   await page.locator('#remember').check();
-  assert.equal(await page.evaluate(()=>localStorage.getItem('mathsmith.access-key')),match[2]);
+  assert.equal(await page.evaluate(()=>localStorage.getItem('matmmax.access-key')),match[2]);
   async function command(s){
    await page.locator('#command').fill(s);await page.locator('#run').click();
    await page.waitForFunction(()=>document.getElementById('state').textContent==='Ready');

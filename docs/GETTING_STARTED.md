@@ -53,14 +53,16 @@ At the prompt, type `2+2`, then `:wifi join`. Enter your 2.4 GHz network's
 SSID and password in the guided prompts. SSID is visible; the password is
 masked. After a usable IP is assigned, settings and the browser key are
 saved automatically. Use `:wifi` to see the board's URL, then open it from
-a browser on the same network. Keep its access key private. `mathsmith.local`
+a browser on the same network. Keep its access key private. `matmmax.local`
 depends on local mDNS support; the numeric IP is the fallback.
 
 After setup, a USB power supply is sufficient: serial USB to the computer is
 not required for browser use. The board must remain on the same reachable
 network as the browser. Follow the [browser manual](../esp8266/docs/USER_MANUAL_L01.md)
-and [GPIO guide](../esp8266/docs/SCRIPT_GPIO_L01.md). The editor's Open/Save
-uses files on the computer, not board flash. No board filesystem is implemented.
+and [GPIO guide](../esp8266/docs/SCRIPT_GPIO_L01.md). The editor's Open file/Save file
+use the computer; Save to board/Open from board/Run on board use the board's own
+flash ([program store guide](../esp8266/docs/PROGRAM_STORE_L02.md)). In the console,
+`ls` lists saved programs and `run NAME` (or just `NAME`) runs one.
 
 ## ESP32-S3: run E03 in QEMU
 

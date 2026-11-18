@@ -867,3 +867,35 @@ hardware checks open. No RP2350 implementation or AI integration is claimed.
 
 Local preparation does not create a remote or publish it. Commands and release
 notes are in `docs/SHARING_ON_GITHUB.md` and `sharing/RELEASING.md`.
+
+## XD118 — ESP8266 L02: a program store on flash, run on demand (2026-11-18)
+
+The user chose to save, list, load and run programs on the board's flash,
+and the Fourier transform (not yet built). A boot script was declined: a
+program that runs by itself at power-up is not how an operating system
+normally behaves, so programs run only on demand.
+
+- **Store:** LittleFS on the core's standard 4M1M range, physical
+  `0x300000..0x3F9FFF` (1000 KiB), ending where the Wi-Fi settings sectors
+  begin. It is formatted automatically only if that flash is entirely
+  erased; otherwise `:store format confirm` is required.
+- **Commands:** `ls`/`dir`, `run NAME` or `NAME`, `type`, `rm`/`delete`,
+  `:store`; a variable with one of these names takes precedence. Browser:
+  Save to board, Open from board, Run on board. Workspace variables are
+  not saved.
+- **Engine access:** the generated L02 engine maps `fopen` to a read-only
+  stream over the store, so the shared engine's existing `run`, bare-name
+  scripts and function files work unchanged. Shared engine sources are not
+  edited.
+- **Saving:** `B`/`D`/`E` frames write a temporary file, check its size and
+  rename it over `NAME.m`; any failure, Stop, command or disconnect removes
+  the temporary file and keeps the previous program. Programs are at most
+  16384 bytes and still limited by the engine's 128 statements and 16 KiB
+  payload when run.
+- **L02-r2:** the network identity becomes `matmmax.local`, with the
+  `matmmax.KEY` WebSocket subprotocol and a `matmmax.access-key` browser slot.
+  The old names are refused, not aliased.
+
+Cost: image 507,920 bytes, static DRAM +660 bytes, IRAM +64 bytes over
+L01-r14. Board status as in `PROGRESS.md`.
+
