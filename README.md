@@ -9,46 +9,30 @@ microcontroller source preview predates the MatmMax name.
 
 ## Choose where to run MatmMax
 
-The WebREPL is the browser interface. **The calculations run in the program
-that the browser connects to.** Choose one of these setups:
+On DOS, use the application at the DOS prompt for scripts and CGA plots.
+On ESP8266, use the serial console or the browser-based WebREPL. The
+ESP32-S3 preview runs in QEMU and uses a serial console.
 
 | Setup | Where calculations run | How you use it |
 |---|---|---|
+| **Toshiba T2100 running DOS** | On the 8086 laptop | Start `MATHSMTH.EXE` at the DOS prompt. [Toshiba setup](dos/toshiba/README.md#run-on-the-toshiba). |
+| **Toshiba DOS preview in DOSBox-X** | In the emulated 8086 on your computer | Build from source and start the DOS application. [DOSBox-X setup](#toshiba-dos-preview-in-dosbox-x). |
 | **Real ESP8266 board** | On your Wemos D1 mini | Open the board's Wi-Fi address in your browser. [Hardware setup](#use-a-real-esp8266-board). |
 | **ESP8266 WebREPL PC demo — no board** | In a Linux program on your computer | Open the local program's `127.0.0.1` address in your browser. [PC demo setup](#esp8266-pc-demo-on-linux-no-board). |
 | **ESP32-S3 in QEMU — no board** | In ESP32-S3 firmware inside the emulator on your computer | Use the terminal console. [QEMU setup](#esp32-s3-firmware-in-qemu-no-board). |
 
-## Hardware reference photos
-
-| Wemos D1 mini (ESP8266) | ESP32-S3 development board |
-|:---:|:---:|
-| <img src="esp8266/docs/images/wemos-d1-mini.jpg" alt="Wemos D1 mini ESP8266 development board, front view" height="240"> | <img src="esp32/docs/images/esp32-s3.jpg" alt="ESP32-S3 development board with two USB connectors" height="240"> |
-
-Reference photos; board revisions vary. The ESP32-S3 photo illustrates the
-board family and does not confirm the N16R8 target's memory configuration.
-Photos by [Tpkull](https://commons.wikimedia.org/wiki/File:WeMos_D1_Mini_front.jpg)
-and [VectorVoyager](https://commons.wikimedia.org/wiki/File:ESP32-S3_on_paper.jpg),
-[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
-See [image credits](docs/IMAGE_CREDITS.md) for sources and image details.
-
-## WebREPL screenshot
-
-![MatmMax WebREPL showing the script editor and console solving a linear system, finding eigenvalues and checking the result](esp8266/docs/images/webrepl.png)
-
-**Screenshot: the PC demo running entirely on Linux, with no ESP8266 connected.**
-The browser displays the editor and results; the local Linux program performs
-this matrix calculation. The same browser interface is also available from
-firmware installed on a real ESP8266 board.
+## Platform status
 
 | Target | Working version | Validation |
 |---|---|---|
+| **Toshiba T2100 (8086/CGA)** | **M08 source preview** with offline math, FFTs, scripts, editor and plots. Optional AI uses a separate helper. | 243 native and DOSBox-X checks passed. Core math, scripts and plots ran on the T2100 in earlier builds. A fresh hardware test of the source preview remains open. |
 | **ESP8266 Wemos D1 mini, 4 MB** | **L01-r15**: serial and browser console, saved Wi-Fi, browser script editor, scriptable GPIO | Board checks were reported for L01-r14. The renamed L01-r15 build awaits board testing. The full peripheral/stress procedure remains open. |
 | **ESP32-S3 N16R8** | **E03**: serial MatmMax, FFT, app launcher, separate ELF apps uploaded over serial | Tested in Espressif QEMU. Physical board validation pending. |
 | RP2350 with PSRAM | Architecture draft | No working RP2350 firmware yet. |
 
-Both working targets use **64-bit doubles** and the same portable MatmMax
-engine. ESP8266 limits matrices to 64 elements (8×8 square), with 16 variables
-and a 16 KiB engine payload budget. ESP32-S3 allows 4096 elements (64×64
+The ESP8266 and ESP32-S3 builds use **64-bit doubles** and the same portable
+MatmMax engine. ESP8266 limits matrices to 64 elements (8×8 square), with
+16 variables and a 16 KiB engine payload budget. ESP32-S3 allows 4096 elements (64×64
 square) and uses PSRAM. Limits are allocations, not a promise that every
 combination fits in memory.
 
@@ -60,10 +44,18 @@ ans =
    3
 ```
 
-## Run on your computer — no board required
+## Run on your computer
 
-Choose either route below. If you already cloned the repository, use its
-existing folder and skip the clone/cd lines.
+If you already cloned the repository, use its existing folder and skip the
+clone and initial directory change.
+
+### Toshiba DOS preview in DOSBox-X
+
+Build the DOS application on Linux with GNU Make and Open Watcom, then run
+it in DOSBox-X using the included 8086/CGA configuration. Calculations,
+scripts, editing and plots run offline. The DOS executable displays the
+original MathSmith M08 banner. The preview is available as source.
+See the [DOS build and emulator walkthrough](dos/toshiba/README.md#build-and-run-without-the-toshiba).
 
 ### ESP8266 PC demo on Linux (no board)
 
@@ -115,9 +107,10 @@ prompt. The [full emulator guide](docs/EMULATOR_QUICKSTART.md) covers tool
 installation, expected results, tests, troubleshooting, and running the
 **WebREPL on your computer** with the native ESP8266 test harness.
 
-## Start here
+## Platform guides
 
-- [Build and first use](docs/GETTING_STARTED.md): ESP8266 on a board or ESP32-S3 in QEMU.
+- [Toshiba DOS build and setup](dos/toshiba/README.md) covers real hardware, DOSBox-X and the optional AI helper.
+- [Microcontroller build and first use](docs/GETTING_STARTED.md) covers ESP8266 on a board and ESP32-S3 in QEMU.
 - [ESP8266 browser/GPIO manual](esp8266/docs/USER_MANUAL_L01.md) and [math language manual](esp8266/docs/USER_MANUAL.md).
 - [ESP32-S3 external apps](apps/esp32/e03_external/README.md) and [app ABI](docs/WORKSTATION_APP_ABI.md).
 - [Validation status](PROGRESS.md), including the remaining hardware checks.
@@ -159,7 +152,29 @@ compiled demo can be uploaded and run without reflashing the OS; returning
 preserves MatmMax variables. Uploaded apps are trusted native code in the
 same address space. Uploads are RAM-only and disappear after reboot.
 
-## Current limits
+## Microcontroller reference photos
+
+| Wemos D1 mini (ESP8266) | ESP32-S3 development board |
+|:---:|:---:|
+| <img src="esp8266/docs/images/wemos-d1-mini.jpg" alt="Wemos D1 mini ESP8266 development board, front view" height="240"> | <img src="esp32/docs/images/esp32-s3.jpg" alt="ESP32-S3 development board with two USB connectors" height="240"> |
+
+Reference photos; board revisions vary. The ESP32-S3 photo illustrates the
+board family and does not confirm the N16R8 target's memory configuration.
+Photos by [Tpkull](https://commons.wikimedia.org/wiki/File:WeMos_D1_Mini_front.jpg)
+and [VectorVoyager](https://commons.wikimedia.org/wiki/File:ESP32-S3_on_paper.jpg),
+[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+See [image credits](docs/IMAGE_CREDITS.md) for sources and image details.
+
+## ESP8266 WebREPL screenshot
+
+![MatmMax WebREPL showing the script editor and console solving a linear system, finding eigenvalues and checking the result](esp8266/docs/images/webrepl.png)
+
+**Screenshot: the PC demo running entirely on Linux, with no ESP8266 connected.**
+The browser displays the editor and results; the local Linux program performs
+this matrix calculation. The same browser interface is also available from
+firmware installed on a real ESP8266 board.
+
+## Microcontroller limits
 
 Neither microcontroller build includes AI integration, an attached keyboard,
 OLED driver or SD storage. Those remain future milestones. ESP8266 has no
@@ -170,9 +185,10 @@ depending on the setup you chose.
 
 ## Development and sharing
 
-Builds are currently supported on **x86_64 Linux**. SDK/compiler versions are
-pinned by installers under `tools/`; downloaded dependencies, personal flash
-backups and generated firmware stay outside Git. See
+Builds are currently supported on **x86_64 Linux**. The microcontroller
+installers under `tools/` pin SDK and compiler versions. The Toshiba guide
+lists the DOS toolchain and optional networking library. Downloaded
+dependencies, personal flash backups and generated firmware stay outside Git. See
 [CONTRIBUTING.md](CONTRIBUTING.md) for checks and
 [RELEASING.md](docs/RELEASING.md) for GitHub Pages and source releases.
 
