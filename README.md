@@ -34,6 +34,8 @@ Earlier hardware tests covered core calculations, scripts and plots.
 The current source preview passed 243 native and DOSBox-X checks and
 awaits a fresh physical test.
 
+The [MatmMax DOS User’s Guide and Reference Manual (PDF)](docs/MATMMAX_MANUAL.pdf) covers the 8088/MDA and 8086/CGA builds.
+
 ## Microcontroller builds
 
 ### ESP8266

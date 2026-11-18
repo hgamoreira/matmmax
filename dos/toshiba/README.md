@@ -11,7 +11,9 @@ The executable and its banner retain the original names
 
 The preview provides matrices, numerical functions, FFTs, scripts,
 a full-screen editor and CGA plots. The [quick manual](toshiba/docs/MATMMAX_PREVIEW.txt)
-covers the prompt, example scripts, plotting and editor keys.
+covers the prompt, example scripts, plotting and editor keys. The
+[full DOS user’s guide and reference manual (PDF)](../../docs/MATMMAX_MANUAL.pdf)
+covers the language, numerical methods, and both 16-bit DOS builds.
 
 ## Build on Linux and run in DOSBox-X
 
