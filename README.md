@@ -1,200 +1,80 @@
 # MatmMax
 
-MatmMax is the numerical application in the Mini-Max suite, alongside
-WordmMax for writing and CodemMax for programming. The suite grew out of
-work on the Commodore 64 and MS-DOS. This repository covers the ESP8266
-and ESP32-S3 ports of the MATLAB-inspired numerical environment, plus the
-[Toshiba T2100 DOS source preview](dos/toshiba/README.md). The v0.1.0
-microcontroller source preview predates the MatmMax name.
+MatmMax is a MATLAB-inspired numerical environment for small computers. It
+supports interactive calculations, matrices and scripting. It belongs to the
+Mini-Max suite alongside WordmMax for writing and CodemMax for programming.
 
-## Choose where to run MatmMax
-
-On DOS, use the application at the DOS prompt for scripts and CGA plots.
-On ESP8266, use the serial console or the browser-based WebREPL. The
-ESP32-S3 preview runs in QEMU and uses a serial console.
-
-| Setup | Where calculations run | How you use it |
+| Build | Where to run it | Setup |
 |---|---|---|
-| **Toshiba T2100 running DOS** | On the 8086 laptop | Start `MATHSMTH.EXE` at the DOS prompt. [Toshiba setup](dos/toshiba/README.md#run-on-the-toshiba). |
-| **Toshiba DOS preview in DOSBox-X** | In the emulated 8086 on your computer | Build from source and start the DOS application. [DOSBox-X setup](#toshiba-dos-preview-in-dosbox-x). |
-| **Real ESP8266 board** | On your Wemos D1 mini | Open the board's Wi-Fi address in your browser. [Hardware setup](#use-a-real-esp8266-board). |
-| **ESP8266 WebREPL PC demo — no board** | In a Linux program on your computer | Open the local program's `127.0.0.1` address in your browser. [PC demo setup](#esp8266-pc-demo-on-linux-no-board). |
-| **ESP32-S3 in QEMU — no board** | In ESP32-S3 firmware inside the emulator on your computer | Use the terminal console. [QEMU setup](#esp32-s3-firmware-in-qemu-no-board). |
+| **DOS (8086/CGA)** | A compatible DOS PC or DOSBox-X | [Build and run the DOS preview](dos/toshiba/README.md) |
+| **ESP8266** | Wemos D1 mini with 4 MB flash, using serial or the browser | [Build and flash the board](docs/GETTING_STARTED.md#esp8266-a-real-wemos-d1-mini-4-mb) |
+| **ESP8266 WebREPL demo** | Linux, using a browser connected to a local program | [Run the PC demo](docs/EMULATOR_QUICKSTART.md#6-try-the-webrepl-screenshots-interface-without-an-esp8266) |
+| **ESP32-S3** | ESP32-S3 N16R8 firmware in Espressif QEMU | [Run the firmware in QEMU](docs/GETTING_STARTED.md#esp32-s3-run-e03-in-qemu) |
 
-## Platform status
+## DOS preview
 
-| Target | Working version | Validation |
-|---|---|---|
-| **Toshiba T2100 (8086/CGA)** | **M08 source preview** with offline math, FFTs, scripts, editor and plots. Optional AI uses a separate helper. | 243 native and DOSBox-X checks passed. Core math, scripts and plots ran on the T2100 in earlier builds. A fresh hardware test of the source preview remains open. |
-| **ESP8266 Wemos D1 mini, 4 MB** | **L01-r15**: serial and browser console, saved Wi-Fi, browser script editor, scriptable GPIO | Board checks were reported for L01-r14. The renamed L01-r15 build awaits board testing. The full peripheral/stress procedure remains open. |
-| **ESP32-S3 N16R8** | **E03**: serial MatmMax, FFT, app launcher, separate ELF apps uploaded over serial | Tested in Espressif QEMU. Physical board validation pending. |
-| RP2350 with PSRAM | Architecture draft | No working RP2350 firmware yet. |
+The preview targets the following configuration. Use it as a starting point
+when evaluating another DOS PC.
 
-The ESP8266 and ESP32-S3 builds use **64-bit doubles** and the same portable
-MatmMax engine. ESP8266 limits matrices to 64 elements (8×8 square), with
-16 variables and a 16 KiB engine payload budget. ESP32-S3 allows 4096 elements (64×64
-square) and uses PSRAM. Limits are allocations, not a promise that every
-combination fits in memory.
+| Component | Reference configuration |
+|---|---|
+| CPU | Intel 8086 with software floating point |
+| Memory | 640 KB conventional RAM |
+| Display | CGA-compatible with 640×200 graphics (BIOS mode 6) for plots |
+| OS and storage | DOS 3.30 and a writable directory. The program and examples fit on a 720 KB floppy. |
 
-```text
->> A=[4 -2;-2 4]
->> A\[2;8]
-ans =
-   2
-   3
-```
+Build `MATHSMTH.EXE` from source on Linux with Open Watcom. Run it from the
+DOS prompt on your PC or use the included 8086/CGA configuration for DOSBox-X.
+The executable displays its original MathSmith M08 banner.
 
-## Run on your computer
+Calculations, FFTs, scripts, the editor and plots work offline. The optional
+AI helper uses DOS networking and a host running Ollama. [DOS build guide, emulator instructions and AI setup](dos/toshiba/README.md)
 
-If you already cloned the repository, use its existing folder and skip the
-clone and initial directory change.
+Earlier builds ran core calculations, scripts and plots on the reference
+machine, a Toshiba T2100. The current source preview passed 243 native and
+DOSBox-X checks and awaits a fresh physical test.
 
-### Toshiba DOS preview in DOSBox-X
+## Microcontroller builds
 
-Build the DOS application on Linux with GNU Make and Open Watcom, then run
-it in DOSBox-X using the included 8086/CGA configuration. Calculations,
-scripts, editing and plots run offline. The DOS executable displays the
-original MathSmith M08 banner. The preview is available as source.
-See the [DOS build and emulator walkthrough](dos/toshiba/README.md#build-and-run-without-the-toshiba).
+### ESP8266
 
-### ESP8266 PC demo on Linux (no board)
+The Wemos D1 mini build provides a serial console, a browser console
+(WebREPL), a browser script editor and scriptable GPIO. The matrix limit is
+64 elements (8×8 square). On a physical board, the ESP8266 runs the math
+engine and serves the WebREPL over Wi-Fi. In the PC demo, both run in a Linux
+program that your browser reaches at `127.0.0.1`. [ESP8266 user manual](esp8266/docs/USER_MANUAL_L01.md)
 
-**In this setup, both the WebREPL server and the math engine run on your
-computer. No ESP8266 is connected.** Your browser connects to that local
-program, using an address beginning with `http://127.0.0.1:`.
+Board checks were reported for L01-r14. The renamed L01-r15 build awaits
+physical validation.
 
-On **x86_64 Linux**, you need Python **3.12+**, Git and GCC/G++. On
-Ubuntu/Debian, `sudo apt-get install git python3 build-essential` supplies the
-packages; check that your distribution's Python meets the version requirement.
-No ESP8266 board, USB adapter, ESP-IDF, QEMU or cross-compiler is needed.
+![MatmMax WebREPL on Linux showing the script editor, a matrix solve and eigenvalues](esp8266/docs/images/webrepl.png)
 
-```sh
-git clone https://github.com/hgamoreira/matmmax.git
-cd matmmax
-MS_NATIVE_WIFI=1 esp8266/scripts/webrepl.sh native
-```
+*The ESP8266 WebREPL PC demo running entirely on Linux.*
 
-Keep the terminal open. Copy the complete **Browser URL** it prints into a
-browser on the same computer, then click **Connect**. Try `2+2` in the console,
-use the program editor, and open/save scripts on your computer. Stop the
-harness with **Ctrl+C** in the terminal when finished.
+### ESP32-S3
 
-This is a PC demonstration of the ESP8266 version, built from the same UI
-and math sources. It is a native Linux program, rather than ESP8266 CPU
-emulation. GPIO/ADC and Wi-Fi use test stubs; they do not control real pins
-or connect a board to a network. See the
-[WebREPL walkthrough](docs/EMULATOR_QUICKSTART.md#6-try-the-webrepl-screenshots-interface-without-an-esp8266)
-for the matrix example shown above.
+The E03 firmware provides a serial console, FFTs, matrices up to 64×64, and a
+launcher for separately built apps uploaded over serial. It targets the
+N16R8 configuration with PSRAM. E03 was tested in Espressif QEMU and awaits
+physical board validation. [QEMU walkthrough](docs/EMULATOR_QUICKSTART.md) · [App launcher and upload guide](apps/esp32/e03_external/README.md)
 
-### ESP32-S3 firmware in QEMU (no board)
+### RP2350
 
-Run the ESP32-S3 firmware in Espressif QEMU on **x86_64 Linux**. After
-installing the [Linux prerequisites](docs/EMULATOR_QUICKSTART.md#1-install-linux-prerequisites):
+Architecture draft. [Target notes](rp2350/README.md)
 
-```sh
-git clone https://github.com/hgamoreira/matmmax.git
-cd matmmax
-tools/setup_esp_idf.sh
-tools/setup_esp_qemu.sh
-tools/setup_elf_loader.sh
-esp32/scripts/external.sh build
-python3 esp32/scripts/upload_external.py --qemu build/esp32/e03_external/demo_b.msp
-```
-
-At `>>`, try `2+2`, then `x=41`, `:app uploaded`, `exit`, and `x+1` (42).
-Press **Ctrl+]** to close the emulator console. Enter each line at its current
-prompt. The [full emulator guide](docs/EMULATOR_QUICKSTART.md) covers tool
-installation, expected results, tests, troubleshooting, and running the
-**WebREPL on your computer** with the native ESP8266 test harness.
-
-## Platform guides
-
-- [Toshiba DOS build and setup](dos/toshiba/README.md) covers real hardware, DOSBox-X and the optional AI helper.
-- [Microcontroller build and first use](docs/GETTING_STARTED.md) covers ESP8266 on a board and ESP32-S3 in QEMU.
-- [ESP8266 browser/GPIO manual](esp8266/docs/USER_MANUAL_L01.md) and [math language manual](esp8266/docs/USER_MANUAL.md).
-- [ESP32-S3 external apps](apps/esp32/e03_external/README.md) and [app ABI](docs/WORKSTATION_APP_ABI.md).
-- [Validation status](PROGRESS.md), including the remaining hardware checks.
-- [Project website](https://hgamoreira.github.io/matmmax/).
-
-## Use a real ESP8266 board
-
-**In this setup, MatmMax and the WebREPL server run on the ESP8266.** Your
-computer's browser displays the editor and sends commands over Wi-Fi. The
-ESP8266 performs the calculations and controls its physical GPIO pins.
-
-1. Connect a Wemos D1 mini with 4 MB flash over USB and follow the
-   [firmware build/flash instructions](docs/GETTING_STARTED.md#esp8266-a-real-wemos-d1-mini-4-mb).
-2. In its serial console, enter `:wifi join` and supply your network details.
-3. Enter `:wifi`, then open the complete **Browser URL** it prints. This is
-   the board's network address, not the PC demo's `127.0.0.1` address.
-
-After a successful connection, network credentials and the browser key are
-saved, and subsequent boots reconnect automatically. The browser editor
-opens and saves `.ms` files **on your computer**, then sends acknowledged
-lines to the board. Stop cancels running code. The browser console exposes
-the same workspace as serial. After setup, a USB power supply can power the
-board; a serial connection to the computer is not needed for browser use.
-
-On the physical board, GPIO can be used inside a script. This blinks the D1 mini's active-low LED:
-
-```text
-pinmode('D4','output',1);
-for k=1:5
-    digitalwrite('D4',0); delay(500);
-    digitalwrite('D4',1); delay(500);
-end
-```
-
-## ESP32-S3 application support
-
-The ESP32-S3 has a foreground app launcher and a versioned API. A separately
-compiled demo can be uploaded and run without reflashing the OS; returning
-preserves MatmMax variables. Uploaded apps are trusted native code in the
-same address space. Uploads are RAM-only and disappear after reboot.
-
-## Microcontroller reference photos
+### Board reference photos
 
 | Wemos D1 mini (ESP8266) | ESP32-S3 development board |
 |:---:|:---:|
-| <img src="esp8266/docs/images/wemos-d1-mini.jpg" alt="Wemos D1 mini ESP8266 development board, front view" height="240"> | <img src="esp32/docs/images/esp32-s3.jpg" alt="ESP32-S3 development board with two USB connectors" height="240"> |
+| <img src="esp8266/docs/images/wemos-d1-mini.jpg" alt="Wemos D1 mini ESP8266 development board, front view" height="185"> | <img src="esp32/docs/images/esp32-s3.jpg" alt="ESP32-S3 development board with two USB connectors" height="185"> |
 
-Reference photos; board revisions vary. The ESP32-S3 photo illustrates the
-board family and does not confirm the N16R8 target's memory configuration.
-Photos by [Tpkull](https://commons.wikimedia.org/wiki/File:WeMos_D1_Mini_front.jpg)
-and [VectorVoyager](https://commons.wikimedia.org/wiki/File:ESP32-S3_on_paper.jpg),
-[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
-See [image credits](docs/IMAGE_CREDITS.md) for sources and image details.
+Photos by Tpkull and VectorVoyager, licensed under CC BY-SA 4.0. The ESP32-S3
+photo shows the board family. [Image sources and license](docs/IMAGE_CREDITS.md)
 
-## ESP8266 WebREPL screenshot
+## Project links
 
-![MatmMax WebREPL showing the script editor and console solving a linear system, finding eigenvalues and checking the result](esp8266/docs/images/webrepl.png)
-
-**Screenshot: the PC demo running entirely on Linux, with no ESP8266 connected.**
-The browser displays the editor and results; the local Linux program performs
-this matrix calculation. The same browser interface is also available from
-firmware installed on a real ESP8266 board.
-
-## Microcontroller limits
-
-Neither microcontroller build includes AI integration, an attached keyboard,
-OLED driver or SD storage. Those remain future milestones. ESP8266 has no
-FFT, graphics or native app launcher. Its HTTP/WebSocket browser console is
-intended for a trusted local network. The project website hosts documentation.
-To use the WebREPL, open the URL printed by your board or by the PC demo,
-depending on the setup you chose.
-
-## Development and sharing
-
-Builds are currently supported on **x86_64 Linux**. The microcontroller
-installers under `tools/` pin SDK and compiler versions. The Toshiba guide
-lists the DOS toolchain and optional networking library. Downloaded
-dependencies, personal flash backups and generated firmware stay outside Git. See
-[CONTRIBUTING.md](CONTRIBUTING.md) for checks and
-[RELEASING.md](docs/RELEASING.md) for GitHub Pages and source releases.
-
-This repository is a curated source snapshot from the larger workstation
-project. `EXPORT_MANIFEST.json` records the initial export's provenance and file
-checksums; later changes are tracked in Git.
-Original project source is [MIT licensed](LICENSE); downloaded SDKs and tools
-retain their [own licenses](THIRD_PARTY_NOTICES.md). The initial public
-release is source-only.
+- [MatmMax project website](https://hgamoreira.github.io/matmmax/)
+- [MatmMax language manual](esp8266/docs/USER_MANUAL.md)
+- [Microcontroller validation and open checks](PROGRESS.md)
+- [Contribution and test instructions](CONTRIBUTING.md)
+- [MIT license](LICENSE) · [Third-party notices](THIRD_PARTY_NOTICES.md)

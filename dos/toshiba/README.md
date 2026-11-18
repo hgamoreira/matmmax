@@ -1,16 +1,19 @@
-# MatmMax for DOS · Toshiba T2100 preview
+# MatmMax for DOS (8086/CGA preview)
 
-MatmMax is the numerical program in the Mini-Max suite. This source
-preview targets the Toshiba T2100 with an Intel 8086, 640 KB of
-conventional RAM, DOS 3.30 and a CGA-compatible display. It uses
-software floating point and works offline. The executable and its
-banner retain the original names `MATHSMTH.EXE` and MathSmith M08.
+Run MatmMax on an 8086-class DOS PC or in DOSBox-X. The
+reference machine is a Toshiba T2100 with an Intel 8086, 640 KB of
+conventional RAM, DOS 3.30 and CGA-compatible graphics. Plotting uses
+BIOS mode 6 (640×200). The app uses software floating point and works
+offline. It needs a writable directory for editing scripts.
+
+The executable and its banner retain the original names
+`MATHSMTH.EXE` and MathSmith M08.
 
 The preview provides matrices, numerical functions, FFTs, scripts,
 a full-screen editor and CGA plots. The [quick manual](toshiba/docs/MATMMAX_PREVIEW.txt)
 covers the prompt, example scripts, plotting and editor keys.
 
-## Build and run without the Toshiba
+## Build on Linux and run in DOSBox-X
 
 On Linux, install GNU Make and [Open Watcom 2.0](https://github.com/open-watcom/open-watcom-v2/releases/tag/2025-12-01-Build)
 with its 16-bit DOS tools and libraries. The path here is an example. Run
@@ -39,10 +42,10 @@ Press a key to return from the plot. Use `quit` to return to DOS, or
 For automated checks on Linux, install GCC, Python 3 and DOSBox-X,
 then run `make WATCOM=/opt/open-watcom test` from the same directory.
 
-## Run on the Toshiba
+## Run on a DOS PC
 
-Copy the contents of `build/dos-run` to a writable DOS directory or a
-DOS-formatted 720 KB floppy. Boot DOS and type `MATHSMTH` from that
+Copy the contents of `build/dos-run` to a writable DOS directory. A
+DOS-formatted 720 KB floppy also works if your machine has that drive. Boot DOS and type `MATHSMTH` from that
 directory. Try the solve, script and plot above. For an editor check,
 enter `edit hello`, type `disp(20)`, press F2 to save and press F5 to
 run. The result should be 20.
@@ -82,7 +85,7 @@ python3 host/server.py --bind HOST_LAN_IP --root build/assistant-files --model I
 Replace `HOST_LAN_IP` and `INSTALLED_MODEL` with your values. The
 workstation server listens on port 8064 by default and provides file
 access to its chosen root, so use a dedicated directory and a trusted
-LAN. The full Toshiba hardware test of the assistant remains open.
+LAN. The full hardware test of the assistant remains open.
 
 ## Licensing
 
